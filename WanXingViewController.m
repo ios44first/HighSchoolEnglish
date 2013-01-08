@@ -35,7 +35,7 @@
     scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 420, 320 , 150)];
 	scrollView.userInteractionEnabled = YES;
 	scrollView.scrollEnabled = YES;
-	[scrollView setContentSize:CGSizeMake(320, 2800)];
+	[scrollView setContentSize:CGSizeMake(320, 2860)];
     [scrollView setBackgroundColor:[UIColor clearColor]];
     imgView=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"bg_answersheet.png"]];
     imgView.frame=CGRectMake(0, 420, 320, 150);
@@ -65,6 +65,14 @@
 }
 -(void)setScrollView
 {
+    for (int j=0; j<20; j++)
+    {
+        answer[j]='0';
+    }
+    for(UIView *view in [scrollView subviews])
+    {
+        [view removeFromSuperview];
+    }
     for (int n=0; n<20; n++)
     {
         UILabel *num=[[UILabel alloc]initWithFrame:CGRectMake(5, 140*n+5, 25, 25)];
@@ -112,6 +120,47 @@
         selectD.tag=110+n*10+4;
        // NSLog(@"%d",selectD.tag);
         [scrollView addSubview:selectD];
+        
+        WanXing *wan=[self.array objectAtIndex:n];
+        UILabel *la=[[UILabel alloc]initWithFrame:CGRectMake(50, 140*n+36, 260, 20)];
+        [la setBackgroundColor:[UIColor clearColor]];
+        la.text=[NSString stringWithFormat:@"A.  %@",wan.select1];
+        [scrollView addSubview:la];
+        [la release];
+        UILabel *lb=[[UILabel alloc]initWithFrame:CGRectMake(50, 140*n+62, 260, 20)];
+        [lb setBackgroundColor:[UIColor clearColor]];
+        lb.text=[NSString stringWithFormat:@"B.  %@",wan.select2];
+        [scrollView addSubview:lb];
+        [lb release];
+        UILabel *lc=[[UILabel alloc]initWithFrame:CGRectMake(50, 140*n+88, 260, 20)];
+        [lc setBackgroundColor:[UIColor clearColor]];
+        lc.text=[NSString stringWithFormat:@"C.  %@",wan.select3];
+        [scrollView addSubview:lc];
+        [lc release];
+        UILabel *ld=[[UILabel alloc]initWithFrame:CGRectMake(50, 140*n+114, 260, 20)];
+        [ld setBackgroundColor:[UIColor clearColor]];
+        ld.text=[NSString stringWithFormat:@"D.  %@",wan.select4];
+        [scrollView addSubview:ld];
+        [ld release];
+    }
+    UIButton *submitAn=[UIButton buttonWithType:UIButtonTypeCustom];
+    submitAn.frame=CGRectMake(105, 2810, 110, 42);
+    [submitAn setImage:[UIImage imageNamed:@"btn_submit_pressed.png"] forState:UIControlStateNormal];
+    [submitAn addTarget:self action:@selector(submitAns) forControlEvents:UIControlEventTouchUpInside];
+    [scrollView addSubview:submitAn];
+}
+-(void)submitAns
+{
+     NSLog(@"您选了%s",answer);
+    for (int m=0; m<20; m++)
+    {
+        WanXing *wan=[self.array objectAtIndex:m];
+        UILabel *label=(UILabel *)[scrollView viewWithTag:1+m];
+        if ([[NSString stringWithFormat:@"%c",answer[m]] isEqualToString:wan.result])
+            label.text=[NSString stringWithFormat:@" √ 您选了%c。回答正确！",answer[m]];
+        else
+            label.text=[NSString stringWithFormat:@" × 您选了%c，正确答案是%@。",answer[m],wan.result];
+        //NSLog(@"%@",wan.result);
     }
 }
 -(void)showTishi:(UIButton *)sender
@@ -126,35 +175,35 @@
 -(void)makeAns:(UIButton *)sender
 {
     int x=((sender.tag-100)/10)-1;
-    int y=(sender.tag%10)-1;
+    int y=sender.tag%10;
     UIButton *b1=(UIButton *)[scrollView viewWithTag:sender.tag/10*10+1];
     UIButton *b2=(UIButton *)[scrollView viewWithTag:sender.tag/10*10+2];
     UIButton *b3=(UIButton *)[scrollView viewWithTag:sender.tag/10*10+3];
     UIButton *b4=(UIButton *)[scrollView viewWithTag:sender.tag/10*10+4];
     switch (y)
     {
-        case 0:
+        case 1:
             answer[x]='A';
             [b1 setImage:[UIImage imageNamed:@"btn_radio_on.png"] forState:UIControlStateNormal];
             [b2 setImage:[UIImage imageNamed:@"btn_radio_off.png"] forState:UIControlStateNormal];
             [b3 setImage:[UIImage imageNamed:@"btn_radio_off.png"] forState:UIControlStateNormal];
             [b4 setImage:[UIImage imageNamed:@"btn_radio_off.png"] forState:UIControlStateNormal];
             break;
-        case 1:
+        case 2:
             answer[x]='B';
             [b1 setImage:[UIImage imageNamed:@"btn_radio_off.png"] forState:UIControlStateNormal];
             [b2 setImage:[UIImage imageNamed:@"btn_radio_on.png"] forState:UIControlStateNormal];
             [b3 setImage:[UIImage imageNamed:@"btn_radio_off.png"] forState:UIControlStateNormal];
             [b4 setImage:[UIImage imageNamed:@"btn_radio_off.png"] forState:UIControlStateNormal];
             break;
-        case 2:
+        case 3:
             answer[x]='C';
             [b1 setImage:[UIImage imageNamed:@"btn_radio_off.png"] forState:UIControlStateNormal];
             [b2 setImage:[UIImage imageNamed:@"btn_radio_off.png"] forState:UIControlStateNormal];
             [b3 setImage:[UIImage imageNamed:@"btn_radio_on.png"] forState:UIControlStateNormal];
             [b4 setImage:[UIImage imageNamed:@"btn_radio_off.png"] forState:UIControlStateNormal];
             break;
-        case 3:
+        case 4:
             answer[x]='D';
             [b1 setImage:[UIImage imageNamed:@"btn_radio_off.png"] forState:UIControlStateNormal];
             [b2 setImage:[UIImage imageNamed:@"btn_radio_off.png"] forState:UIControlStateNormal];
@@ -314,8 +363,8 @@
     [self.array removeAllObjects];
     self.array=[NSMutableArray arrayWithArray:arr1];
     
-    WanXing *wan=[self.array objectAtIndex:0];
-    NSLog(@"%@",wan.result);
+   // WanXing *wan=[self.array objectAtIndex:0];
+    //NSLog(@"%@",wan.result);
     //NSLog(@"%@",wanxingContain);
     //NSLog(@"%d",[self.array count]);
 }

@@ -158,7 +158,7 @@
     Questions *que=[self.array objectAtIndex:indexPath.row];
     cell.textLabel.text=que.queTitle;
     [cell.detailTextLabel setFont:[UIFont fontWithName:@"Thonburi" size:13]];
-    cell.detailTextLabel.text=[NSString stringWithFormat:@"%d年%@                     %@",que.year,self.title,[que.createDate substringToIndex:10]];
+    cell.detailTextLabel.text=[NSString stringWithFormat:@"%d年%@                %@",que.year,self.title,[que.createDate substringToIndex:10]];
     cell.imageView.image=[UIImage imageNamed:@"bg_point.png"];
     return cell;
 }
