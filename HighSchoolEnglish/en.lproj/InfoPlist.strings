@@ -1,2 +1,4 @@
 /* Localized versions of Info.plist keys */
 
+CFBundleDisplayName="高考抢分英语";
+CFBundleName="高考抢分英语";

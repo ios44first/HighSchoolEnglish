@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ChooseViewController.h"
+#import "MainViewController.h"
 
 @interface MyAppDelegate : UIResponder <UIApplicationDelegate>
 
