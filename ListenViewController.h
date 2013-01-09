@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ListViewController.h"
 
 @interface ListenViewController : UIViewController
 @property(assign,nonatomic) int grade;
+
+- (IBAction)gotoList:(UIButton *)sender;
 @end

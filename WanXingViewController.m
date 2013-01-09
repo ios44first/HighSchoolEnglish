@@ -368,7 +368,7 @@
     //NSLog(@"%@",wanxingContain);
     //NSLog(@"%d",[self.array count]);
 }
-
+#pragma mark - 按钮
 - (IBAction)downBut:(UIButton *)sender
 {
     [UIView beginAnimations:nil context:nil];

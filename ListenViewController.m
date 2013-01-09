@@ -39,4 +39,17 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)dealloc {
+    [super dealloc];
+}
+- (IBAction)gotoList:(UIButton *)sender
+{
+    ListViewController *list=[[ListViewController alloc]init];
+    list.grade=grade;
+    list.titleType=sender.tag;
+    list.url=[NSString stringWithFormat:@"http://api.winclass.net/serviceaction.do?method=getlisteningthemes&currentpagenum=1&pagesize=20&listentype=%d",sender.tag];
+    list.title=@"英语听力";
+    [self.navigationController pushViewController:list animated:YES];
+    [list release];
+}
 @end

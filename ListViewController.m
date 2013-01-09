@@ -14,7 +14,7 @@
 
 @implementation ListViewController
 @synthesize array,str,dictionary,question;
-@synthesize grade,year,titleType;
+@synthesize grade,year,titleType,url;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -33,12 +33,12 @@
     self.array=[NSMutableArray array];
     self.str=[NSMutableString string];
     self.dictionary=[NSMutableDictionary dictionary];
-    NSString *string=nil;
+    /*NSString *string=nil;
     if (self.year==1999)
       string=[NSString stringWithFormat:@"http://api.winclass.net/serviceaction.do?method=themelibrary&subjectid=3&pagesize=20&areaid=0&gread=%d&titletype=%d",self.grade,self.titleType];
     else
-      string=[NSString stringWithFormat:@"http://api.winclass.net/serviceaction.do?method=themelibrary&subjectid=3&pagesize=20&areaid=0&gread=%d&titletype=%d&year=%d",self.grade,self.titleType,self.year];
-    NSURL *newsURL=[[NSURL alloc]initWithString:string];
+      string=[NSString stringWithFormat:@"http://api.winclass.net/serviceaction.do?method=themelibrary&subjectid=3&pagesize=20&areaid=0&gread=%d&titletype=%d&year=%d",self.grade,self.titleType,self.year];*/
+    NSURL *newsURL=[[NSURL alloc]initWithString:url];
     NSData *xmlData=[[NSData alloc] initWithContentsOfURL:newsURL];
     NSXMLParser *parserTool=[[NSXMLParser alloc]initWithData:xmlData];
     parserTool.delegate=self;
@@ -156,11 +156,47 @@
         cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     }
     Questions *que=[self.array objectAtIndex:indexPath.row];
-    cell.textLabel.text=que.queTitle;
+    if (que.queTitle==nil)
+        cell.textLabel.text=@"暂无标题";
+    else
+        cell.textLabel.text=[self filterString:que.queTitle];
     [cell.detailTextLabel setFont:[UIFont fontWithName:@"Thonburi" size:13]];
-    cell.detailTextLabel.text=[NSString stringWithFormat:@"%d年%@                %@",que.year,self.title,[que.createDate substringToIndex:10]];
+    if (self.titleType>100)
+        cell.detailTextLabel.text=[NSString stringWithFormat:@"%@                %@",self.title,[que.createDate substringToIndex:10]];
+    else
+        cell.detailTextLabel.text=[NSString stringWithFormat:@"%d年%@                %@",que.year,self.title,[que.createDate substringToIndex:10]];
     cell.imageView.image=[UIImage imageNamed:@"bg_point.png"];
     return cell;
+}
+- (NSString *)filterString:(NSString *)string
+{
+    if (string!=nil)
+    {
+        NSMutableString *str1=[NSMutableString stringWithString:string];
+        [str1 replaceOccurrencesOfString:@"&lt;U&gt;" withString:@"`" options:0 range:NSMakeRange(0, str1.length)];
+        [str1 replaceOccurrencesOfString:@"&lt;/U&gt;" withString:@"`" options:0 range:NSMakeRange(0, str1.length)];
+        [str1 replaceOccurrencesOfString:@"&amp;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
+        [str1 replaceOccurrencesOfString:@"nbsp;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
+        [str1 replaceOccurrencesOfString:@"&lt;P&gt;" withString:@"" options:0 range:NSMakeRange(0, str1.length)];
+        [str1 replaceOccurrencesOfString:@"&lt;/P&gt;" withString:@"" options:0 range:NSMakeRange(0, str1.length)];
+        [str1 replaceOccurrencesOfString:@"&#xd;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
+        [str1 replaceOccurrencesOfString:@"&lt;P style=&quot;TEXT-ALIGN: center&quot; align=center&gt;" withString:@"  " options:0 range:NSMakeRange(0, str1.length)];
+        [str1 replaceOccurrencesOfString:@"&lt;p style=&quot;text-align:center&quot; align=&quot;center&quot;&gt;" withString:@"  " options:0 range:NSMakeRange(0, str1.length)];
+        [str1 replaceOccurrencesOfString:@"&lt;p style=&quot;text-align:center&quot; align=&quot;center&quot;&gt;" withString:@"  " options:0 range:NSMakeRange(0, str1.length)];
+        [str1 replaceOccurrencesOfString:@"&lt;p&gt;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
+        [str1 replaceOccurrencesOfString:@"&quot;" withString:@"\"" options:0 range:NSMakeRange(0, str1.length)];
+        [str1 replaceOccurrencesOfString:@"&apos;" withString:@"'" options:0 range:NSMakeRange(0, str1.length)];
+        [str1 replaceOccurrencesOfString:@"&lt;p style=\"text-align:left\" align=\"left\"&gt;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
+        [str1 replaceOccurrencesOfString:@"&lt;p style=\"text-align:right\" align=\"right\"&gt;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
+         [str1 replaceOccurrencesOfString:@"&lt;P style=\"TEXT-INDENT: 2em\"&gt;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
+         [str1 replaceOccurrencesOfString:@"&lt;/TD&gt;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
+         [str1 replaceOccurrencesOfString:@"&lt;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
+        [str1 replaceOccurrencesOfString:@"&gt;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
+        
+        return str1;
+    }
+    else
+        return @"";
 }
 
 #pragma mark - Table view delegate
@@ -195,24 +231,24 @@
         }
             break;
         case 15:
-            break;
         case 16:
-            break;
         case 17:
-            break;
         case 18:
-            break;
         case 19:
-            break;
         case 20:
-            break;
         case 21:
-            break;
         case 24:
-            break;
         case 28:
+        {
+            ReadViewController *read=[[ReadViewController alloc]init];
+            read.arr=self.array;
+            read.strTitle=self.title;
+            read.question=q;
+            read.i=indexPath.row;
+            [self.navigationController pushViewController:read animated:YES];
+            [read release];
+        }
             break;
-            
         default:
             break;
 }

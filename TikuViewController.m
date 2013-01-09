@@ -57,6 +57,10 @@ const NSUInteger btnInterval = 60;
     list.year=year;
     list.titleType=sender.tag;
     list.title=sender.titleLabel.text;
+    if (year==1999)
+        list.url=[NSString stringWithFormat:@"http://api.winclass.net/serviceaction.do?method=themelibrary&subjectid=3&pagesize=20&areaid=0&gread=%d&titletype=%d",self.grade,sender.tag];
+    else
+        list.url=[NSString stringWithFormat:@"http://api.winclass.net/serviceaction.do?method=themelibrary&subjectid=3&pagesize=20&areaid=0&gread=%d&titletype=%d&year=%d",self.grade,sender.tag,year];
     [self.navigationController pushViewController:list animated:YES];
     [list release];
 }

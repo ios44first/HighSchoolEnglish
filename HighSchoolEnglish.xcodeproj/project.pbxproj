@@ -349,6 +349,8 @@
 		0FC9A330169ACD8900DAA31B /* WanXingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC9A32E169ACD8800DAA31B /* WanXingViewController.m */; };
 		0FC9A331169ACD8900DAA31B /* WanXingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FC9A32F169ACD8900DAA31B /* WanXingViewController.xib */; };
 		0FC9A336169AD69C00DAA31B /* WanXing.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC9A335169AD69C00DAA31B /* WanXing.m */; };
+		0FD12EDB169C19D900F43E6F /* ReadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FD12ED9169C19D900F43E6F /* ReadViewController.m */; };
+		0FD12EDC169C19D900F43E6F /* ReadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FD12EDA169C19D900F43E6F /* ReadViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -711,6 +713,9 @@
 		0FC9A32F169ACD8900DAA31B /* WanXingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WanXingViewController.xib; sourceTree = "<group>"; };
 		0FC9A334169AD69C00DAA31B /* WanXing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WanXing.h; sourceTree = "<group>"; };
 		0FC9A335169AD69C00DAA31B /* WanXing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WanXing.m; sourceTree = "<group>"; };
+		0FD12ED8169C19D900F43E6F /* ReadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReadViewController.h; sourceTree = "<group>"; };
+		0FD12ED9169C19D900F43E6F /* ReadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReadViewController.m; sourceTree = "<group>"; };
+		0FD12EDA169C19D900F43E6F /* ReadViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReadViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1290,6 +1295,8 @@
 				0FAC8D7D16982DE700732D7D /* dictionary */,
 				0FAC8D7C16982DBB00732D7D /* listen */,
 				0FAC8D7B16982DAD00732D7D /* tiku */,
+				0FB18F2616999C6100F08BA0 /* ListViewController.h */,
+				0FB18F2716999C6100F08BA0 /* ListViewController.m */,
 				0FAC8D7016981A0800732D7D /* ChooseViewController.h */,
 				0FAC8D7116981A0800732D7D /* ChooseViewController.m */,
 				0FAC8D7216981A0800732D7D /* ChooseViewController.xib */,
@@ -1319,14 +1326,15 @@
 				0FAC8D9716983FED00732D7D /* TikuViewController.h */,
 				0FAC8D9816983FED00732D7D /* TikuViewController.m */,
 				0FAC8D9916983FED00732D7D /* TikuViewController.xib */,
-				0FB18F2616999C6100F08BA0 /* ListViewController.h */,
-				0FB18F2716999C6100F08BA0 /* ListViewController.m */,
 				0FBFD7F9169A5FB200AAA559 /* doWorkViewController.h */,
 				0FBFD7FA169A5FB200AAA559 /* doWorkViewController.m */,
 				0FBFD7FB169A5FB200AAA559 /* doWorkViewController.xib */,
 				0FC9A32D169ACD8800DAA31B /* WanXingViewController.h */,
 				0FC9A32E169ACD8800DAA31B /* WanXingViewController.m */,
 				0FC9A32F169ACD8900DAA31B /* WanXingViewController.xib */,
+				0FD12ED8169C19D900F43E6F /* ReadViewController.h */,
+				0FD12ED9169C19D900F43E6F /* ReadViewController.m */,
+				0FD12EDA169C19D900F43E6F /* ReadViewController.xib */,
 			);
 			name = tiku;
 			sourceTree = "<group>";
@@ -1740,6 +1748,7 @@
 				0FB18F18169962C100F08BA0 /* select.png in Resources */,
 				0FBFD7FD169A5FB200AAA559 /* doWorkViewController.xib in Resources */,
 				0FC9A331169ACD8900DAA31B /* WanXingViewController.xib in Resources */,
+				0FD12EDC169C19D900F43E6F /* ReadViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1765,6 +1774,7 @@
 				0FC9A32B169A968D00DAA31B /* DanXuanTi.m in Sources */,
 				0FC9A330169ACD8900DAA31B /* WanXingViewController.m in Sources */,
 				0FC9A336169AD69C00DAA31B /* WanXing.m in Sources */,
+				0FD12EDB169C19D900F43E6F /* ReadViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

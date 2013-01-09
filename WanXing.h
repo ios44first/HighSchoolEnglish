@@ -11,6 +11,7 @@
 @interface WanXing : NSObject
 
 @property(assign,nonatomic)int tiId;
+@property(retain,nonatomic)NSString *tiTitle;
 @property(retain,nonatomic)NSString *select1;
 @property(retain,nonatomic)NSString *select2;
 @property(retain,nonatomic)NSString *select3;

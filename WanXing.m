@@ -9,5 +9,5 @@
 #import "WanXing.h"
 
 @implementation WanXing
-@synthesize tiId,select1,select2,select3,select4,hint1,hint2,hint3,result;
+@synthesize tiId,tiTitle,select1,select2,select3,select4,hint1,hint2,hint3,result;
 @end

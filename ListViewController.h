@@ -10,9 +10,11 @@
 #import "Questions.h"
 #import "doWorkViewController.h"
 #import "WanXingViewController.h"
+#import "ReadViewController.h"
 
 @interface ListViewController : UITableViewController<NSXMLParserDelegate>
 @property(assign,nonatomic)int grade,year,titleType;
+@property(retain,nonatomic) NSString *url;
 @property(retain,nonatomic) NSMutableArray *array;
 @property(retain,nonatomic) NSMutableString *str;
 @property(retain,nonatomic) NSMutableDictionary *dictionary;
