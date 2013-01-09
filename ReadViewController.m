@@ -47,6 +47,11 @@
     tishiAnswer.editable=NO;
     [scrollView addSubview:tishiAnswer];
     
+    UIControl *con=[[UIControl alloc]initWithFrame:CGRectMake(0, 0, 320, 200)];
+    [con addTarget:self action:@selector(goDown) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:con];
+    [con release];
+    
     [self setContain];
 }
 -(void)setContain
@@ -278,13 +283,13 @@
     }
     tishiAnswer.text=[self filterString:contain];
 }
-- (void)downBut
+- (void)goDown
 {
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration:1.0f];
-    if (!isDown)
+    if (isDown)
     {
-       /* isDown=NO;
+        isDown=NO;
         self.allContain.frame=CGRectMake(0, 0, 320, self.allContain.frame.size.height+150);
         self.tiShi.frame=CGRectMake(self.tiShi.frame.origin.x, self.tiShi.frame.origin.y+150, self.tiShi.frame.size.width, self.tiShi.frame.size.height);
         self.anSwer.frame=CGRectMake(self.anSwer.frame.origin.x, self.anSwer.frame.origin.y+150, self.anSwer.frame.size.width, self.anSwer.frame.size.height);
@@ -292,8 +297,14 @@
         scrollView.frame=CGRectMake(0, scrollView.frame.origin.y+150, scrollView.frame.size.width, scrollView.frame.size.height);
         imgView.frame=CGRectMake(0, imgView.frame.origin.y+150, imgView.frame.size.width, imgView.frame.size.height);
     }
-    else
-    {*/
+    [UIView commitAnimations];
+}
+- (void)downBut
+{
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:1.0f];
+    if (!isDown)
+    {
         isDown=YES;
         self.allContain.frame=CGRectMake(0, 0, 320, self.allContain.frame.size.height-150);
         self.tiShi.frame=CGRectMake(self.tiShi.frame.origin.x, self.tiShi.frame.origin.y-150, self.tiShi.frame.size.width, self.tiShi.frame.size.height);
@@ -312,6 +323,7 @@
     {
         self.question=[self.arr objectAtIndex:++i];
     }
+    readContain=nil;
     [self setContain];
 }
 
