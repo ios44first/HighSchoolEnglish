@@ -11,10 +11,22 @@
 #import "doWorkViewController.h"
 #import "WanXingViewController.h"
 #import "ReadViewController.h"
+#import "EGORefreshTableHeaderView.h"
+#import "TalkViewController.h"
 
-@interface ListViewController : UITableViewController<NSXMLParserDelegate>
+@interface ListViewController : UITableViewController<NSXMLParserDelegate,EGORefreshTableHeaderDelegate ,UIScrollViewDelegate>
+{
+    int currentpagenum;
+    
+    EGORefreshTableHeaderView *_refreshHeaderView;
+    BOOL _reloading;
+}
+- (void)reloadTableViewDataSource;
+- (void)doneLoadingTableViewData;
+
+@property(assign,nonatomic)BOOL TIKU;
 @property(assign,nonatomic)int grade,year,titleType;
-@property(retain,nonatomic) NSString *url;
+@property(retain,nonatomic) NSMutableArray *arrayData;
 @property(retain,nonatomic) NSMutableArray *array;
 @property(retain,nonatomic) NSMutableString *str;
 @property(retain,nonatomic) NSMutableDictionary *dictionary;

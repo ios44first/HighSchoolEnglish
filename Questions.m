@@ -10,5 +10,6 @@
 
 @implementation Questions
 @synthesize createDate,year,questionsId,queTitle;
+@synthesize original,optionA,optionB,optionC,answer,midFile;
 
 @end

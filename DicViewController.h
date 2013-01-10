@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DicViewController : UIViewController
+@interface DicViewController : UIViewController<UITextFieldDelegate>
+{
+    BOOL exChangeL;
+    //UIBarButtonItem* back;
+    UIButton* backButton;
+}
+@property (retain, nonatomic) IBOutlet UITextField *inputWord;
+@property (retain, nonatomic) IBOutlet UITextView *translationView;
 
+- (IBAction)searchWord:(UIButton *)sender;
 @end

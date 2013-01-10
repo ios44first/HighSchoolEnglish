@@ -12,5 +12,11 @@
 
 @property(assign,nonatomic)int questionsId,year;
 @property(retain,nonatomic)NSString *createDate,*queTitle;
+@property (retain,nonatomic) NSString * optionA;
+@property (retain,nonatomic) NSString * optionB;
+@property (retain,nonatomic) NSString * optionC;
+@property (retain,nonatomic) NSString * answer;
+@property (retain,nonatomic) NSString * midFile;
+@property (retain,nonatomic) NSString * original;
 
 @end

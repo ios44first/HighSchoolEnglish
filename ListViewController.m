@@ -13,8 +13,8 @@
 @end
 
 @implementation ListViewController
-@synthesize array,str,dictionary,question;
-@synthesize grade,year,titleType,url;
+@synthesize array,str,dictionary,question,arrayData;
+@synthesize grade,year,titleType,TIKU;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -28,17 +28,54 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    if (_refreshHeaderView == nil) {
+        
+        EGORefreshTableHeaderView *view = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];
+        view.delegate = self;
+        [self.tableView addSubview:view];
+        _refreshHeaderView = view;
+        [view release];
+    }
+    //  update the last update date
+    [_refreshHeaderView refreshLastUpdatedDate];
+    
     NSLog(@"%d,%d,%d",year,grade,titleType);
     
     self.array=[NSMutableArray array];
+    self.arrayData=[NSMutableArray array];
     self.str=[NSMutableString string];
     self.dictionary=[NSMutableDictionary dictionary];
-    /*NSString *string=nil;
-    if (self.year==1999)
-      string=[NSString stringWithFormat:@"http://api.winclass.net/serviceaction.do?method=themelibrary&subjectid=3&pagesize=20&areaid=0&gread=%d&titletype=%d",self.grade,self.titleType];
+    currentpagenum=0;
+    [self getData];
+    
+    UIImage* image= [UIImage imageNamed:@"return_pressed.png"];
+    CGRect frame_1= CGRectMake(0, 0, image.size.width, image.size.height);
+    UIButton* backButton= [[UIButton alloc] initWithFrame:frame_1];
+    [backButton setBackgroundImage:image forState:UIControlStateNormal];
+    [backButton addTarget:self action:@selector(goBack) forControlEvents:UIControlEventTouchUpInside];
+    //定制自己的风格的 UIBarButtonItem
+    UIBarButtonItem* back= [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    [self.navigationItem setLeftBarButtonItem:back];
+    [back release];
+    [backButton release];
+    
+    [self.tableView setSeparatorColor:[UIColor grayColor]];
+}
+-(void)getData
+{
+    NSLog(@"%d",currentpagenum);
+    NSString *string=nil;
+    if (TIKU)
+    {
+        if (self.year==1999)
+            string=[NSString stringWithFormat:@"http://api.winclass.net/serviceaction.do?method=themelibrary&subjectid=3&pagesize=20&areaid=0&gread=%d&titletype=%d&currentpagenum=%d",self.grade,self.titleType,++currentpagenum];
+        else
+            string=[NSString stringWithFormat:@"http://api.winclass.net/serviceaction.do?method=themelibrary&subjectid=3&pagesize=20&areaid=0&gread=%d&titletype=%d&year=%d&currentpagenum=%d",self.grade,self.titleType,self.year,++currentpagenum];
+    }
     else
-      string=[NSString stringWithFormat:@"http://api.winclass.net/serviceaction.do?method=themelibrary&subjectid=3&pagesize=20&areaid=0&gread=%d&titletype=%d&year=%d",self.grade,self.titleType,self.year];*/
-    NSURL *newsURL=[[NSURL alloc]initWithString:url];
+        string=[NSString stringWithFormat:@"http://api.winclass.net/serviceaction.do?method=getlisteningthemes&currentpagenum=%d&pagesize=20&listentype=%d",++currentpagenum,self.titleType];
+   // url=[NSString stringWithFormat:@"http://api.winclass.net/serviceaction.do?method=themelibrary&subjectid=3&pagesize=20&areaid=0&gread=12&titletype=1&currentpagenum=%d",currentpagenum++];
+    NSURL *newsURL=[[NSURL alloc]initWithString:string];
     NSData *xmlData=[[NSData alloc] initWithContentsOfURL:newsURL];
     NSXMLParser *parserTool=[[NSXMLParser alloc]initWithData:xmlData];
     parserTool.delegate=self;
@@ -46,8 +83,10 @@
     [newsURL release];
     [xmlData release];
     [parserTool release];
-    
-    [self.tableView setSeparatorColor:[UIColor grayColor]];
+}
+-(void)goBack
+{
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 #pragma mark - NSXMLParserDelegate 代理方法
 -(void)parserDidStartDocument:(NSXMLParser *)parser
@@ -75,6 +114,30 @@
         [str setString:@""];
     }
     else if ([elementName isEqualToString:@"createdate"])
+    {
+        [str setString:@""];
+    }
+    else if ([elementName isEqualToString:@"optiona"])
+    {
+        [str setString:@""];
+    }
+    else if ([elementName isEqualToString:@"optionb"])
+    {
+        [str setString:@""];
+    }
+    else if ([elementName isEqualToString:@"optionc"])
+    {
+        [str setString:@""];
+    }
+    else if ([elementName isEqualToString:@"answer"])
+    {
+        [str setString:@""];
+    }
+    else if ([elementName isEqualToString:@"midfile"])
+    {
+        [str setString:@""];
+    }
+    else if ([elementName isEqualToString:@"original"])
     {
         [str setString:@""];
     }
@@ -108,6 +171,30 @@
     {
         [self.dictionary setObject:[NSString stringWithString:str] forKey:elementName];
     }
+    else if ([elementName isEqualToString:@"optiona"])
+    {
+        [self.dictionary setObject:[NSString stringWithString:str] forKey:elementName];
+    }
+    else if ([elementName isEqualToString:@"optionb"])
+    {
+        [self.dictionary setObject:[NSString stringWithString:str] forKey:elementName];
+    }
+    else if ([elementName isEqualToString:@"optionc"])
+    {
+        [self.dictionary setObject:[NSString stringWithString:str] forKey:elementName];
+    }
+    else if ([elementName isEqualToString:@"answer"])
+    {
+        [self.dictionary setObject:[NSString stringWithString:str] forKey:elementName];
+    }
+    else if ([elementName isEqualToString:@"midfile"])
+    {
+        [self.dictionary setObject:[NSString stringWithString:str] forKey:elementName];
+    }
+    else if ([elementName isEqualToString:@"original"])
+    {
+        [self.dictionary setObject:[NSString stringWithString:str] forKey:elementName];
+    }
     
 }
 -(void)parserDidEndDocument:(NSXMLParser *)parser
@@ -118,14 +205,31 @@
     {
         Questions *temp=[[Questions alloc]init];
         temp.questionsId=[[element objectForKey:@"id"] intValue];
-        temp.year=[[element objectForKey:@"year"] intValue];
+        if ([[element allKeys] containsObject:@"year"])
+            temp.year=[[element objectForKey:@"year"] intValue];
         temp.queTitle=[element objectForKey:@"title"];
         temp.createDate=[element objectForKey:@"createdate"];
+        if ([[element allKeys] containsObject:@"optiona"])
+            temp.optionA=[element objectForKey:@"optiona"];
+        if ([[element allKeys] containsObject:@"optionb"])
+            temp.optionB=[element objectForKey:@"optionb"];
+        if ([[element allKeys] containsObject:@"optionc"])
+            temp.optionC=[element objectForKey:@"optionc"];
+        if ([[element allKeys] containsObject:@"answer"])
+            temp.answer=[element objectForKey:@"answer"];
+        if ([[element allKeys] containsObject:@"midfile"])
+            temp.midFile=[element objectForKey:@"midfile"];
+        if ([[element allKeys] containsObject:@"original"])
+            temp.original=[element objectForKey:@"original"];
         [arr addObject:temp];
         [temp release];
     }
     [self.array removeAllObjects];
     self.array=[NSMutableArray arrayWithArray:arr];
+    for (Questions *tem in self.array)
+    {
+        [self.arrayData addObject:tem];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -143,7 +247,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.array count];
+    return [self.arrayData count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -155,7 +259,7 @@
         cell=[[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
         cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     }
-    Questions *que=[self.array objectAtIndex:indexPath.row];
+    Questions *que=[self.arrayData objectAtIndex:indexPath.row];
     if (que.queTitle==nil)
         cell.textLabel.text=@"暂无标题";
     else
@@ -168,6 +272,7 @@
     cell.imageView.image=[UIImage imageNamed:@"bg_point.png"];
     return cell;
 }
+#pragma mark - 过滤字符串
 - (NSString *)filterString:(NSString *)string
 {
     if (string!=nil)
@@ -203,7 +308,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Questions *q=[self.array objectAtIndex:indexPath.row];
+    Questions *q=[self.arrayData objectAtIndex:indexPath.row];
     NSLog(@"%d",q.questionsId);
     switch (self.titleType)
     {
@@ -211,7 +316,7 @@
         case 13:
         {
           doWorkViewController *detailViewController = [[doWorkViewController alloc] init];
-          detailViewController.arr=self.array;
+          detailViewController.arr=self.arrayData;
           detailViewController.strTitle=self.title;
           detailViewController.question=q;
           detailViewController.i=indexPath.row;
@@ -222,7 +327,7 @@
         case 14:
         {
             WanXingViewController *wanxing=[[WanXingViewController alloc]init];
-            wanxing.arr=self.array;
+            wanxing.arr=self.arrayData;
             wanxing.strTitle=self.title;
             wanxing.question=q;
             wanxing.i=indexPath.row;
@@ -241,7 +346,7 @@
         case 28:
         {
             ReadViewController *read=[[ReadViewController alloc]init];
-            read.arr=self.array;
+            read.arr=self.arrayData;
             read.strTitle=self.title;
             read.question=q;
             read.i=indexPath.row;
@@ -249,10 +354,83 @@
             [read release];
         }
             break;
+        case 610:
+        case 669:
+        case 651:
+        case 671:
+        case 670:
+        case 684:
+        case 683:
+        case 680:
+        case 650:
+        case 653:
+        case 674:
+        case 681:
+        case 672:
+        case 673:
+        case 645:
+        case 647:
+        case 641:
+        {
+            TalkViewController *talk =[[TalkViewController alloc]init];
+            talk.arr=self.arrayData;
+            talk.question=q;
+            talk.i=indexPath.row;
+            [self.navigationController pushViewController:talk animated:YES];
+            [talk release];
+        }
+            break;
+        case 675:
+        {
+            
+        }
+            break;
         default:
             break;
+    }
 }
-
+#pragma mark -
+#pragma mark Data Source Loading / Reloading Methods
+- (void)reloadTableViewDataSource{
+    _reloading = YES;
 }
-
+- (void)doneLoadingTableViewData{
+    _reloading = NO;
+    [_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+}
+#pragma mark -
+#pragma mark UIScrollViewDelegate Methods
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    [_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
+}
+-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    if (self.tableView.contentOffset.y < -20||self.tableView.contentOffset.y == (self.tableView.contentSize.height - self.tableView.frame.size.height) )
+    {
+       [self.array removeAllObjects];
+       [self getData];
+       [self.tableView reloadData];
+    }
+} 
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+    
+    [_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+}
+#pragma mark -
+#pragma mark EGORefreshTableHeaderDelegate Methods
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
+    [self reloadTableViewDataSource];
+    [self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:3.0];
+}
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
+    return _reloading; // should return if data source model is reloading
+}
+- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view{
+    
+    return [NSDate date]; // should return date data source was last changed
+}
+- (void)dealloc {
+    _refreshHeaderView = nil;
+    [super dealloc];
+}
 @end

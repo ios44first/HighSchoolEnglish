@@ -41,8 +41,37 @@
     imgView.frame=CGRectMake(0, 420, 320, 150);
 	[self.view addSubview:imgView];
 	[self.view addSubview:scrollView];
+    
+    UIImage* image= [UIImage imageNamed:@"return_pressed.png"];
+    CGRect frame_1= CGRectMake(0, 0, image.size.width, image.size.height);
+    UIButton* backButton= [[UIButton alloc] initWithFrame:frame_1];
+    [backButton setBackgroundImage:image forState:UIControlStateNormal];
+    [backButton addTarget:self action:@selector(goBack) forControlEvents:UIControlEventTouchUpInside];
+    //定制自己的风格的 UIBarButtonItem
+    UIBarButtonItem* back= [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    [self.navigationItem setLeftBarButtonItem:back];
+    [back release];
+    [backButton release];
+
+    UIImage* image1= [UIImage imageNamed:@"btn_favorite_normal.png"];
+    CGRect frame_2= CGRectMake(0, 0, image1.size.width, image1.size.height);
+    UIButton* backButton1= [[UIButton alloc] initWithFrame:frame_2];
+    [backButton1 setBackgroundImage:image1 forState:UIControlStateNormal];
+    [backButton1 addTarget:self action:@selector(addQuestion) forControlEvents:UIControlEventTouchUpInside];
+    //定制自己的风格的 UIBarButtonItem
+    UIBarButtonItem* back1= [[UIBarButtonItem alloc] initWithCustomView:backButton1];
+    [self.navigationItem setRightBarButtonItem:back1];
+    [back1 release];
+    [backButton1 release];
 
     [self setContain];
+}
+-(void)addQuestion
+{
+}
+-(void)goBack
+{
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 -(void)setContain
 {

@@ -33,7 +33,7 @@ const NSUInteger btnInterval = 60;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    year=0;
+    year=1999;
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]]];
     self.navigationItem.title=@"智能题库";
     
@@ -57,10 +57,11 @@ const NSUInteger btnInterval = 60;
     list.year=year;
     list.titleType=sender.tag;
     list.title=sender.titleLabel.text;
-    if (year==1999)
-        list.url=[NSString stringWithFormat:@"http://api.winclass.net/serviceaction.do?method=themelibrary&subjectid=3&pagesize=20&areaid=0&gread=%d&titletype=%d",self.grade,sender.tag];
+    list.TIKU=YES;
+    /*if (year==1999)
+        list.url=[NSString stringWithFormat:@"http://api.winclass.net/serviceaction.do?method=themelibrary&subjectid=3&pagesize=20&areaid=0&gread=%d&titletype=%d&currentpagenum=xx",self.grade,sender.tag];
     else
-        list.url=[NSString stringWithFormat:@"http://api.winclass.net/serviceaction.do?method=themelibrary&subjectid=3&pagesize=20&areaid=0&gread=%d&titletype=%d&year=%d",self.grade,sender.tag,year];
+        list.url=[NSString stringWithFormat:@"http://api.winclass.net/serviceaction.do?method=themelibrary&subjectid=3&pagesize=20&areaid=0&gread=%d&titletype=%d&year=%d&currentpagenum=xx",self.grade,sender.tag,year];*/
     [self.navigationController pushViewController:list animated:YES];
     [list release];
 }

@@ -34,7 +34,36 @@
     self.danxuanti=dan;
     [dan release];
     
+    UIImage* image= [UIImage imageNamed:@"return_pressed.png"];
+    CGRect frame_1= CGRectMake(0, 0, image.size.width, image.size.height);
+    UIButton* backButton= [[UIButton alloc] initWithFrame:frame_1];
+    [backButton setBackgroundImage:image forState:UIControlStateNormal];
+    [backButton addTarget:self action:@selector(goBack) forControlEvents:UIControlEventTouchUpInside];
+    //定制自己的风格的 UIBarButtonItem
+    UIBarButtonItem* back= [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    [self.navigationItem setLeftBarButtonItem:back];
+    [back release];
+    [backButton release];
+    
+    UIImage* image1= [UIImage imageNamed:@"btn_favorite_normal.png"];
+    CGRect frame_2= CGRectMake(0, 0, image1.size.width, image1.size.height);
+    UIButton* backButton1= [[UIButton alloc] initWithFrame:frame_2];
+    [backButton1 setBackgroundImage:image1 forState:UIControlStateNormal];
+    [backButton1 addTarget:self action:@selector(addQuestion) forControlEvents:UIControlEventTouchUpInside];
+    //定制自己的风格的 UIBarButtonItem
+    UIBarButtonItem* back1= [[UIBarButtonItem alloc] initWithCustomView:backButton1];
+    [self.navigationItem setRightBarButtonItem:back1];
+    [back1 release];
+    [backButton1 release];
+
     [self setContain];
+}
+-(void)addQuestion
+{
+}
+-(void)goBack
+{
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 -(void)setContain
 {
@@ -73,6 +102,17 @@
         [str1 replaceOccurrencesOfString:@"&lt;/U&gt;" withString:@"`" options:0 range:NSMakeRange(0, str1.length)];
         [str1 replaceOccurrencesOfString:@"&amp;" withString:@"" options:0 range:NSMakeRange(0, str1.length)];
         [str1 replaceOccurrencesOfString:@"nbsp;" withString:@"" options:0 range:NSMakeRange(0, str1.length)];
+        [str1 replaceOccurrencesOfString:@"&lt;P&gt;" withString:@"" options:0 range:NSMakeRange(0, str1.length)];
+        [str1 replaceOccurrencesOfString:@"&lt;/P&gt;" withString:@"" options:0 range:NSMakeRange(0, str1.length)];
+        [str1 replaceOccurrencesOfString:@"&#xd;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
+        [str1 replaceOccurrencesOfString:@"&lt;P style=&quot;TEXT-ALIGN: center&quot; align=center&gt;" withString:@"  " options:0 range:NSMakeRange(0, str1.length)];
+        [str1 replaceOccurrencesOfString:@"&lt;p style=&quot;text-align:center&quot; align=&quot;center&quot;&gt;" withString:@"  " options:0 range:NSMakeRange(0, str1.length)];
+        [str1 replaceOccurrencesOfString:@"&lt;p style=&quot;text-align:center&quot; align=&quot;center&quot;&gt;" withString:@"  " options:0 range:NSMakeRange(0, str1.length)];
+        [str1 replaceOccurrencesOfString:@"&lt;p&gt;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
+        [str1 replaceOccurrencesOfString:@"&quot;" withString:@"\"" options:0 range:NSMakeRange(0, str1.length)];
+        [str1 replaceOccurrencesOfString:@"&apos;" withString:@"'" options:0 range:NSMakeRange(0, str1.length)];
+        [str1 replaceOccurrencesOfString:@"&lt;p style=\"text-align:left\" align=\"left\"&gt;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
+        [str1 replaceOccurrencesOfString:@"&lt;p style=\"text-align:right\" align=\"right\"&gt;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
         //NSLog(@"%@",str1);
         return str1;
     }
@@ -289,15 +329,20 @@
         self.question=[self.arr objectAtIndex:++i];
     }
     [self setContain];
+    [_butA setImage:[UIImage imageNamed:@"btn_radio_off.png"] forState:UIControlStateNormal];
+    [_butB setImage:[UIImage imageNamed:@"btn_radio_off.png"] forState:UIControlStateNormal];
+    [_butC setImage:[UIImage imageNamed:@"btn_radio_off.png"] forState:UIControlStateNormal];
+    [_butD setImage:[UIImage imageNamed:@"btn_radio_off.png"] forState:UIControlStateNormal];
 }
 
 - (IBAction)tiShi:(UIButton *)sender
 {
     UIAlertView *alert;
     NSString *an=[NSString stringWithFormat:@"%@\n%@\n%@",self.danxuanti.hint1,self.danxuanti.hint2,self.danxuanti.hint3];
-        alert=[[UIAlertView alloc]initWithTitle:@"提示：" message:[self filterString:an] delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];
+    alert=[[UIAlertView alloc]initWithTitle:@"提示：" message:[self filterString:an] delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];
     [alert show];
     [alert release];
+    
 }
 
 - (IBAction)submitAnswer:(UIButton *)sender

@@ -75,7 +75,7 @@
     [self.view addSubview:imgview4];
     
     UISwipeGestureRecognizer *swipe=[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(backView)];
-    swipe.direction=UISwipeGestureRecognizerDirectionLeft|UISwipeGestureRecognizerDirectionRight;
+    swipe.direction=UISwipeGestureRecognizerDirectionRight;
     [self.view addGestureRecognizer:swipe];
     [swipe release];
 }
