@@ -13,6 +13,7 @@
 #import "ReadViewController.h"
 #import "EGORefreshTableHeaderView.h"
 #import "TalkViewController.h"
+#import "BuQuanViewController.h"
 
 @interface ListViewController : UITableViewController<NSXMLParserDelegate,EGORefreshTableHeaderDelegate ,UIScrollViewDelegate>
 {

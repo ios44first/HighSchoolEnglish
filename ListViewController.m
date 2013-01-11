@@ -63,7 +63,7 @@
 }
 -(void)getData
 {
-    NSLog(@"%d",currentpagenum);
+    //NSLog(@"%d",currentpagenum);
     NSString *string=nil;
     if (TIKU)
     {
@@ -74,7 +74,6 @@
     }
     else
         string=[NSString stringWithFormat:@"http://api.winclass.net/serviceaction.do?method=getlisteningthemes&currentpagenum=%d&pagesize=20&listentype=%d",++currentpagenum,self.titleType];
-   // url=[NSString stringWithFormat:@"http://api.winclass.net/serviceaction.do?method=themelibrary&subjectid=3&pagesize=20&areaid=0&gread=12&titletype=1&currentpagenum=%d",currentpagenum++];
     NSURL *newsURL=[[NSURL alloc]initWithString:string];
     NSData *xmlData=[[NSData alloc] initWithContentsOfURL:newsURL];
     NSXMLParser *parserTool=[[NSXMLParser alloc]initWithData:xmlData];
@@ -355,22 +354,11 @@
         }
             break;
         case 610:
-        case 669:
-        case 651:
-        case 671:
-        case 670:
-        case 684:
-        case 683:
-        case 680:
-        case 650:
-        case 653:
-        case 674:
-        case 681:
-        case 672:
-        case 673:
-        case 645:
-        case 647:
         case 641:
+        case 669:
+        case 670:
+        case 671:
+        case 672:
         {
             TalkViewController *talk =[[TalkViewController alloc]init];
             talk.arr=self.arrayData;
@@ -382,7 +370,13 @@
             break;
         case 675:
         {
-            
+            BuQuanViewController *buquan=[[BuQuanViewController alloc]init];
+            buquan.title=@"补全填空";
+            buquan.arr=self.arrayData;
+            buquan.question=q;
+            buquan.i=indexPath.row;
+            [self.navigationController pushViewController:buquan animated:YES];
+            [buquan release];
         }
             break;
         default:

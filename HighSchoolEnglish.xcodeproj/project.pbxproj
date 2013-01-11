@@ -15,6 +15,11 @@
 		0F5C31DF169EC0AF00972656 /* HY.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F5C31DD169EC0AF00972656 /* HY.png */; };
 		0F5C31E0169EC0AF00972656 /* YH.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F5C31DE169EC0AF00972656 /* YH.png */; };
 		0F5C31E2169EC65B00972656 /* translation_result1.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F5C31E1169EC65B00972656 /* translation_result1.png */; };
+		0F5C31E8169EDEE500972656 /* ManyListenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5C31E7169EDEE500972656 /* ManyListenViewController.m */; };
+		0F5C31EC169EEA7C00972656 /* BuQuanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5C31EA169EEA7C00972656 /* BuQuanViewController.m */; };
+		0F5C31ED169EEA7C00972656 /* BuQuanViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F5C31EB169EEA7C00972656 /* BuQuanViewController.xib */; };
+		0F5C31F1169EEA9E00972656 /* ManyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5C31EF169EEA9D00972656 /* ManyViewController.m */; };
+		0F5C31F2169EEA9E00972656 /* ManyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F5C31F0169EEA9D00972656 /* ManyViewController.xib */; };
 		0F71917116980FC600533C93 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F71917016980FC600533C93 /* UIKit.framework */; };
 		0F71917316980FC600533C93 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F71917216980FC600533C93 /* Foundation.framework */; };
 		0F71917516980FC600533C93 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F71917416980FC600533C93 /* CoreGraphics.framework */; };
@@ -385,6 +390,14 @@
 		0F5C31DD169EC0AF00972656 /* HY.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HY.png; sourceTree = "<group>"; };
 		0F5C31DE169EC0AF00972656 /* YH.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = YH.png; sourceTree = "<group>"; };
 		0F5C31E1169EC65B00972656 /* translation_result1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = translation_result1.png; sourceTree = "<group>"; };
+		0F5C31E6169EDEE500972656 /* ManyListenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManyListenViewController.h; sourceTree = "<group>"; };
+		0F5C31E7169EDEE500972656 /* ManyListenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManyListenViewController.m; sourceTree = "<group>"; };
+		0F5C31E9169EEA7C00972656 /* BuQuanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuQuanViewController.h; sourceTree = "<group>"; };
+		0F5C31EA169EEA7C00972656 /* BuQuanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BuQuanViewController.m; sourceTree = "<group>"; };
+		0F5C31EB169EEA7C00972656 /* BuQuanViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BuQuanViewController.xib; sourceTree = "<group>"; };
+		0F5C31EE169EEA9D00972656 /* ManyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManyViewController.h; sourceTree = "<group>"; };
+		0F5C31EF169EEA9D00972656 /* ManyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManyViewController.m; sourceTree = "<group>"; };
+		0F5C31F0169EEA9D00972656 /* ManyViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ManyViewController.xib; sourceTree = "<group>"; };
 		0F71916C16980FC600533C93 /* HighSchoolEnglish.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HighSchoolEnglish.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F71917016980FC600533C93 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		0F71917216980FC600533C93 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -1428,6 +1441,14 @@
 				0FCB72CF169D8BB000723A0B /* TalkViewController.h */,
 				0FCB72D0169D8BB000723A0B /* TalkViewController.m */,
 				0FCB72D1169D8BB000723A0B /* TalkViewController.xib */,
+				0F5C31E6169EDEE500972656 /* ManyListenViewController.h */,
+				0F5C31E7169EDEE500972656 /* ManyListenViewController.m */,
+				0F5C31E9169EEA7C00972656 /* BuQuanViewController.h */,
+				0F5C31EA169EEA7C00972656 /* BuQuanViewController.m */,
+				0F5C31EB169EEA7C00972656 /* BuQuanViewController.xib */,
+				0F5C31EE169EEA9D00972656 /* ManyViewController.h */,
+				0F5C31EF169EEA9D00972656 /* ManyViewController.m */,
+				0F5C31F0169EEA9D00972656 /* ManyViewController.xib */,
 			);
 			name = listen;
 			sourceTree = "<group>";
@@ -1856,6 +1877,8 @@
 				0F5C31DF169EC0AF00972656 /* HY.png in Resources */,
 				0F5C31E0169EC0AF00972656 /* YH.png in Resources */,
 				0F5C31E2169EC65B00972656 /* translation_result1.png in Resources */,
+				0F5C31ED169EEA7C00972656 /* BuQuanViewController.xib in Resources */,
+				0F5C31F2169EEA9E00972656 /* ManyViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1885,6 +1908,9 @@
 				0FCB72C0169D586000723A0B /* EGORefreshTableHeaderView.m in Sources */,
 				0FCB72D2169D8BB000723A0B /* TalkViewController.m in Sources */,
 				0F5C31DA169E8D3800972656 /* AudioStreamer.m in Sources */,
+				0F5C31E8169EDEE500972656 /* ManyListenViewController.m in Sources */,
+				0F5C31EC169EEA7C00972656 /* BuQuanViewController.m in Sources */,
+				0F5C31F1169EEA9E00972656 /* ManyViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

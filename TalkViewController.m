@@ -13,7 +13,7 @@
 @end
 
 @implementation TalkViewController
-@synthesize question,i,arr,dictionary,str;
+@synthesize question,i,arr;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -42,8 +42,9 @@
     
     [self.sliderAV addTarget:self action:@selector(changeValue) forControlEvents:UIControlEventTouchUpInside];
     
-    resultView=[[UITextView alloc]initWithFrame:CGRectMake(320, 0, 320, 400)];
+    resultView=[[UITextView alloc]initWithFrame:CGRectMake(320, 10, 320, 300)];
     [resultView setBackgroundColor:[UIColor clearColor]];
+    resultView.editable=NO;
     [self.view addSubview:resultView];
     [resultView release];
     
@@ -229,15 +230,43 @@
             [self createStreamer];
             [streamer start];
         }
-		
     }
 }
-
+-(void)moveLR:(NSArray *)viewArray
+{
+    if (isShow)
+    {
+        isShow=NO;
+        for (UIView *view in viewArray)
+        {
+            view.frame=CGRectMake(view.frame.origin.x+320, view.frame.origin.y, view.frame.size.width, view.frame.size.height);
+        }
+        
+    }
+    else
+    {
+        isShow=YES;
+        for (UIView *view in viewArray)
+        {
+            view.frame=CGRectMake(view.frame.origin.x-320, view.frame.origin.y, view.frame.size.width, view.frame.size.height);
+        }
+    }
+}
 - (IBAction)submitAnswer:(UIButton *)sender
 {
-    resultView.text=self.question.answer;
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:1.0f];
+    NSString *contain=nil;
+    if ([answer isEqualToString:self.question.answer])
+        contain=[NSString stringWithFormat:@"\n√  恭喜你答对了。答案为%@.\n\n%@",self.question.answer,self.question.original];
+    else
+        contain=[NSString stringWithFormat:@"\n×  您选了%@。答案为%@.\n\n%@",answer,self.question.answer,self.question.original];
+    resultView.text=[self filterString:contain];
+    NSArray *viewArray=[NSArray arrayWithObjects:self.listenTitle,self.butA,self.butB,self.butC,self.selectA,self.selectB,self.selectC,resultView, nil];
+    [self moveLR:viewArray];
     
-    UIAlertView *alert;
+    [UIView commitAnimations];
+    /*UIAlertView *alert;
     if ([answer isEqualToString:self.question.answer])
         alert=[[UIAlertView alloc]initWithTitle:@"答题结果" message:@"恭喜你答对了！" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];
     else
@@ -246,7 +275,7 @@
         alert=[[UIAlertView alloc]initWithTitle:@"答题结果" message:an delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];
     }
     [alert show];
-    [alert release];
+    [alert release];*/
 }
 
 - (IBAction)nextTI:(UIButton *)sender
@@ -254,7 +283,12 @@
     [streamer stop];
     [self destroyStreamer];
     isPlay=NO;
+    answer=nil;
     [self.butPlay setImage:[UIImage imageNamed:@"btn_play_pressed.png"] forState:UIControlStateNormal];
+    if (isShow)
+    {
+        [self submitAnswer:nil];
+    }
     if (i<[self.arr count]-1)
     {
         self.question=[self.arr objectAtIndex:++i];

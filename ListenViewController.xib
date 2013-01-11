@@ -1253,12 +1253,8 @@
 						<int key="objectID">4</int>
 						<reference key="object" ref="577195770"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="208248517"/>
 							<reference ref="653372345"/>
 							<reference ref="68225929"/>
-							<reference ref="545388004"/>
-							<reference ref="754746746"/>
-							<reference ref="721872906"/>
 							<reference ref="927823836"/>
 							<object class="IBNSLayoutConstraint" id="65194233">
 								<reference key="firstItem" ref="285362102"/>
@@ -2997,10 +2993,14 @@
 							<reference ref="528159073"/>
 							<reference ref="78973407"/>
 							<reference ref="145874769"/>
-							<reference ref="386482110"/>
 							<reference ref="708249854"/>
 							<reference ref="1028262877"/>
 							<reference ref="968424445"/>
+							<reference ref="545388004"/>
+							<reference ref="208248517"/>
+							<reference ref="386482110"/>
+							<reference ref="754746746"/>
+							<reference ref="721872906"/>
 						</array>
 						<reference key="parent" ref="191373211"/>
 					</object>
@@ -4241,7 +4241,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">643</int>
+			<int key="maxID">697</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">

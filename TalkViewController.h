@@ -13,7 +13,7 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import <CFNetwork/CFNetwork.h>
 
-@interface TalkViewController : UIViewController<NSXMLParserDelegate>
+@interface TalkViewController : UIViewController
 {
     UITextView *resultView;
     NSString *answer;
@@ -21,13 +21,12 @@
     AudioStreamer *streamer;
 	NSTimer *progressUpdateTimer;
     BOOL isPlay;
+    BOOL isShow;
 }
 
 @property (retain,nonatomic) Questions *question;
 @property (assign,nonatomic) int i;
 @property(retain,nonatomic) NSArray *arr;
-@property(retain,nonatomic) NSMutableString *str;
-@property(retain,nonatomic) NSMutableDictionary *dictionary;
 
 @property (retain, nonatomic) IBOutlet UILabel *listenTitle;
 @property (retain, nonatomic) IBOutlet UILabel *selectA;

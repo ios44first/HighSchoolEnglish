@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ListViewController.h"
+#import "ManyListenViewController.h"
 
 @interface ListenViewController : UIViewController
 @property(assign,nonatomic) int grade;
