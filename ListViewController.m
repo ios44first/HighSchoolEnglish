@@ -13,7 +13,7 @@
 @end
 
 @implementation ListViewController
-@synthesize array,str,dictionary,question,arrayData;
+@synthesize array,str,dictionary,question,arrayData,areaDic;
 @synthesize grade,year,titleType,TIKU;
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -46,6 +46,7 @@
     self.str=[NSMutableString string];
     self.dictionary=[NSMutableDictionary dictionary];
     currentpagenum=0;
+    self.areaDic=[NSDictionary dictionaryWithObjectsAndKeys:@"天津",@"120000",@"河北",@"130000",@"山西",@"140000",@"内蒙",@"150000",@"辽宁",@"210000",@"吉林",@"220000",@"黑龙江",@"230000",@"上海",@"310000",@"江苏",@"320000",@"浙江",@"330000",@"安徽",@"340000",@"福建",@"350000",@"江西",@"360000",@"山东",@"370000",@"河南",@"410000",@"湖北",@"420000",@"湖南",@"430000",@"广东",@"440000",@"广西",@"450000",@"海南",@"460000",@"重庆",@"500000",@"四川",@"510000",@"贵州",@"520000",@"云南",@"530000",@"西藏",@"540000",@"陕西",@"610000",@"甘肃",@"620000",@"青海",@"630000",@"宁夏",@"640000",@"新疆",@"650000",@"北京",@"110000", nil];
     [self getData];
     
     UIImage* image= [UIImage imageNamed:@"return_pressed.png"];
@@ -108,6 +109,10 @@
     {
         [str setString:@""];
     }
+    else if ([elementName isEqualToString:@"areaid"])
+    {
+        [str setString:@""];
+    }
     else if ([elementName isEqualToString:@"title"])
     {
         [str setString:@""];
@@ -159,6 +164,10 @@
         // NSLog(@"%@",str);
     }
     else if ([elementName isEqualToString:@"year"])
+    {
+        [self.dictionary setObject:[NSString stringWithString:str] forKey:elementName];
+    }
+    else if ([elementName isEqualToString:@"areaid"])
     {
         [self.dictionary setObject:[NSString stringWithString:str] forKey:elementName];
     }
@@ -220,6 +229,8 @@
             temp.midFile=[element objectForKey:@"midfile"];
         if ([[element allKeys] containsObject:@"original"])
             temp.original=[element objectForKey:@"original"];
+        if ([[element allKeys] containsObject:@"areaid"])
+            temp.areaId=[element objectForKey:@"areaid"];
         [arr addObject:temp];
         [temp release];
     }
@@ -264,10 +275,15 @@
     else
         cell.textLabel.text=[self filterString:que.queTitle];
     [cell.detailTextLabel setFont:[UIFont fontWithName:@"Thonburi" size:13]];
+    NSString *area=nil;
+    if ([self.areaDic.allKeys containsObject:que.areaId])
+        area=[areaDic objectForKey:que.areaId];
+    else
+        area=@"全国";
     if (self.titleType>100)
         cell.detailTextLabel.text=[NSString stringWithFormat:@"%@                %@",self.title,[que.createDate substringToIndex:10]];
     else
-        cell.detailTextLabel.text=[NSString stringWithFormat:@"%d年%@                %@",que.year,self.title,[que.createDate substringToIndex:10]];
+        cell.detailTextLabel.text=[NSString stringWithFormat:@"%d年%@                %@",que.year,self.title,area];
     cell.imageView.image=[UIImage imageNamed:@"bg_point.png"];
     return cell;
 }

@@ -49,6 +49,8 @@
     
     UITabBarController *tab=[[UITabBarController alloc]init];
     tab.viewControllers=[NSArray arrayWithObjects:na1,na2,na3,na4, nil];
+    //tab.tabBar.frame=CGRectMake(0, 435, 320, 50);
+    //[[tab.tabBar.items objectAtIndex:0] setFinishedSelectedImage:[UIImage imageNamed:@"smart_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"smart_normal.png"]];
     tab.delegate=self;
     tab.selectedIndex=0;
     [self.view addSubview:tab.view];
@@ -102,10 +104,16 @@
             [imgview4 setImage:[UIImage imageNamed:@"more_normal.png"]];
             break;
         case 2:
+        {
             [imgview1 setImage:[UIImage imageNamed:@"smart_normal.png"]];
             [imgview2 setImage:[UIImage imageNamed:@"dictionary_normal.png"]];
             [imgview3 setImage:[UIImage imageNamed:@"listening_selected.png"]];
             [imgview4 setImage:[UIImage imageNamed:@"more_normal.png"]];
+            /*UINavigationController * listenNav = (UINavigationController *) viewController;
+            ListenViewController * listen = (ListenViewController *)[listenNav.viewControllers objectAtIndex:0];
+            //[listen scrollViewShouldScrollToTop:listen.scroll];
+            [listen.scroll setContentOffset:CGPointMake(0, -100) animated:YES];*/
+        }
             break;
         case 3:
             [imgview1 setImage:[UIImage imageNamed:@"smart_normal.png"]];

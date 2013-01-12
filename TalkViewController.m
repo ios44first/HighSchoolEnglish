@@ -61,6 +61,7 @@
     self.selectC.text=[NSString stringWithFormat:@"C.  %@",[self filterString:self.question.optionC]];
     self.sliderAV.value=0;
     isPlay=NO;
+    isShow=NO;
 }
 -(void)changeValue
 {
@@ -95,15 +96,19 @@
 	}
 	[self destroyStreamer];
 	
-	NSURL *url = [NSURL URLWithString:self.question.midFile];
-	streamer = [[AudioStreamer alloc] initWithURL:url];
-	progressUpdateTimer =
-    [NSTimer
-     scheduledTimerWithTimeInterval:0.1
-     target:self
-     selector:@selector(updateProgress:)
-     userInfo:nil
-     repeats:YES];
+	if (self.question.midFile==nil)
+    {
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"ERROR" message:@"Sorry，暂无音频。。。" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];
+        [alert show];
+        [alert release];
+    }
+    else
+    {
+        NSURL *url = [NSURL URLWithString:self.question.midFile];
+        streamer = [[AudioStreamer alloc] initWithURL:url];
+        progressUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:0.1  target:self selector:@selector(updateProgress:) userInfo:nil repeats:YES];
+    }
+
 }
 - (void)updateProgress:(NSTimer *)updatedTimer
 {
@@ -241,7 +246,6 @@
         {
             view.frame=CGRectMake(view.frame.origin.x+320, view.frame.origin.y, view.frame.size.width, view.frame.size.height);
         }
-        
     }
     else
     {
@@ -264,18 +268,12 @@
     resultView.text=[self filterString:contain];
     NSArray *viewArray=[NSArray arrayWithObjects:self.listenTitle,self.butA,self.butB,self.butC,self.selectA,self.selectB,self.selectC,resultView, nil];
     [self moveLR:viewArray];
-    
     [UIView commitAnimations];
-    /*UIAlertView *alert;
-    if ([answer isEqualToString:self.question.answer])
-        alert=[[UIAlertView alloc]initWithTitle:@"答题结果" message:@"恭喜你答对了！" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];
-    else
-    {
-        NSString *an=[NSString stringWithFormat:@"很遗憾您答错了，正确答案是%@",self.question.answer];
-        alert=[[UIAlertView alloc]initWithTitle:@"答题结果" message:an delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];
-    }
-    [alert show];
-    [alert release];*/
+    /*isPlay=NO;
+    [self.butPlay setImage:[UIImage imageNamed:@"btn_play_pressed.png"] forState:UIControlStateNormal];
+    [streamer stop];
+    [self destroyStreamer];
+    self.sliderAV.value=0;*/
 }
 
 - (IBAction)nextTI:(UIButton *)sender

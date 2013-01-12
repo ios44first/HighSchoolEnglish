@@ -18,5 +18,6 @@
 @property (retain,nonatomic) NSString * answer;
 @property (retain,nonatomic) NSString * midFile;
 @property (retain,nonatomic) NSString * original;
+@property (retain,nonatomic) NSString * areaId;
 
 @end

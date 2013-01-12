@@ -32,4 +32,5 @@
 @property(retain,nonatomic) NSMutableString *str;
 @property(retain,nonatomic) NSMutableDictionary *dictionary;
 @property(retain,nonatomic) Questions *question;
+@property(retain,nonatomic) NSDictionary *areaDic;
 @end

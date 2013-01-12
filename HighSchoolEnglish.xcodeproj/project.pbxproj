@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F1128D5169FC5B90019B59C /* ListenChild.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1128D4169FC5B80019B59C /* ListenChild.m */; };
+		0F1128D9169FC5D50019B59C /* ListenMany.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1128D8169FC5D50019B59C /* ListenMany.m */; };
 		0F5C31D3169E8CD300972656 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F5C31D2169E8CD300972656 /* CFNetwork.framework */; };
 		0F5C31D5169E8CE600972656 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F5C31D4169E8CE600972656 /* AudioToolbox.framework */; };
 		0F5C31D7169E8CF000972656 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F5C31D6169E8CF000972656 /* MediaPlayer.framework */; };
@@ -381,6 +383,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0F1128D3169FC5B80019B59C /* ListenChild.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListenChild.h; sourceTree = "<group>"; };
+		0F1128D4169FC5B80019B59C /* ListenChild.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListenChild.m; sourceTree = "<group>"; };
+		0F1128D7169FC5D50019B59C /* ListenMany.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListenMany.h; sourceTree = "<group>"; };
+		0F1128D8169FC5D50019B59C /* ListenMany.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListenMany.m; sourceTree = "<group>"; };
 		0F5C31D2169E8CD300972656 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		0F5C31D4169E8CE600972656 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		0F5C31D6169E8CF000972656 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
@@ -1409,6 +1415,10 @@
 				0FC9A32A169A968D00DAA31B /* DanXuanTi.m */,
 				0FC9A334169AD69C00DAA31B /* WanXing.h */,
 				0FC9A335169AD69C00DAA31B /* WanXing.m */,
+				0F1128D3169FC5B80019B59C /* ListenChild.h */,
+				0F1128D4169FC5B80019B59C /* ListenChild.m */,
+				0F1128D7169FC5D50019B59C /* ListenMany.h */,
+				0F1128D8169FC5D50019B59C /* ListenMany.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1911,6 +1921,8 @@
 				0F5C31E8169EDEE500972656 /* ManyListenViewController.m in Sources */,
 				0F5C31EC169EEA7C00972656 /* BuQuanViewController.m in Sources */,
 				0F5C31F1169EEA9E00972656 /* ManyViewController.m in Sources */,
+				0F1128D5169FC5B90019B59C /* ListenChild.m in Sources */,
+				0F1128D9169FC5D50019B59C /* ListenMany.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

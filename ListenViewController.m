@@ -23,13 +23,16 @@
     }
     return self;
 }
-
+//- (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView
+//{
+//    return YES;
+//}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]]];
     self.navigationItem.title=@"英语听力";
-    
+    self.scroll.delegate=self;
     NSLog(@"%d",self.grade);
 }
 
@@ -40,6 +43,7 @@
 }
 
 - (void)dealloc {
+    [_scroll release];
     [super dealloc];
 }
 - (IBAction)gotoList:(UIButton *)sender

@@ -58,6 +58,7 @@
     //NSLog(@"%@",self.question.queTitle);
     self.sliderAV.value=0;
     isPlay=NO;
+    isShow=NO;
 }
 -(void)changeValue
 {
@@ -92,15 +93,18 @@
 	}
 	[self destroyStreamer];
 	
-	NSURL *url = [NSURL URLWithString:self.question.midFile];
-	streamer = [[AudioStreamer alloc] initWithURL:url];
-	progressUpdateTimer =
-    [NSTimer
-     scheduledTimerWithTimeInterval:0.1
-     target:self
-     selector:@selector(updateProgress:)
-     userInfo:nil
-     repeats:YES];
+    if (self.question.midFile==nil)
+    {
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"ERROR" message:@"Sorry，暂无音频。。。" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];
+        [alert show];
+        [alert release];
+    }
+    else
+    {
+        NSURL *url = [NSURL URLWithString:self.question.midFile];
+        streamer = [[AudioStreamer alloc] initWithURL:url];
+        progressUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:0.1  target:self selector:@selector(updateProgress:) userInfo:nil repeats:YES];
+    }
 }
 - (void)updateProgress:(NSTimer *)updatedTimer
 {
@@ -249,8 +253,12 @@
     resultView.text=[self filterString:contain];
     NSArray *viewArray=[NSArray arrayWithObjects:self.listenTitle,resultView, nil];
     [self moveLR:viewArray];
-    
     [UIView commitAnimations];
+    /*isPlay=NO;
+    [self.butPlay setImage:[UIImage imageNamed:@"btn_play_pressed.png"] forState:UIControlStateNormal];
+    [streamer stop];
+    [self destroyStreamer];
+    self.sliderAV.value=0;*/
 }
 - (IBAction)nextTI:(UIButton *)sender
 {

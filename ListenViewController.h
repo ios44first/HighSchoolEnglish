@@ -10,8 +10,9 @@
 #import "ListViewController.h"
 #import "ManyListenViewController.h"
 
-@interface ListenViewController : UIViewController
+@interface ListenViewController : UIViewController<UIScrollViewDelegate>
 @property(assign,nonatomic) int grade;
+@property (retain, nonatomic) IBOutlet UIScrollView *scroll;
 
 - (IBAction)gotoList:(UIButton *)sender;
 @end
