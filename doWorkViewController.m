@@ -63,7 +63,7 @@
 }
 -(void)goBack
 {
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)setContain
 {
@@ -77,48 +77,13 @@
     [xmlData release];
     [parserTool release];
     
-    self.questionContain.text=[self filterString:self.danxuanti.tiTitle];
-    self.chooseA.text=[NSString stringWithFormat:@"A.  %@",[self filterString:self.danxuanti.select1]];
-    self.chooseB.text=[NSString stringWithFormat:@"B.  %@",[self filterString:self.danxuanti.select2]];
-    self.chooseC.text=[NSString stringWithFormat:@"C.  %@",[self filterString:self.danxuanti.select3]];
-    self.chooseD.text=[NSString stringWithFormat:@"D.  %@",[self filterString:self.danxuanti.select4]];
+    self.questionContain.text=[NSString filterString:self.danxuanti.tiTitle];
+    self.chooseA.text=[NSString stringWithFormat:@"A.  %@",[NSString filterString:self.danxuanti.select1]];
+    self.chooseB.text=[NSString stringWithFormat:@"B.  %@",[NSString filterString:self.danxuanti.select2]];
+    self.chooseC.text=[NSString stringWithFormat:@"C.  %@",[NSString filterString:self.danxuanti.select3]];
+    self.chooseD.text=[NSString stringWithFormat:@"D.  %@",[NSString filterString:self.danxuanti.select4]];
 }
-- (NSString *)filterString:(NSString *)string
-{
-    //cou&lt;U&gt;gh&lt;/U&gt;
-    //cou<U>gh</U>
-    //cough  gh下划线
-   /* NSError* error = NULL;
-    NSRegularExpression* regex = [NSRegularExpression regularExpressionWithPattern:@"&lt;U&gt;"                        options:0 error:&error];
-    NSString* result = [regex stringByReplacingMatchesInString:string
-                       options:0 range:NSMakeRange(0, string.length)withTemplate:@"'"];
-    NSRegularExpression* regex1 = [NSRegularExpression regularExpressionWithPattern:@"&lt;/U&gt;"                        options:0 error:&error];
-    NSString* result1 = [regex1 stringByReplacingMatchesInString:result
-                         options:0 range:NSMakeRange(0, result.length)withTemplate:@"'"];*/
-    if (string!=nil)
-    {
-        NSMutableString *str1=[NSMutableString stringWithString:string];
-        [str1 replaceOccurrencesOfString:@"&lt;U&gt;" withString:@"`" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;/U&gt;" withString:@"`" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&amp;" withString:@"" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"nbsp;" withString:@"" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;P&gt;" withString:@"" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;/P&gt;" withString:@"" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&#xd;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;P style=&quot;TEXT-ALIGN: center&quot; align=center&gt;" withString:@"  " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;p style=&quot;text-align:center&quot; align=&quot;center&quot;&gt;" withString:@"  " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;p style=&quot;text-align:center&quot; align=&quot;center&quot;&gt;" withString:@"  " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;p&gt;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&quot;" withString:@"\"" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&apos;" withString:@"'" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;p style=\"text-align:left\" align=\"left\"&gt;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;p style=\"text-align:right\" align=\"right\"&gt;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
-        //NSLog(@"%@",str1);
-        return str1;
-    }
-    else
-        return @"";
-}
+
 #pragma mark - NSXMLParserDelegate 代理方法
 -(void)parserDidStartDocument:(NSXMLParser *)parser
 {
@@ -339,7 +304,7 @@
 {
     UIAlertView *alert;
     NSString *an=[NSString stringWithFormat:@"%@\n%@\n%@",self.danxuanti.hint1,self.danxuanti.hint2,self.danxuanti.hint3];
-    alert=[[UIAlertView alloc]initWithTitle:@"提示：" message:[self filterString:an] delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];
+    alert=[[UIAlertView alloc]initWithTitle:@"提示：" message:[NSString filterString:an] delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];
     [alert show];
     [alert release];
     

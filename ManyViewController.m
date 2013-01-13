@@ -64,7 +64,7 @@
         [view removeFromSuperview];
     }
     if (self.listen.listenTitle!=nil)
-        self.listen.listenTitle=[self filterString:self.listen.listenTitle];
+        self.listen.listenTitle=[NSString filterString:self.listen.listenTitle];
     else
         self.listen.listenTitle=@"暂无标题。。。";
     int selectLength=[self.listen.childArray count]*150;
@@ -221,7 +221,7 @@
        // NSLog(@"--------%@",contain);
     }
     contain=[contain stringByAppendingFormat:@"\n\n%@",self.listen.original];
-    resultView.text=[self filterString:contain];
+    resultView.text=[NSString filterString:contain];
     
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration:1.0f];
@@ -259,7 +259,7 @@
 -(void)goBack
 {
     [streamer stop];
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 #pragma mark -
 #pragma mark 音频流
@@ -358,48 +358,7 @@
         }
     }
 }
-#pragma mark -
-#pragma mark 过滤字符串
-- (NSString *)filterString:(NSString *)string
-{
-    if (string!=nil)
-    {
-        NSMutableString *str1=[NSMutableString stringWithString:string];
-        [str1 replaceOccurrencesOfString:@"&lt;U&gt;" withString:@"`" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;/U&gt;" withString:@"`" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&amp;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"nbsp;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&nbsp;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;P&gt;" withString:@"" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;/P&gt;" withString:@"" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&#xd;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;P style=&quot;TEXT-ALIGN: center&quot; align=center&gt;" withString:@"  " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;p style=&quot;text-align:center&quot; align=&quot;center&quot;&gt;" withString:@"  " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;p style=&quot;text-align:center&quot; align=&quot;center&quot;&gt;" withString:@"  " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;p&gt;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&quot;" withString:@"\"" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&apos;" withString:@"'" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;p style=\"text-align:left\" align=\"left\"&gt;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;p style=\"text-align:right\" align=\"right\"&gt;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"<P style=\"TEXT-INDENT: 2em\">" withString:@"" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"</P>;" withString:@"" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"<STRONG>" withString:@"" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"<U>" withString:@"" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"</U>" withString:@"" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"</STRONG>" withString:@"" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"</P>" withString:@"" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;" withString:@"" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"P style=\"TEXT-INDENT: 2em\"" withString:@"" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&gt;" withString:@"" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;" withString:@"" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"IMG border=0 src=\"/ewebeditor/uploadfile/2011/12/29/20111229143522001.gif\"/" withString:@"" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"BR&gt;" withString:@"" options:0 range:NSMakeRange(0, str1.length)];
-        
-        return str1;
-    }
-    else
-        return @"";
-}
+
 #pragma mark -
 - (void)didReceiveMemoryWarning
 {

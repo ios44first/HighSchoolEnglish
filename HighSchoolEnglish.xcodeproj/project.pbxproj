@@ -380,6 +380,12 @@
 		0FD12EDC169C19D900F43E6F /* ReadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FD12EDA169C19D900F43E6F /* ReadViewController.xib */; };
 		0FD3C118169E61C8000C3DA8 /* slider_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 0FD3C116169E61C8000C3DA8 /* slider_normal.png */; };
 		0FD3C119169E61C8000C3DA8 /* slider_press.png in Resources */ = {isa = PBXBuildFile; fileRef = 0FD3C117169E61C8000C3DA8 /* slider_press.png */; };
+		0FFB0C9516A17819009C16FB /* NSString+Filter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FFB0C9416A17819009C16FB /* NSString+Filter.m */; };
+		0FFE1E0116A2B04C004C3B95 /* WrongViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FFE1E0016A2B04C004C3B95 /* WrongViewController.m */; };
+		0FFE1E0516A2B05F004C3B95 /* NewWordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FFE1E0416A2B05F004C3B95 /* NewWordViewController.m */; };
+		0FFE1E0916A2B2A6004C3B95 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FFE1E0716A2B2A5004C3B95 /* LoginViewController.m */; };
+		0FFE1E0A16A2B2A6004C3B95 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FFE1E0816A2B2A6004C3B95 /* LoginViewController.xib */; };
+		0FFE1E0C16A2B736004C3B95 /* yejing.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0FFE1E0B16A2B736004C3B95 /* yejing.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -782,6 +788,16 @@
 		0FD12EDA169C19D900F43E6F /* ReadViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReadViewController.xib; sourceTree = "<group>"; };
 		0FD3C116169E61C8000C3DA8 /* slider_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slider_normal.png; sourceTree = "<group>"; };
 		0FD3C117169E61C8000C3DA8 /* slider_press.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slider_press.png; sourceTree = "<group>"; };
+		0FFB0C9316A17819009C16FB /* NSString+Filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Filter.h"; sourceTree = "<group>"; };
+		0FFB0C9416A17819009C16FB /* NSString+Filter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Filter.m"; sourceTree = "<group>"; };
+		0FFE1DFF16A2B04C004C3B95 /* WrongViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WrongViewController.h; sourceTree = "<group>"; };
+		0FFE1E0016A2B04C004C3B95 /* WrongViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WrongViewController.m; sourceTree = "<group>"; };
+		0FFE1E0316A2B05F004C3B95 /* NewWordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewWordViewController.h; sourceTree = "<group>"; };
+		0FFE1E0416A2B05F004C3B95 /* NewWordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewWordViewController.m; sourceTree = "<group>"; };
+		0FFE1E0616A2B2A5004C3B95 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		0FFE1E0716A2B2A5004C3B95 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		0FFE1E0816A2B2A6004C3B95 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
+		0FFE1E0B16A2B736004C3B95 /* yejing.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = yejing.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -807,6 +823,8 @@
 			children = (
 				0F5C31D8169E8D3700972656 /* AudioStreamer.h */,
 				0F5C31D9169E8D3800972656 /* AudioStreamer.m */,
+				0FFB0C9316A17819009C16FB /* NSString+Filter.h */,
+				0FFB0C9416A17819009C16FB /* NSString+Filter.m */,
 			);
 			name = Tools;
 			sourceTree = "<group>";
@@ -1123,6 +1141,7 @@
 		0F71920716980FE100533C93 /* login */ = {
 			isa = PBXGroup;
 			children = (
+				0FFE1E0B16A2B736004C3B95 /* yejing.jpg */,
 				0F71920816980FE100533C93 /* bg_input.png */,
 				0F71920916980FE100533C93 /* bg_member_login.png */,
 				0F71920A16980FE100533C93 /* bg_member_register.png */,
@@ -1482,6 +1501,13 @@
 				0FBA0F1F1699288600C2EE79 /* DetailViewController.h */,
 				0FBA0F201699288600C2EE79 /* DetailViewController.m */,
 				0FBA0F211699288600C2EE79 /* DetailViewController.xib */,
+				0FFE1DFF16A2B04C004C3B95 /* WrongViewController.h */,
+				0FFE1E0016A2B04C004C3B95 /* WrongViewController.m */,
+				0FFE1E0316A2B05F004C3B95 /* NewWordViewController.h */,
+				0FFE1E0416A2B05F004C3B95 /* NewWordViewController.m */,
+				0FFE1E0616A2B2A5004C3B95 /* LoginViewController.h */,
+				0FFE1E0716A2B2A5004C3B95 /* LoginViewController.m */,
+				0FFE1E0816A2B2A6004C3B95 /* LoginViewController.xib */,
 			);
 			name = more;
 			sourceTree = "<group>";
@@ -1889,6 +1915,8 @@
 				0F5C31E2169EC65B00972656 /* translation_result1.png in Resources */,
 				0F5C31ED169EEA7C00972656 /* BuQuanViewController.xib in Resources */,
 				0F5C31F2169EEA9E00972656 /* ManyViewController.xib in Resources */,
+				0FFE1E0A16A2B2A6004C3B95 /* LoginViewController.xib in Resources */,
+				0FFE1E0C16A2B736004C3B95 /* yejing.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1923,6 +1951,10 @@
 				0F5C31F1169EEA9E00972656 /* ManyViewController.m in Sources */,
 				0F1128D5169FC5B90019B59C /* ListenChild.m in Sources */,
 				0F1128D9169FC5D50019B59C /* ListenMany.m in Sources */,
+				0FFB0C9516A17819009C16FB /* NSString+Filter.m in Sources */,
+				0FFE1E0116A2B04C004C3B95 /* WrongViewController.m in Sources */,
+				0FFE1E0516A2B05F004C3B95 /* NewWordViewController.m in Sources */,
+				0FFE1E0916A2B2A6004C3B95 /* LoginViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

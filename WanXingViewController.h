@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Questions.h"
 #import "WanXing.h"
+#import "NSString+Filter.h"
 
 @interface WanXingViewController : UIViewController<NSXMLParserDelegate>
 {
@@ -33,5 +34,5 @@
 
 - (IBAction)downBut:(UIButton *)sender;
 - (IBAction)nextButton:(UIButton *)sender;
-- (NSString *)filterString:(NSString *)string;
+
 @end

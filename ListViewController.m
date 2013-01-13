@@ -86,7 +86,7 @@
 }
 -(void)goBack
 {
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 #pragma mark - NSXMLParserDelegate 代理方法
 -(void)parserDidStartDocument:(NSXMLParser *)parser
@@ -273,7 +273,7 @@
     if (que.queTitle==nil)
         cell.textLabel.text=@"暂无标题";
     else
-        cell.textLabel.text=[self filterString:que.queTitle];
+        cell.textLabel.text=[NSString filterString:que.queTitle];
     [cell.detailTextLabel setFont:[UIFont fontWithName:@"Thonburi" size:13]];
     NSString *area=nil;
     if ([self.areaDic.allKeys containsObject:que.areaId])
@@ -286,37 +286,6 @@
         cell.detailTextLabel.text=[NSString stringWithFormat:@"%d年%@                %@",que.year,self.title,area];
     cell.imageView.image=[UIImage imageNamed:@"bg_point.png"];
     return cell;
-}
-#pragma mark - 过滤字符串
-- (NSString *)filterString:(NSString *)string
-{
-    if (string!=nil)
-    {
-        NSMutableString *str1=[NSMutableString stringWithString:string];
-        [str1 replaceOccurrencesOfString:@"&lt;U&gt;" withString:@"`" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;/U&gt;" withString:@"`" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&amp;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"nbsp;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;P&gt;" withString:@"" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;/P&gt;" withString:@"" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&#xd;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;P style=&quot;TEXT-ALIGN: center&quot; align=center&gt;" withString:@"  " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;p style=&quot;text-align:center&quot; align=&quot;center&quot;&gt;" withString:@"  " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;p style=&quot;text-align:center&quot; align=&quot;center&quot;&gt;" withString:@"  " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;p&gt;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&quot;" withString:@"\"" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&apos;" withString:@"'" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;p style=\"text-align:left\" align=\"left\"&gt;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;p style=\"text-align:right\" align=\"right\"&gt;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
-         [str1 replaceOccurrencesOfString:@"&lt;P style=\"TEXT-INDENT: 2em\"&gt;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
-         [str1 replaceOccurrencesOfString:@"&lt;/TD&gt;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
-         [str1 replaceOccurrencesOfString:@"&lt;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&gt;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
-        
-        return str1;
-    }
-    else
-        return @"";
 }
 
 #pragma mark - Table view delegate

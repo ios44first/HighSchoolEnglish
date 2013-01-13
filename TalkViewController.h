@@ -7,11 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Questions.h"
-#import "AudioStreamer.h"
 #import <QuartzCore/CoreAnimation.h>
 #import <MediaPlayer/MediaPlayer.h>
 #import <CFNetwork/CFNetwork.h>
+#import "AudioStreamer.h"
+
+#import "Questions.h"
+#import "NSString+Filter.h"
+
 
 @interface TalkViewController : UIViewController
 {

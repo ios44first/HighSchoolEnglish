@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Questions.h"
 #import "WanXing.h"
+#import "NSString+Filter.h"
 
 @interface ReadViewController : UIViewController<NSXMLParserDelegate>
 {
@@ -35,5 +36,5 @@
 - (IBAction)showTishi:(UIButton *)sender;
 - (IBAction)showAnswer:(UIButton *)sender;
 - (IBAction)nextTi:(UIButton *)sender;
-- (NSString *)filterString:(NSString *)string;
+
 @end

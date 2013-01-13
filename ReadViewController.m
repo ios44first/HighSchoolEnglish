@@ -81,7 +81,7 @@
 }
 -(void)goBack
 {
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)setContain
 {
@@ -101,7 +101,7 @@
         WanXing *wx=[self.array objectAtIndex:n];
         contain=[contain stringByAppendingFormat:@"\n%d. %@ \n A. %@ \n B. %@ \n C. %@ \n D. %@ \n",n+1,wx.tiTitle,wx.select1,wx.select2,wx.select3,wx.select4];
     }
-    self.allContain.text=[self filterString:contain];
+    self.allContain.text=[NSString filterString:contain];
     //NSLog(@"%d",[self.array count]);
 }
 #pragma mark - NSXMLParserDelegate 代理方法
@@ -261,11 +261,11 @@
     self.array=[NSMutableArray arrayWithArray:arr1];
     
     if (readContain!=nil)
-     readContain=[[self filterString:readContain] substringToIndex:[[self filterString:readContain] length]-28];
+     readContain=[[NSString filterString:readContain] substringToIndex:[[NSString filterString:readContain] length]-28];
     else
     {
         WanXing *wan=[self.array objectAtIndex:0];
-        readContain=[[self filterString:wan.tiTitle] substringToIndex:[[self filterString:wan.tiTitle] length]-28];
+        readContain=[[NSString filterString:wan.tiTitle] substringToIndex:[[NSString filterString:wan.tiTitle] length]-28];
     }
    // NSLog(@"%@",[[self filterString:readContain] substringToIndex:[[self filterString:readContain] length]-28]);
     // WanXing *wan=[self.array objectAtIndex:0];
@@ -290,7 +290,7 @@
          contain=[contain stringByAppendingFormat:@"\n%d. %@ \n %@ \n  %@ \n",n+1,wx.hint1,wx.hint2,wx.hint3];
        }
     }
-    tishiAnswer.text=[self filterString:contain];
+    tishiAnswer.text=[NSString filterString:contain];
 }
 
 - (IBAction)showAnswer:(UIButton *)sender
@@ -310,7 +310,7 @@
            contain=[contain stringByAppendingFormat:@"\n%d. %@ \n",n+1,wx.result];
         }
     }
-    tishiAnswer.text=[self filterString:contain];
+    tishiAnswer.text=[NSString filterString:contain];
 }
 - (void)goDown
 {
@@ -356,32 +356,6 @@
     [self setContain];
 }
 
-- (NSString *)filterString:(NSString *)string
-{
-    if (string!=nil)
-    {
-        NSMutableString *str1=[NSMutableString stringWithString:string];
-        [str1 replaceOccurrencesOfString:@"&lt;U&gt;" withString:@"`" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;/U&gt;" withString:@"`" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&amp;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"nbsp;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;P&gt;" withString:@"" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;/P&gt;" withString:@"" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&#xd;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;P style=&quot;TEXT-ALIGN: center&quot; align=center&gt;" withString:@"  " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;p style=&quot;text-align:center&quot; align=&quot;center&quot;&gt;" withString:@"  " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;p style=&quot;text-align:center&quot; align=&quot;center&quot;&gt;" withString:@"  " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;p&gt;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&quot;" withString:@"\"" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&apos;" withString:@"'" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;p style=\"text-align:left\" align=\"left\"&gt;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;p style=\"text-align:right\" align=\"right\"&gt;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
-        
-        return str1;
-    }
-    else
-        return @"";
-}
 - (void)viewWillAppear: (BOOL)animated
 {
     [self hideTabBar:YES];

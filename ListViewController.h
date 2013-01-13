@@ -14,6 +14,7 @@
 #import "EGORefreshTableHeaderView.h"
 #import "TalkViewController.h"
 #import "BuQuanViewController.h"
+#import "NSString+Filter.h"
 
 @interface ListViewController : UITableViewController<NSXMLParserDelegate,EGORefreshTableHeaderDelegate ,UIScrollViewDelegate>
 {

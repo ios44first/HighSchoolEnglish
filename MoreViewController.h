@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "DetailViewController.h"
+#import "WrongViewController.h"
+#import "LoginViewController.h"
 
 @interface MoreViewController : UITableViewController
 

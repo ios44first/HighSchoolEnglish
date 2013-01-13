@@ -71,7 +71,7 @@
 }
 -(void)goBack
 {
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)setContain
 {
@@ -87,7 +87,7 @@
     [xmlData release];
     [parserTool release];
     
-    self.containView.text=[self filterString:wanxingContain];
+    self.containView.text=[NSString filterString:wanxingContain];
     //NSLog(@"%@",[self filterString:wanxingContain]);
     [self setScrollView];
     //NSLog(@"--%c--",answer[10][2]);
@@ -197,7 +197,7 @@
     int num=sender.tag-21;
     WanXing *wan=[self.array objectAtIndex:num];
     NSString *showString=[NSString stringWithFormat:@"%@\n%@\n%@",wan.hint1,wan.hint2,wan.hint3];
-    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示信息" message:[self filterString:showString] delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];
+    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示信息" message:[NSString filterString:showString] delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];
     [alert show];
     [alert release];
 }
@@ -432,33 +432,6 @@
         self.question=[self.arr objectAtIndex:++i];
     }
     [self setContain];
-}
-
-- (NSString *)filterString:(NSString *)string
-{
-    if (string!=nil)
-    {
-        NSMutableString *str1=[NSMutableString stringWithString:string];
-        [str1 replaceOccurrencesOfString:@"&lt;U&gt;" withString:@"`" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;/U&gt;" withString:@"`" options:0 range:NSMakeRange(0, str1.length)]; 
-        [str1 replaceOccurrencesOfString:@"&amp;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"nbsp;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;P&gt;" withString:@"" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;/P&gt;" withString:@"" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&#xd;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;P style=&quot;TEXT-ALIGN: center&quot; align=center&gt;" withString:@"  " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;p style=&quot;text-align:center&quot; align=&quot;center&quot;&gt;" withString:@"  " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;p style=&quot;text-align:center&quot; align=&quot;center&quot;&gt;" withString:@"  " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;p&gt;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&quot;" withString:@"\"" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&apos;" withString:@"'" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;p style=\"text-align:left\" align=\"left\"&gt;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;p style=\"text-align:right\" align=\"right\"&gt;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
-        
-        return str1;
-    }
-    else
-        return @"";
 }
 - (void)viewWillAppear: (BOOL)animated
 {

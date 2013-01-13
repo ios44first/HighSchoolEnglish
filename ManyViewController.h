@@ -7,12 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ListenChild.h"
-#import "ListenMany.h"
-#import "AudioStreamer.h"
 #import <QuartzCore/CoreAnimation.h>
 #import <MediaPlayer/MediaPlayer.h>
 #import <CFNetwork/CFNetwork.h>
+#import "AudioStreamer.h"
+
+#import "ListenChild.h"
+#import "ListenMany.h"
+#import "NSString+Filter.h"
+
 
 @interface ManyViewController : UIViewController
 {

@@ -11,6 +11,7 @@
 #import "ListenChild.h"
 #import "ListenMany.h"
 #import "ManyViewController.h"
+#import "NSString+Filter.h"
 
 @interface ManyListenViewController : UITableViewController<NSXMLParserDelegate,EGORefreshTableHeaderDelegate ,UIScrollViewDelegate>
 {

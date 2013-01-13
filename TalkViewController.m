@@ -53,12 +53,12 @@
 -(void)setData
 {
     if (self.question.queTitle!=nil)
-        self.listenTitle.text=[self filterString:self.question.queTitle];
+        self.listenTitle.text=[NSString filterString:self.question.queTitle];
     else
         self.listenTitle.text=@"暂无标题。。。";
-    self.selectA.text=[NSString stringWithFormat:@"A.  %@",[self filterString:self.question.optionA]];
-    self.selectB.text=[NSString stringWithFormat:@"B.  %@",[self filterString:self.question.optionB]];
-    self.selectC.text=[NSString stringWithFormat:@"C.  %@",[self filterString:self.question.optionC]];
+    self.selectA.text=[NSString stringWithFormat:@"A.  %@",[NSString filterString:self.question.optionA]];
+    self.selectB.text=[NSString stringWithFormat:@"B.  %@",[NSString filterString:self.question.optionB]];
+    self.selectC.text=[NSString stringWithFormat:@"C.  %@",[NSString filterString:self.question.optionC]];
     self.sliderAV.value=0;
     isPlay=NO;
     isShow=NO;
@@ -265,7 +265,7 @@
         contain=[NSString stringWithFormat:@"\n√  恭喜你答对了。答案为%@.\n\n%@",self.question.answer,self.question.original];
     else
         contain=[NSString stringWithFormat:@"\n×  您选了%@。答案为%@.\n\n%@",answer,self.question.answer,self.question.original];
-    resultView.text=[self filterString:contain];
+    resultView.text=[NSString filterString:contain];
     NSArray *viewArray=[NSArray arrayWithObjects:self.listenTitle,self.butA,self.butB,self.butC,self.selectA,self.selectB,self.selectC,resultView, nil];
     [self moveLR:viewArray];
     [UIView commitAnimations];
@@ -299,41 +299,6 @@
 -(void)goBack
 {
     [streamer stop];
-    [self.navigationController popToRootViewControllerAnimated:YES];
-}
-#pragma mark -
-#pragma mark 过滤字符串
-- (NSString *)filterString:(NSString *)string
-{
-    if (string!=nil)
-    {
-        NSMutableString *str1=[NSMutableString stringWithString:string];
-        [str1 replaceOccurrencesOfString:@"&lt;U&gt;" withString:@"`" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;/U&gt;" withString:@"`" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&amp;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"nbsp;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;P&gt;" withString:@"" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;/P&gt;" withString:@"" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&#xd;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;P style=&quot;TEXT-ALIGN: center&quot; align=center&gt;" withString:@"  " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;p style=&quot;text-align:center&quot; align=&quot;center&quot;&gt;" withString:@"  " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;p style=&quot;text-align:center&quot; align=&quot;center&quot;&gt;" withString:@"  " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;p&gt;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&quot;" withString:@"\"" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&apos;" withString:@"'" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;p style=\"text-align:left\" align=\"left\"&gt;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"&lt;p style=\"text-align:right\" align=\"right\"&gt;" withString:@" " options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"<P style=\"TEXT-INDENT: 2em\">" withString:@"" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"</P>;" withString:@"" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"<STRONG>" withString:@"" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"<U>" withString:@"" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"</U>" withString:@"" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"</STRONG>" withString:@"" options:0 range:NSMakeRange(0, str1.length)];
-        [str1 replaceOccurrencesOfString:@"</P>" withString:@"" options:0 range:NSMakeRange(0, str1.length)];
-        
-        return str1;
-    }
-    else
-        return @"";
+    [self.navigationController popViewControllerAnimated:YES];
 }
 @end

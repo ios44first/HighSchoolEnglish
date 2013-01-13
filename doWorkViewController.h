@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Questions.h"
 #import "DanXuanTi.h"
+#import "NSString+Filter.h"
 
 @interface doWorkViewController : UIViewController<NSXMLParserDelegate>
 {
@@ -36,5 +37,5 @@
 - (IBAction)tiShi:(UIButton *)sender;
 - (IBAction)submitAnswer:(UIButton *)sender;
 - (IBAction)chooseAnswer:(UIButton *)sender;
-- (NSString *)filterString:(NSString *)string;
+
 @end
