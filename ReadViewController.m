@@ -13,7 +13,7 @@
 @end
 
 @implementation ReadViewController
-@synthesize question,arr,strTitle,str,dictionary,i,titleType,array=_array,stringAnswer,stringTishi;
+@synthesize question,arr,strTitle,str,dictionary,i,titleType,array=_array,stringAnswer,stringTishi,isWrong,artical;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -27,7 +27,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.navigationItem.title=[NSString stringWithFormat:@"%d年%@",self.question.year,self.strTitle];
+    self.navigationItem.title=[NSString stringWithFormat:@"%@",self.strTitle];
     self.str=[NSMutableString string];
     self.array=[NSMutableArray array];
     self.dictionary=[NSMutableDictionary dictionary];
@@ -63,16 +63,19 @@
     [back release];
     [backButton release];
     
-    UIImage* image1= [UIImage imageNamed:@"btn_favorite_normal.png"];
-    CGRect frame_2= CGRectMake(0, 0, image1.size.width, image1.size.height);
-    UIButton* backButton1= [[UIButton alloc] initWithFrame:frame_2];
-    [backButton1 setBackgroundImage:image1 forState:UIControlStateNormal];
-    [backButton1 addTarget:self action:@selector(addQuestion) forControlEvents:UIControlEventTouchUpInside];
-    //定制自己的风格的 UIBarButtonItem
-    UIBarButtonItem* back1= [[UIBarButtonItem alloc] initWithCustomView:backButton1];
-    [self.navigationItem setRightBarButtonItem:back1];
-    [back1 release];
-    [backButton1 release];
+    if (!isWrong)
+    {
+        UIImage* image1= [UIImage imageNamed:@"btn_favorite_normal.png"];
+        CGRect frame_2= CGRectMake(0, 0, image1.size.width, image1.size.height);
+        UIButton* backButton1= [[UIButton alloc] initWithFrame:frame_2];
+        [backButton1 setBackgroundImage:image1 forState:UIControlStateNormal];
+        [backButton1 addTarget:self action:@selector(addQuestion) forControlEvents:UIControlEventTouchUpInside];
+        //定制自己的风格的 UIBarButtonItem
+        UIBarButtonItem* back1= [[UIBarButtonItem alloc] initWithCustomView:backButton1];
+        [self.navigationItem setRightBarButtonItem:back1];
+        [back1 release];
+        [backButton1 release];
+    }
     
     [self setContain];
 }
@@ -81,7 +84,7 @@
     id delegate=[[UIApplication sharedApplication]delegate];
     NSManagedObjectContext *managedObjectContext=[delegate managedObjectContext];
     ReadArtical *read=[NSEntityDescription insertNewObjectForEntityForName:@"ReadArtical" inManagedObjectContext:managedObjectContext];
-    read.titleType=[NSNumber numberWithInt:self.titleType];
+    read.titleType=[NSString stringWithFormat:@"%d",self.titleType];
     read.contain=self.allContain.text;
     read.result=self.stringAnswer;
     read.tishi=self.stringTishi;
@@ -103,54 +106,63 @@
 }
 -(void)setContain
 {
-    NSString *string=[NSString stringWithFormat:@"http://api.winclass.net/serviceaction.do?method=gettheme&subjectid=3&id=%d",self.question.questionsId];
-    NSURL *newsURL=[[NSURL alloc]initWithString:string];
-    NSData *xmlData=[[NSData alloc] initWithContentsOfURL:newsURL];
-    NSXMLParser *parserTool=[[NSXMLParser alloc]initWithData:xmlData];
-    parserTool.delegate=self;
-    [parserTool parse];
-    [newsURL release];
-    [xmlData release];
-    [parserTool release];
-    
-    NSString *contain=[NSString stringWithFormat:@"%@",readContain];
-    for (int n=0; n<[self.array count]-1; n++)
+    if (!isWrong)
     {
-        WanXing *wx=[self.array objectAtIndex:n];
-        contain=[contain stringByAppendingFormat:@"\n%d. %@ \n A. %@ \n B. %@ \n C. %@ \n D. %@ \n",n+1,wx.tiTitle,wx.select1,wx.select2,wx.select3,wx.select4];
-    }
-    self.allContain.text=[NSString filterString:contain];
-    //NSLog(@"%d",[self.array count]);
-    NSString *contain1=[NSString stringWithFormat:@"\n参考答案："];
-    if ([self.array count]==1)
-    {
-        WanXing *wx=[self.array objectAtIndex:0];
-        contain1=[contain1 stringByAppendingFormat:@"\n%@ \n",wx.result];
-    }
-    else
-    {
+        NSString *string=[NSString stringWithFormat:@"http://api.winclass.net/serviceaction.do?method=gettheme&subjectid=3&id=%d",self.question.questionsId];
+        NSURL *newsURL=[[NSURL alloc]initWithString:string];
+        NSData *xmlData=[[NSData alloc] initWithContentsOfURL:newsURL];
+        NSXMLParser *parserTool=[[NSXMLParser alloc]initWithData:xmlData];
+        parserTool.delegate=self;
+        [parserTool parse];
+        [newsURL release];
+        [xmlData release];
+        [parserTool release];
+        
+        NSString *contain=[NSString stringWithFormat:@"%@",readContain];
         for (int n=0; n<[self.array count]-1; n++)
         {
             WanXing *wx=[self.array objectAtIndex:n];
-            contain1=[contain1 stringByAppendingFormat:@"\n%d. %@ \n",n+1,wx.result];
+            contain=[contain stringByAppendingFormat:@"\n%d. %@ \n A. %@ \n B. %@ \n C. %@ \n D. %@ \n",n+1,wx.tiTitle,wx.select1,wx.select2,wx.select3,wx.select4];
         }
-    }
-    self.stringAnswer=[NSString filterString:contain1];
-    NSString *contain2=[NSString stringWithString:[NSString stringWithFormat:@"\n提示信息："]];
-    if ([self.array count]==1)
-    {
-        WanXing *wx=[self.array objectAtIndex:0];
-        contain2=[contain2 stringByAppendingFormat:@"\n%@ \n %@ \n  %@ \n",wx.hint1,wx.hint2,wx.hint3];
+        self.allContain.text=[NSString filterString:contain];
+        //NSLog(@"%d",[self.array count]);
+        NSString *contain1=[NSString stringWithFormat:@"\n参考答案："];
+        if ([self.array count]==1)
+        {
+            WanXing *wx=[self.array objectAtIndex:0];
+            contain1=[contain1 stringByAppendingFormat:@"\n%@ \n",wx.result];
+        }
+        else
+        {
+            for (int n=0; n<[self.array count]-1; n++)
+            {
+                WanXing *wx=[self.array objectAtIndex:n];
+                contain1=[contain1 stringByAppendingFormat:@"\n%d. %@ \n",n+1,wx.result];
+            }
+        }
+        self.stringAnswer=[NSString filterString:contain1];
+        NSString *contain2=[NSString stringWithString:[NSString stringWithFormat:@"\n提示信息："]];
+        if ([self.array count]==1)
+        {
+            WanXing *wx=[self.array objectAtIndex:0];
+            contain2=[contain2 stringByAppendingFormat:@"\n%@ \n %@ \n  %@ \n",wx.hint1,wx.hint2,wx.hint3];
+        }
+        else
+        {
+            for (int n=0; n<[self.array count]-1; n++)
+            {
+                WanXing *wx=[self.array objectAtIndex:n];
+                contain2=[contain2 stringByAppendingFormat:@"\n%d. %@ \n %@ \n  %@ \n",n+1,wx.hint1,wx.hint2,wx.hint3];
+            }
+        }
+        self.stringTishi=[NSString stringWithString:[NSString filterString:contain2]];
     }
     else
     {
-        for (int n=0; n<[self.array count]-1; n++)
-        {
-            WanXing *wx=[self.array objectAtIndex:n];
-            contain2=[contain2 stringByAppendingFormat:@"\n%d. %@ \n %@ \n  %@ \n",n+1,wx.hint1,wx.hint2,wx.hint3];
-        }
+        self.allContain.text=self.artical.contain;
+        self.stringAnswer=self.artical.result;
+        self.stringTishi=self.artical.tishi;
     }
-    self.stringTishi=[NSString stringWithString:[NSString filterString:contain2]];
 }
 #pragma mark - NSXMLParserDelegate 代理方法
 -(void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict
@@ -366,13 +378,23 @@
 }
 - (IBAction)nextTi:(UIButton *)sender
 {
-    [self.dictionary removeAllObjects];
-    [self.array removeAllObjects];
-    if (i<[self.arr count]-1)
+    if (!isWrong)
     {
-        self.question=[self.arr objectAtIndex:++i];
+        [self.dictionary removeAllObjects];
+        [self.array removeAllObjects];
+        if (i<[self.arr count]-1)
+        {
+            self.question=[self.arr objectAtIndex:++i];
+        }
+        readContain=nil;
     }
-    readContain=nil;
+    else
+    {
+        if (i<[self.arr count]-1)
+        {
+            self.artical=[self.arr objectAtIndex:++i];
+        }
+    }
     [self setContain];
 }
 

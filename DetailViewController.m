@@ -108,20 +108,26 @@
 }
 -(void)preOne
 {
-    if (index>0&&index<[self.array count])
+    if ([self.array count]>0)
     {
-        word=[self.array objectAtIndex:--index];
-        contain.text=[NSString stringWithFormat:@"%@\n%@",word.title,word.result];
+        if (index>0&&index<[self.array count])
+        {
+            word=[self.array objectAtIndex:--index];
+            contain.text=[NSString stringWithFormat:@"%@\n%@",word.title,word.result];
+        }
     }
 }
 -(void)deleteOne
 {}
 -(void)nextOne
 {
-    if (index>-1&&index<[self.array count]-1)
+    if ([self.array count]>0)
     {
-        word=[self.array objectAtIndex:++index];
-        contain.text=[NSString stringWithFormat:@"%@\n%@",word.title,word.result];
+        if (index>-1&&index<[self.array count]-1)
+        {
+            word=[self.array objectAtIndex:++index];
+            contain.text=[NSString stringWithFormat:@"%@\n%@",word.title,word.result];
+        }
     }
 }
 -(void)closeAlert:(UIButton *)sender

@@ -232,13 +232,61 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     [detailViewController release];
-     */
+    switch (indexPath.section)
+    {
+        case 0:
+        {
+            doWorkViewController *detailViewController = [[doWorkViewController alloc] init];
+            DanXuan *dan=[[self.array objectAtIndex:0]objectAtIndex:indexPath.row];
+            DanXuanTi *d=[[DanXuanTi alloc]init];
+            detailViewController.danxuanti=d;
+            [d release];
+            detailViewController.i=indexPath.row;
+            detailViewController.arr=[self.array objectAtIndex:0];
+            detailViewController.danxuanti.tiTitle=dan.title;
+            detailViewController.danxuanti.select1=dan.selectA;
+            detailViewController.danxuanti.select2=dan.selectB;
+            detailViewController.danxuanti.select3=dan.selectC;
+            detailViewController.danxuanti.select4=dan.selectD;
+            detailViewController.danxuanti.result=dan.result;
+            detailViewController.danxuanti.hint1=dan.tishi;
+            detailViewController.danxuanti.hint2=@"";
+            detailViewController.danxuanti.hint3=@"";
+            detailViewController.strTitle=self.title;
+            detailViewController.isWrong=YES;
+            [self.navigationController pushViewController:detailViewController animated:YES];
+            [detailViewController release];
+        }
+            break;
+        case 1:
+        {
+            ReadViewController *read=[[ReadViewController alloc]init];
+            ReadArtical *art=[[self.array objectAtIndex:1]objectAtIndex:indexPath.row];
+            read.arr=[self.array objectAtIndex:1];
+            read.i=indexPath.row;
+            read.artical=art;
+            read.strTitle=@"阅读理解";
+            read.isWrong=YES;
+            [self.navigationController pushViewController:read animated:YES];
+            [read release];
+        }
+            break;
+        case 2:
+        {
+            WanXingViewController *wanxing=[[WanXingViewController alloc]init];
+            wanxing.strTitle=@"完形填空";
+             DuoXuan *duo=[[self.array objectAtIndex:2]objectAtIndex:indexPath.row];
+            Questions *q=[[Questions alloc]init];
+            q.questionsId=[duo.tiId intValue];
+            wanxing.i=indexPath.row;
+            wanxing.arr=[self.array objectAtIndex:2];
+            wanxing.question=q;
+            wanxing.isWrong=YES;
+            [self.navigationController pushViewController:wanxing animated:YES];
+            [wanxing release];
+        }
+            break;
+    }
 }
 
 @end

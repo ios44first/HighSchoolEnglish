@@ -22,6 +22,7 @@
 }
 
 @property(assign,nonatomic) int i,titleType;
+@property(assign,nonatomic) BOOL isWrong;
 @property(retain,nonatomic)Questions *question;
 @property(retain,nonatomic) NSArray *arr;
 @property(retain,nonatomic) NSString *strTitle;

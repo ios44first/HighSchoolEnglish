@@ -2,7 +2,7 @@
 //  NewWord.h
 //  HighSchoolEnglish
 //
-//  Created by Ibokan on 13-1-14.
+//  Created by Ibokan on 13-1-15.
 //  Copyright (c) 2013年 Ibokan. All rights reserved.
 //
 
@@ -15,6 +15,6 @@
 @property (nonatomic, retain) NSDate * createDate;
 @property (nonatomic, retain) NSString * result;
 @property (nonatomic, retain) NSString * title;
-@property (nonatomic, retain) NSNumber * titleType;
+@property (nonatomic, retain) NSString * titleType;
 
 @end

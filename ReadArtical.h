@@ -2,7 +2,7 @@
 //  ReadArtical.h
 //  HighSchoolEnglish
 //
-//  Created by Ibokan on 13-1-13.
+//  Created by Ibokan on 13-1-15.
 //  Copyright (c) 2013年 Ibokan. All rights reserved.
 //
 
@@ -13,9 +13,9 @@
 @interface ReadArtical : NSManagedObject
 
 @property (nonatomic, retain) NSString * contain;
-@property (nonatomic, retain) NSNumber * titleType;
-@property (nonatomic, retain) NSString * tishi;
-@property (nonatomic, retain) NSString * result;
 @property (nonatomic, retain) NSDate * createDate;
+@property (nonatomic, retain) NSString * result;
+@property (nonatomic, retain) NSString * tishi;
+@property (nonatomic, retain) NSString * titleType;
 
 @end

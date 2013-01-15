@@ -2,7 +2,7 @@
 //  NewWord.m
 //  HighSchoolEnglish
 //
-//  Created by Ibokan on 13-1-14.
+//  Created by Ibokan on 13-1-15.
 //  Copyright (c) 2013年 Ibokan. All rights reserved.
 //
 

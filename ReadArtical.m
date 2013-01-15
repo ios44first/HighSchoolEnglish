@@ -2,7 +2,7 @@
 //  ReadArtical.m
 //  HighSchoolEnglish
 //
-//  Created by Ibokan on 13-1-13.
+//  Created by Ibokan on 13-1-15.
 //  Copyright (c) 2013年 Ibokan. All rights reserved.
 //
 
@@ -12,9 +12,9 @@
 @implementation ReadArtical
 
 @dynamic contain;
-@dynamic titleType;
-@dynamic tishi;
-@dynamic result;
 @dynamic createDate;
+@dynamic result;
+@dynamic tishi;
+@dynamic titleType;
 
 @end

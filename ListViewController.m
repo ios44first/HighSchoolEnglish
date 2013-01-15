@@ -300,6 +300,9 @@
         case 13:
         {
           doWorkViewController *detailViewController = [[doWorkViewController alloc] init];
+            DanXuanTi *d=[[DanXuanTi alloc]init];
+            detailViewController.danxuanti=d;
+            [d release];
           detailViewController.arr=self.arrayData;
           detailViewController.strTitle=self.title;
           detailViewController.question=q;

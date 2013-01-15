@@ -21,6 +21,8 @@
     BOOL isDown;
 }
 
+@property(assign,nonatomic) BOOL isWrong;
+@property(retain,nonatomic)ReadArtical *artical;
 @property(assign,nonatomic) int i,titleType;
 @property(retain,nonatomic)Questions *question;
 @property(retain,nonatomic) NSArray *arr;

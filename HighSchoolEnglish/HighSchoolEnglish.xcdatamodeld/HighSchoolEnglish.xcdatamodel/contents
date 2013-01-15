@@ -9,26 +9,26 @@
         <attribute name="selectD" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="tishi" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="titleType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="titleType" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="DuoXuan" representedClassName="DuoXuan" syncable="YES">
         <attribute name="createDate" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="tiId" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="tiId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="titleType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="titleType" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="NewWord" representedClassName="NewWord" syncable="YES">
         <attribute name="createDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="result" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="titleType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="titleType" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="ReadArtical" representedClassName="ReadArtical" syncable="YES">
         <attribute name="contain" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="createDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="result" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="tishi" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="titleType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="titleType" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
         <element name="DanXuan" positionX="160" positionY="192" width="128" height="180"/>

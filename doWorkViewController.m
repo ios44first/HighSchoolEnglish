@@ -13,7 +13,7 @@
 @end
 
 @implementation doWorkViewController
-@synthesize question,arr,strTitle,str,dictionary,i,titleType;
+@synthesize question,arr,strTitle,str,dictionary,i,titleType,isWrong;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -27,12 +27,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.navigationItem.title=[NSString stringWithFormat:@"%d年%@",self.question.year,self.strTitle];
+    self.navigationItem.title=[NSString stringWithFormat:@"%@",self.strTitle];
     self.str=[NSMutableString string];
     self.dictionary=[NSMutableDictionary dictionary];
-    DanXuanTi *dan=[[DanXuanTi alloc]init];
-    self.danxuanti=dan;
-    [dan release];
     
     UIImage* image= [UIImage imageNamed:@"return_pressed.png"];
     CGRect frame_1= CGRectMake(0, 0, image.size.width, image.size.height);
@@ -45,16 +42,19 @@
     [back release];
     [backButton release];
     
-    UIImage* image1= [UIImage imageNamed:@"btn_favorite_normal.png"];
-    CGRect frame_2= CGRectMake(0, 0, image1.size.width, image1.size.height);
-    UIButton* backButton1= [[UIButton alloc] initWithFrame:frame_2];
-    [backButton1 setBackgroundImage:image1 forState:UIControlStateNormal];
-    [backButton1 addTarget:self action:@selector(addQuestion) forControlEvents:UIControlEventTouchUpInside];
-    //定制自己的风格的 UIBarButtonItem
-    UIBarButtonItem* back1= [[UIBarButtonItem alloc] initWithCustomView:backButton1];
-    [self.navigationItem setRightBarButtonItem:back1];
-    [back1 release];
-    [backButton1 release];
+    if (!isWrong)
+    {
+        UIImage* image1= [UIImage imageNamed:@"btn_favorite_normal.png"];
+        CGRect frame_2= CGRectMake(0, 0, image1.size.width, image1.size.height);
+        UIButton* backButton1= [[UIButton alloc] initWithFrame:frame_2];
+        [backButton1 setBackgroundImage:image1 forState:UIControlStateNormal];
+        [backButton1 addTarget:self action:@selector(addQuestion) forControlEvents:UIControlEventTouchUpInside];
+        //定制自己的风格的 UIBarButtonItem
+        UIBarButtonItem* back1= [[UIBarButtonItem alloc] initWithCustomView:backButton1];
+        [self.navigationItem setRightBarButtonItem:back1];
+        [back1 release];
+        [backButton1 release];
+    }
 
     [self setContain];
 }
@@ -63,7 +63,7 @@
     id delegate=[[UIApplication sharedApplication]delegate];
     NSManagedObjectContext *managedObjectContext=[delegate managedObjectContext];
     DanXuan *dan=[NSEntityDescription insertNewObjectForEntityForName:@"DanXuan" inManagedObjectContext:managedObjectContext];
-    dan.titleType=[NSNumber numberWithInt:self.titleType];
+    dan.titleType=[NSString stringWithFormat:@"%d",self.titleType];
     dan.title=[NSString filterString:self.danxuanti.tiTitle];
     dan.selectA=[NSString filterString:self.danxuanti.select1];
     dan.selectB=[NSString filterString:self.danxuanti.select2];
@@ -89,15 +89,18 @@
 }
 -(void)setContain
 {
-    NSString *string=[NSString stringWithFormat:@"http://api.winclass.net/serviceaction.do?method=gettheme&subjectid=3&id=%d",self.question.questionsId];
-    NSURL *newsURL=[[NSURL alloc]initWithString:string];
-    NSData *xmlData=[[NSData alloc] initWithContentsOfURL:newsURL];
-    NSXMLParser *parserTool=[[NSXMLParser alloc]initWithData:xmlData];
-    parserTool.delegate=self;
-    [parserTool parse];
-    [newsURL release];
-    [xmlData release];
-    [parserTool release];
+    if (!isWrong)
+    {
+        NSString *string=[NSString stringWithFormat:@"http://api.winclass.net/serviceaction.do?method=gettheme&subjectid=3&id=%d",self.question.questionsId];
+        NSURL *newsURL=[[NSURL alloc]initWithString:string];
+        NSData *xmlData=[[NSData alloc] initWithContentsOfURL:newsURL];
+        NSXMLParser *parserTool=[[NSXMLParser alloc]initWithData:xmlData];
+        parserTool.delegate=self;
+        [parserTool parse];
+        [newsURL release];
+        [xmlData release];
+        [parserTool release];
+    }
     
     self.questionContain.text=[NSString filterString:self.danxuanti.tiTitle];
     self.chooseA.text=[NSString stringWithFormat:@"A.  %@",[NSString filterString:self.danxuanti.select1]];
@@ -307,14 +310,34 @@
     [_butB release];
     [_butC release];
     [_butD release];
+    [_downButton release];
     [super dealloc];
 }
 - (IBAction)nextQuestion:(UIButton *)sender
 {
-    if (i<[self.arr count]-1)
+    if (!isWrong)
     {
-        self.question=[self.arr objectAtIndex:++i];
+        if (i<[self.arr count]-1)
+        {
+            self.question=[self.arr objectAtIndex:++i];
+        }
+    }else
+    {
+        if (i<[self.arr count]-1)
+        {
+            DanXuan *dan=[self.arr objectAtIndex:++i];
+            self.danxuanti.tiTitle=dan.title;
+            self.danxuanti.select1=dan.selectA;
+            self.danxuanti.select2=dan.selectB;
+            self.danxuanti.select3=dan.selectC;
+            self.danxuanti.select4=dan.selectD;
+            self.danxuanti.result=dan.result;
+            self.danxuanti.hint1=dan.tishi;
+            self.danxuanti.hint2=@"";
+            self.danxuanti.hint3=@"";
+        }
     }
+    
     [self setContain];
     [_butA setImage:[UIImage imageNamed:@"btn_radio_off.png"] forState:UIControlStateNormal];
     [_butB setImage:[UIImage imageNamed:@"btn_radio_off.png"] forState:UIControlStateNormal];

@@ -12,6 +12,11 @@
 #import "DuoXuan.h"
 #import "DanXuan.h"
 
+#import "doWorkViewController.h"
+#import "WanXingViewController.h"
+#import "ReadViewController.h"
+#import "Questions.h"
+
 @interface WrongViewController : UITableViewController
 {
     NSMutableArray *num;

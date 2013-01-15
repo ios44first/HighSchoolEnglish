@@ -2,7 +2,7 @@
 //  DuoXuan.h
 //  HighSchoolEnglish
 //
-//  Created by Ibokan on 13-1-13.
+//  Created by Ibokan on 13-1-15.
 //  Copyright (c) 2013年 Ibokan. All rights reserved.
 //
 
@@ -12,9 +12,9 @@
 
 @interface DuoXuan : NSManagedObject
 
-@property (nonatomic, retain) NSNumber * titleType;
-@property (nonatomic, retain) NSNumber * tiId;
 @property (nonatomic, retain) NSDate * createDate;
+@property (nonatomic, retain) NSString * tiId;
 @property (nonatomic, retain) NSString * title;
+@property (nonatomic, retain) NSString * titleType;
 
 @end

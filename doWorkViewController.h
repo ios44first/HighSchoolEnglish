@@ -17,6 +17,7 @@
     NSString *answer;
 }
 
+@property(assign,nonatomic) BOOL isWrong;
 @property(assign,nonatomic) int i,titleType;
 @property(retain,nonatomic) Questions *question;
 @property(retain,nonatomic) DanXuanTi *danxuanti;
@@ -33,6 +34,7 @@
 @property (retain, nonatomic) IBOutlet UIButton *butB;
 @property (retain, nonatomic) IBOutlet UIButton *butC;
 @property (retain, nonatomic) IBOutlet UIButton *butD;
+@property (retain, nonatomic) IBOutlet UIButton *downButton;
 
 - (IBAction)nextQuestion:(UIButton *)sender;
 - (IBAction)tiShi:(UIButton *)sender;

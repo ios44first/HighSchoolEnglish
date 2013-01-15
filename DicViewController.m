@@ -29,7 +29,6 @@
     self.navigationItem.title=@"英语词霸";
     self.inputWord.delegate=self;
 
-
     UIImage* image= [UIImage imageNamed:@"HY.png"];
     CGRect frame_1= CGRectMake(0, 0, image.size.width, image.size.height);
     backButton= [[UIButton alloc] initWithFrame:frame_1];
@@ -57,7 +56,7 @@
     id delegate=[[UIApplication sharedApplication]delegate];
     NSManagedObjectContext *managedObjectContext=[delegate managedObjectContext];
     NewWord *word=[NSEntityDescription insertNewObjectForEntityForName:@"NewWord" inManagedObjectContext:managedObjectContext];
-    word.titleType=[NSNumber numberWithInt:0];
+    word.titleType=[NSString stringWithFormat:@"%d",0];
     word.title=self.inputWord.text;
     word.result=self.translationView.text;
     word.createDate=[NSDate date];

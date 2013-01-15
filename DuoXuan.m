@@ -2,7 +2,7 @@
 //  DuoXuan.m
 //  HighSchoolEnglish
 //
-//  Created by Ibokan on 13-1-13.
+//  Created by Ibokan on 13-1-15.
 //  Copyright (c) 2013年 Ibokan. All rights reserved.
 //
 
@@ -11,9 +11,9 @@
 
 @implementation DuoXuan
 
-@dynamic titleType;
-@dynamic tiId;
 @dynamic createDate;
+@dynamic tiId;
 @dynamic title;
+@dynamic titleType;
 
 @end

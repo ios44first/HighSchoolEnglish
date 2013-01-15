@@ -13,7 +13,7 @@
 @end
 
 @implementation WanXingViewController
-@synthesize question,arr,strTitle,str,dictionary,i,array,titleType;
+@synthesize question,arr,strTitle,str,dictionary,i,array,titleType,isWrong;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -27,7 +27,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.navigationItem.title=[NSString stringWithFormat:@"%d年%@",self.question.year,self.strTitle];
+    self.navigationItem.title=[NSString stringWithFormat:@"%@",self.strTitle];
     self.str=[NSMutableString string];
     self.array=[NSMutableArray array];
     self.dictionary=[NSMutableDictionary dictionary];
@@ -52,18 +52,21 @@
     [self.navigationItem setLeftBarButtonItem:back];
     [back release];
     [backButton release];
-
-    UIImage* image1= [UIImage imageNamed:@"btn_favorite_normal.png"];
-    CGRect frame_2= CGRectMake(0, 0, image1.size.width, image1.size.height);
-    UIButton* backButton1= [[UIButton alloc] initWithFrame:frame_2];
-    [backButton1 setBackgroundImage:image1 forState:UIControlStateNormal];
-    [backButton1 addTarget:self action:@selector(addQuestion) forControlEvents:UIControlEventTouchUpInside];
-    //定制自己的风格的 UIBarButtonItem
-    UIBarButtonItem* back1= [[UIBarButtonItem alloc] initWithCustomView:backButton1];
-    [self.navigationItem setRightBarButtonItem:back1];
-    [back1 release];
-    [backButton1 release];
-
+    
+    if (!self.isWrong)
+    {
+        UIImage* image1= [UIImage imageNamed:@"btn_favorite_normal.png"];
+        CGRect frame_2= CGRectMake(0, 0, image1.size.width, image1.size.height);
+        UIButton* backButton1= [[UIButton alloc] initWithFrame:frame_2];
+        [backButton1 setBackgroundImage:image1 forState:UIControlStateNormal];
+        [backButton1 addTarget:self action:@selector(addQuestion) forControlEvents:UIControlEventTouchUpInside];
+        //定制自己的风格的 UIBarButtonItem
+        UIBarButtonItem* back1= [[UIBarButtonItem alloc] initWithCustomView:backButton1];
+        [self.navigationItem setRightBarButtonItem:back1];
+        [back1 release];
+        [backButton1 release];
+    }
+    
     [self setContain];
 }
 -(void)addQuestion
@@ -71,8 +74,9 @@
     id delegate=[[UIApplication sharedApplication]delegate];
     NSManagedObjectContext *managedObjectContext=[delegate managedObjectContext];
     DuoXuan *duo=[NSEntityDescription insertNewObjectForEntityForName:@"DuoXuan" inManagedObjectContext:managedObjectContext];
-    duo.titleType=[NSNumber numberWithInt:self.titleType];
-    duo.tiId=[NSNumber numberWithInt:self.question.questionsId];
+    duo.titleType=[NSString stringWithFormat:@"%d",self.titleType];
+    duo.tiId=[NSString stringWithFormat:@"%d",self.question.questionsId];
+    //NSLog(@"%d",self.question.questionsId);
     duo.title=self.containView.text;
     duo.createDate=[NSDate date];
     
@@ -92,6 +96,7 @@
 }
 -(void)setContain
 {
+    NSLog(@"%d",self.question.questionsId);
     [self.dictionary removeAllObjects];
     [self.array removeAllObjects];
     NSString *string=[NSString stringWithFormat:@"http://api.winclass.net/serviceaction.do?method=gettheme&subjectid=3&id=%d",self.question.questionsId];
@@ -444,10 +449,22 @@
 
 - (IBAction)nextButton:(UIButton *)sender
 {
-    if (i<[self.arr count]-1)
+    if (!isWrong)
     {
-        self.question=[self.arr objectAtIndex:++i];
+        if (i<[self.arr count]-1)
+        {
+            self.question=[self.arr objectAtIndex:++i];
+        }
     }
+    else
+    {
+        if (i<[self.arr count]-1)
+        {
+            DuoXuan *duo=[self.arr objectAtIndex:++i];
+            self.question.questionsId=[duo.tiId intValue];
+        }
+    }
+    
     [self setContain];
 }
 - (void)viewWillAppear: (BOOL)animated
