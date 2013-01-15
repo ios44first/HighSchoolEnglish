@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1811" systemVersion="11G63" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="DanXuan" representedClassName="DanXuan" syncable="YES">
+        <attribute name="createDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="result" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="selectA" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="selectB" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="selectC" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="selectD" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="tishi" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="titleType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="DuoXuan" representedClassName="DuoXuan" syncable="YES">
+        <attribute name="createDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="tiId" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="titleType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="NewWord" representedClassName="NewWord" syncable="YES">
+        <attribute name="createDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="result" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="titleType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="ReadArtical" representedClassName="ReadArtical" syncable="YES">
+        <attribute name="contain" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="createDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="result" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="tishi" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="titleType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="DanXuan" positionX="160" positionY="192" width="128" height="180"/>
+        <element name="DuoXuan" positionX="160" positionY="192" width="128" height="105"/>
+        <element name="NewWord" positionX="160" positionY="192" width="128" height="105"/>
+        <element name="ReadArtical" positionX="160" positionY="192" width="128" height="120"/>
+    </elements>
+</model>

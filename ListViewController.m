@@ -304,6 +304,7 @@
           detailViewController.strTitle=self.title;
           detailViewController.question=q;
           detailViewController.i=indexPath.row;
+          detailViewController.titleType=self.titleType;
           [self.navigationController pushViewController:detailViewController animated:YES];
           [detailViewController release];
         }
@@ -315,6 +316,7 @@
             wanxing.strTitle=self.title;
             wanxing.question=q;
             wanxing.i=indexPath.row;
+            wanxing.titleType=self.titleType;
             [self.navigationController pushViewController:wanxing animated:YES];
             [wanxing release];
         }
@@ -334,6 +336,7 @@
             read.strTitle=self.title;
             read.question=q;
             read.i=indexPath.row;
+            read.titleType=self.titleType;
             [self.navigationController pushViewController:read animated:YES];
             [read release];
         }

@@ -54,6 +54,23 @@
 }
 -(void)addQuestion
 {
+    id delegate=[[UIApplication sharedApplication]delegate];
+    NSManagedObjectContext *managedObjectContext=[delegate managedObjectContext];
+    NewWord *word=[NSEntityDescription insertNewObjectForEntityForName:@"NewWord" inManagedObjectContext:managedObjectContext];
+    word.titleType=[NSNumber numberWithInt:0];
+    word.title=self.inputWord.text;
+    word.result=self.translationView.text;
+    word.createDate=[NSDate date];
+    
+    NSError *error = nil;
+    if (![managedObjectContext save:&error])
+    {
+        NSLog(@"添加生词失败, %@, %@", error, [error userInfo]);
+        abort();
+    }
+    UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"温馨提示：" message:@"收藏生词成功！" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];
+    [alert show];
+    [alert release];
 }
 
 -(void)changeType

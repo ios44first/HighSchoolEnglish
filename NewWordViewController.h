@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DataFactory.h"
+#import "NewWord.h"
 
 @interface NewWordViewController : UITableViewController
+
+@property(retain,nonatomic) NSMutableArray *array;
 
 @end

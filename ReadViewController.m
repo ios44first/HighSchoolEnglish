@@ -13,7 +13,7 @@
 @end
 
 @implementation ReadViewController
-@synthesize question,arr,strTitle,str,dictionary,i,array=_array;
+@synthesize question,arr,strTitle,str,dictionary,i,titleType,array=_array,stringAnswer,stringTishi;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -47,7 +47,7 @@
     tishiAnswer.editable=NO;
     [scrollView addSubview:tishiAnswer];
     
-    UIControl *con=[[UIControl alloc]initWithFrame:CGRectMake(0, 0, 320, 200)];
+    UIControl *con=[[UIControl alloc]initWithFrame:CGRectMake(0, 0, 320, 150)];
     [con addTarget:self action:@selector(goDown) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:con];
     [con release];
@@ -78,6 +78,24 @@
 }
 -(void)addQuestion
 {
+    id delegate=[[UIApplication sharedApplication]delegate];
+    NSManagedObjectContext *managedObjectContext=[delegate managedObjectContext];
+    ReadArtical *read=[NSEntityDescription insertNewObjectForEntityForName:@"ReadArtical" inManagedObjectContext:managedObjectContext];
+    read.titleType=[NSNumber numberWithInt:self.titleType];
+    read.contain=self.allContain.text;
+    read.result=self.stringAnswer;
+    read.tishi=self.stringTishi;
+    read.createDate=[NSDate date];
+    
+    NSError *error = nil;
+    if (![managedObjectContext save:&error])
+    {
+        NSLog(@"添加题目失败, %@, %@", error, [error userInfo]);
+        abort();
+    }
+    UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"温馨提示：" message:@"收藏题目成功！" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];
+    [alert show];
+    [alert release];
 }
 -(void)goBack
 {
@@ -103,6 +121,36 @@
     }
     self.allContain.text=[NSString filterString:contain];
     //NSLog(@"%d",[self.array count]);
+    NSString *contain1=[NSString stringWithFormat:@"\n参考答案："];
+    if ([self.array count]==1)
+    {
+        WanXing *wx=[self.array objectAtIndex:0];
+        contain1=[contain1 stringByAppendingFormat:@"\n%@ \n",wx.result];
+    }
+    else
+    {
+        for (int n=0; n<[self.array count]-1; n++)
+        {
+            WanXing *wx=[self.array objectAtIndex:n];
+            contain1=[contain1 stringByAppendingFormat:@"\n%d. %@ \n",n+1,wx.result];
+        }
+    }
+    self.stringAnswer=[NSString filterString:contain1];
+    NSString *contain2=[NSString stringWithString:[NSString stringWithFormat:@"\n提示信息："]];
+    if ([self.array count]==1)
+    {
+        WanXing *wx=[self.array objectAtIndex:0];
+        contain2=[contain2 stringByAppendingFormat:@"\n%@ \n %@ \n  %@ \n",wx.hint1,wx.hint2,wx.hint3];
+    }
+    else
+    {
+        for (int n=0; n<[self.array count]-1; n++)
+        {
+            WanXing *wx=[self.array objectAtIndex:n];
+            contain2=[contain2 stringByAppendingFormat:@"\n%d. %@ \n %@ \n  %@ \n",n+1,wx.hint1,wx.hint2,wx.hint3];
+        }
+    }
+    self.stringTishi=[NSString stringWithString:[NSString filterString:contain2]];
 }
 #pragma mark - NSXMLParserDelegate 代理方法
 -(void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict
@@ -276,41 +324,13 @@
 - (IBAction)showTishi:(UIButton *)sender
 {
     [self downBut];
-    NSString *contain=[NSString stringWithFormat:@"\n提示信息："];
-    if ([self.array count]==1)
-    {
-        WanXing *wx=[self.array objectAtIndex:0];
-        contain=[contain stringByAppendingFormat:@"\n%@ \n %@ \n  %@ \n",wx.hint1,wx.hint2,wx.hint3];
-    }
-    else
-    {
-       for (int n=0; n<[self.array count]-1; n++)
-       {
-         WanXing *wx=[self.array objectAtIndex:n];
-         contain=[contain stringByAppendingFormat:@"\n%d. %@ \n %@ \n  %@ \n",n+1,wx.hint1,wx.hint2,wx.hint3];
-       }
-    }
-    tishiAnswer.text=[NSString filterString:contain];
+    tishiAnswer.text=self.stringTishi;
 }
 
 - (IBAction)showAnswer:(UIButton *)sender
 {
     [self downBut];
-    NSString *contain=[NSString stringWithFormat:@"\n参考答案："];
-    if ([self.array count]==1)
-    {
-        WanXing *wx=[self.array objectAtIndex:0];
-        contain=[contain stringByAppendingFormat:@"\n%@ \n",wx.result];
-    }
-    else
-    {
-        for (int n=0; n<[self.array count]-1; n++)
-        {
-           WanXing *wx=[self.array objectAtIndex:n];
-           contain=[contain stringByAppendingFormat:@"\n%d. %@ \n",n+1,wx.result];
-        }
-    }
-    tishiAnswer.text=[NSString filterString:contain];
+    tishiAnswer.text=self.stringAnswer;
 }
 - (void)goDown
 {

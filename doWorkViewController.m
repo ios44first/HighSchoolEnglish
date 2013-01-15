@@ -13,7 +13,7 @@
 @end
 
 @implementation doWorkViewController
-@synthesize question,arr,strTitle,str,dictionary,i;
+@synthesize question,arr,strTitle,str,dictionary,i,titleType;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -60,6 +60,28 @@
 }
 -(void)addQuestion
 {
+    id delegate=[[UIApplication sharedApplication]delegate];
+    NSManagedObjectContext *managedObjectContext=[delegate managedObjectContext];
+    DanXuan *dan=[NSEntityDescription insertNewObjectForEntityForName:@"DanXuan" inManagedObjectContext:managedObjectContext];
+    dan.titleType=[NSNumber numberWithInt:self.titleType];
+    dan.title=[NSString filterString:self.danxuanti.tiTitle];
+    dan.selectA=[NSString filterString:self.danxuanti.select1];
+    dan.selectB=[NSString filterString:self.danxuanti.select2];
+    dan.selectC=[NSString filterString:self.danxuanti.select3];
+    dan.selectD=[NSString filterString:self.danxuanti.select4];
+    dan.result=self.danxuanti.result;
+    dan.tishi=[NSString stringWithFormat:@"%@\n%@\n%@",self.danxuanti.hint1,self.danxuanti.hint2,self.danxuanti.hint3];
+    dan.createDate=[NSDate date];
+    
+    NSError *error = nil;
+    if (![managedObjectContext save:&error])
+    {
+        NSLog(@"添加题目失败, %@, %@", error, [error userInfo]);
+        abort();
+    }
+    UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"温馨提示：" message:@"收藏题目成功！" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];
+    [alert show];
+    [alert release];
 }
 -(void)goBack
 {

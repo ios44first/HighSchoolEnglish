@@ -10,6 +10,7 @@
 #import "Questions.h"
 #import "WanXing.h"
 #import "NSString+Filter.h"
+#import "ReadArtical.h"
 
 @interface ReadViewController : UIViewController<NSXMLParserDelegate>
 {
@@ -20,11 +21,12 @@
     BOOL isDown;
 }
 
-@property(assign,nonatomic) int i;
+@property(assign,nonatomic) int i,titleType;
 @property(retain,nonatomic)Questions *question;
 @property(retain,nonatomic) NSArray *arr;
 @property(retain,nonatomic) NSString *strTitle;
 
+@property(retain,nonatomic) NSString *stringAnswer,*stringTishi;
 @property(retain,nonatomic) NSMutableString *str;
 @property(retain,nonatomic) NSMutableArray *array;
 @property(retain,nonatomic) NSMutableDictionary *dictionary;

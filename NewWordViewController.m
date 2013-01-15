@@ -13,6 +13,7 @@
 @end
 
 @implementation NewWordViewController
+@synthesize array;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -37,6 +38,15 @@
     [self.navigationItem setLeftBarButtonItem:back];
     [back release];
     [backButton release];
+    
+    self.array=[NSMutableArray array];
+    DataFactory *factory=[DataFactory instance];
+    id delegate=[[UIApplication sharedApplication]delegate];
+    factory.managedObjectContext=[delegate managedObjectContext];
+    for (id temp in [factory getData:@"NewWord" andSort:@"title"])
+    {
+        [self.array addObject:temp];
+    }
 }
 -(void)goBack
 {
@@ -58,29 +68,30 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 0;
+    return [self.array count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
-    // Configure the cell...
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+        cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
+    }
+    cell.imageView.image=[UIImage imageNamed:@"bg_point.png"];
+    NewWord *word=[self.array objectAtIndex:indexPath.row];
+    cell.textLabel.text=word.title;
+    cell.detailTextLabel.text=word.result;
     
     return cell;
 }
-
-/*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Return NO if you do not want the specified item to be editable.
     return YES;
 }
-*/
-
-/*
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -92,23 +103,16 @@
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   
 }
-*/
-
-/*
 // Override to support rearranging the table view.
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
 {
 }
-*/
-
-/*
 // Override to support conditional rearranging of the table view.
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Return NO if you do not want the item to be re-orderable.
     return YES;
 }
-*/
 
 #pragma mark - Table view delegate
 

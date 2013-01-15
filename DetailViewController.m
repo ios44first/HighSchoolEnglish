@@ -38,7 +38,14 @@
     [back release];
     [backButton release];
     
-    //self.onButton
+    self.array=[NSMutableArray array];
+    DataFactory *factory=[DataFactory instance];
+    id delegate=[[UIApplication sharedApplication]delegate];
+    factory.managedObjectContext=[delegate managedObjectContext];
+    for (id temp in [factory getData:@"NewWord" andSort:@"createDate"])
+    {
+        [self.array addObject:temp];
+    }
 }
 -(void)goBack
 {
@@ -64,15 +71,22 @@
             [view removeFromSuperview];
         }
     }
+    
     UIButton *close=[UIButton buttonWithType:UIButtonTypeCustom];
     [close setImage:[UIImage imageNamed:@"btn_closereview_pressed.png"] forState:UIControlStateNormal];
     [close addTarget:self action:@selector(closeAlert:) forControlEvents:UIControlEventTouchUpInside];
     close.frame=CGRectMake(255, 0, 45, 36);
     [alertView addSubview:close];
-    UITextView *contain=[[UITextView alloc]initWithFrame:CGRectMake(10, 40, 280, 80)];
+    contain=[[UITextView alloc]initWithFrame:CGRectMake(10, 40, 280, 80)];
     contain.backgroundColor=[UIColor clearColor];
     contain.editable=NO;
-    contain.text=@"暂无内容。。。";
+    if ([self.array count]>0)
+    {
+        word=[self.array objectAtIndex:0];
+        contain.text=[NSString stringWithFormat:@"%@\n%@",word.title,word.result];
+    }
+    else
+        contain.text=@"暂无内容。。。";
     contain.font=[UIFont systemFontOfSize:17];
     [alertView addSubview:contain];
     [contain release];
@@ -93,11 +107,23 @@
     [alertView addSubview:nextButton];
 }
 -(void)preOne
-{}
+{
+    if (index>0&&index<[self.array count])
+    {
+        word=[self.array objectAtIndex:--index];
+        contain.text=[NSString stringWithFormat:@"%@\n%@",word.title,word.result];
+    }
+}
 -(void)deleteOne
 {}
 -(void)nextOne
-{}
+{
+    if (index>-1&&index<[self.array count]-1)
+    {
+        word=[self.array objectAtIndex:++index];
+        contain.text=[NSString stringWithFormat:@"%@\n%@",word.title,word.result];
+    }
+}
 -(void)closeAlert:(UIButton *)sender
 {
     UIAlertView *sup=(UIAlertView *)[sender superview];

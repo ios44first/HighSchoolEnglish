@@ -10,6 +10,7 @@
 #import "Questions.h"
 #import "WanXing.h"
 #import "NSString+Filter.h"
+#import "DuoXuan.h"
 
 @interface WanXingViewController : UIViewController<NSXMLParserDelegate>
 {
@@ -20,7 +21,7 @@
     BOOL isDown;
 }
 
-@property(assign,nonatomic) int i;
+@property(assign,nonatomic) int i,titleType;
 @property(retain,nonatomic)Questions *question;
 @property(retain,nonatomic) NSArray *arr;
 @property(retain,nonatomic) NSString *strTitle;

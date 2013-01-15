@@ -7,7 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DataFactory.h"
+#import "ReadArtical.h"
+#import "DuoXuan.h"
+#import "DanXuan.h"
 
 @interface WrongViewController : UITableViewController
+{
+    NSMutableArray *num;
+}
+@property(retain,nonatomic) NSMutableArray *array;
 
 @end

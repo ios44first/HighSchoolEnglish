@@ -10,13 +10,14 @@
 #import "Questions.h"
 #import "DanXuanTi.h"
 #import "NSString+Filter.h"
+#import "DanXuan.h"
 
 @interface doWorkViewController : UIViewController<NSXMLParserDelegate>
 {
     NSString *answer;
 }
 
-@property(assign,nonatomic) int i;
+@property(assign,nonatomic) int i,titleType;
 @property(retain,nonatomic) Questions *question;
 @property(retain,nonatomic) DanXuanTi *danxuanti;
 @property(retain,nonatomic) NSArray *arr;

@@ -13,7 +13,7 @@
 @end
 
 @implementation WanXingViewController
-@synthesize question,arr,strTitle,str,dictionary,i,array;
+@synthesize question,arr,strTitle,str,dictionary,i,array,titleType;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -68,6 +68,23 @@
 }
 -(void)addQuestion
 {
+    id delegate=[[UIApplication sharedApplication]delegate];
+    NSManagedObjectContext *managedObjectContext=[delegate managedObjectContext];
+    DuoXuan *duo=[NSEntityDescription insertNewObjectForEntityForName:@"DuoXuan" inManagedObjectContext:managedObjectContext];
+    duo.titleType=[NSNumber numberWithInt:self.titleType];
+    duo.tiId=[NSNumber numberWithInt:self.question.questionsId];
+    duo.title=self.containView.text;
+    duo.createDate=[NSDate date];
+    
+    NSError *error = nil;
+    if (![managedObjectContext save:&error])
+    {
+        NSLog(@"添加题目失败, %@, %@", error, [error userInfo]);
+        abort();
+    }
+    UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"温馨提示：" message:@"收藏题目成功！" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];
+    [alert show];
+    [alert release];
 }
 -(void)goBack
 {

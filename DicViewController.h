@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NewWord.h"
 
 @interface DicViewController : UIViewController<UITextFieldDelegate>
 {

@@ -8,9 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import "NewWordViewController.h"
+#import "NewWord.h"
+#import "DataFactory.h"
 
 @interface DetailViewController : UIViewController<UIAlertViewDelegate>
+{
+    int index;
+    NewWord *word;
+    UITextView *contain;
+}
 
+@property(retain,nonatomic) NSMutableArray *array;
 @property (retain, nonatomic) IBOutlet UITextField *timeView;
 @property (retain, nonatomic) IBOutlet UISwitch *onButton;
 
