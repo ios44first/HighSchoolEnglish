@@ -39,7 +39,12 @@
     [backButton release];
     
     self.array=[NSMutableArray array];
-    DataFactory *factory=[DataFactory instance];
+    [self getData];
+}
+-(void)getData
+{
+    [self.array removeAllObjects];
+    factory=[DataFactory instance];
     id delegate=[[UIApplication sharedApplication]delegate];
     factory.managedObjectContext=[delegate managedObjectContext];
     for (id temp in [factory getData:@"NewWord" andSort:@"createDate"])
@@ -80,6 +85,8 @@
     contain=[[UITextView alloc]initWithFrame:CGRectMake(10, 40, 280, 80)];
     contain.backgroundColor=[UIColor clearColor];
     contain.editable=NO;
+    [self getData];
+    index=0;
     if ([self.array count]>0)
     {
         word=[self.array objectAtIndex:0];
@@ -118,7 +125,24 @@
     }
 }
 -(void)deleteOne
-{}
+{
+    if ([self.array count]>0)
+    {
+        [factory.managedObjectContext deleteObject:[self.array objectAtIndex:index]];
+        NSError *error;
+        if (![factory.managedObjectContext save:&error])
+        {
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            abort();
+        }
+        [self getData];
+        if ([self.array count]>0&&--index<[self.array count])
+        {
+            word=[self.array objectAtIndex:index];
+            contain.text=[NSString stringWithFormat:@"%@\n%@",word.title,word.result];
+        }
+    }
+}
 -(void)nextOne
 {
     if ([self.array count]>0)
@@ -141,6 +165,7 @@
     NewWordViewController *newWord=[[NewWordViewController alloc]init];
     newWord.title=@"生 词 本";
     [self.navigationController pushViewController:newWord animated:YES];
+    [newWord release];
 }
 
 - (IBAction)wordAlert:(UIButton *)sender

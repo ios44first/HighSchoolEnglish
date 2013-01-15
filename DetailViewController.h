@@ -16,6 +16,7 @@
     int index;
     NewWord *word;
     UITextView *contain;
+    DataFactory *factory;
 }
 
 @property(retain,nonatomic) NSMutableArray *array;

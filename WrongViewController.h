@@ -17,9 +17,11 @@
 #import "ReadViewController.h"
 #import "Questions.h"
 
-@interface WrongViewController : UITableViewController
+@interface WrongViewController : UITableViewController<NSFetchedResultsControllerDelegate>
 {
     NSMutableArray *num;
+    DataFactory *factory;
+    BOOL isEditing;
 }
 @property(retain,nonatomic) NSMutableArray *array;
 

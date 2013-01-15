@@ -39,8 +39,21 @@
     [back release];
     [backButton release];
     
+    UIImage* image1= [UIImage imageNamed:@"delete_pressed.png"];
+    CGRect frame_2= CGRectMake(0, 0, image1.size.width, image1.size.height);
+    UIButton* backButton1= [[UIButton alloc] initWithFrame:frame_2];
+    [backButton1 setBackgroundImage:image1 forState:UIControlStateNormal];
+    SEL s=self.editButtonItem.action;
+    [backButton1 addTarget:self action:s forControlEvents:UIControlEventTouchUpInside];
+    [backButton1 addTarget:self action:@selector(changeImg:) forControlEvents:UIControlEventTouchUpInside];
+    //定制自己的风格的 UIBarButtonItem
+    UIBarButtonItem* back1= [[UIBarButtonItem alloc] initWithCustomView:backButton1];
+    [self.navigationItem setRightBarButtonItem:back1];
+    [back1 release];
+    [backButton1 release];
+    
     self.array=[NSMutableArray array];
-    DataFactory *factory=[DataFactory instance];
+    factory=[DataFactory instance];
     id delegate=[[UIApplication sharedApplication]delegate];
     factory.managedObjectContext=[delegate managedObjectContext];
     for (id temp in [factory getData:@"NewWord" andSort:@"title"])
@@ -51,6 +64,20 @@
 -(void)goBack
 {
     [self.navigationController popViewControllerAnimated:YES];
+}
+-(void)changeImg:(UIButton *)sender
+{
+    if (isEditing)
+    {
+        isEditing=NO;
+        [sender setBackgroundImage:[UIImage imageNamed:@"delete_pressed.png"] forState:UIControlStateNormal];
+    }
+    else
+    {
+        isEditing=YES;
+        [sender setBackgroundImage:[UIImage imageNamed:@"done_pressed.png"] forState:UIControlStateNormal];
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -80,11 +107,16 @@
         cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     }
     cell.imageView.image=[UIImage imageNamed:@"bg_point.png"];
+    
+    [self configureCell:cell atIndexPath:indexPath];
+    
+    return cell;
+}
+-(void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+{
     NewWord *word=[self.array objectAtIndex:indexPath.row];
     cell.textLabel.text=word.title;
     cell.detailTextLabel.text=word.result;
-    
-    return cell;
 }
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -97,7 +129,14 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [factory.managedObjectContext deleteObject:[factory.fetchedResultsController objectAtIndexPath:indexPath]];
+        [self.array removeObjectAtIndex:indexPath.row];
+        [self.tableView reloadData];
+        NSError *error;
+        if (![factory.managedObjectContext save:&error]) {
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            abort();
+        }
     }   
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
@@ -118,14 +157,60 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     [detailViewController release];
-     */
+    
+}
+#pragma mark -
+#pragma mark - NSFetchedResultsControllerDelegate
+-(void)controllerWillChangeContent:(NSFetchedResultsController *)controller
+{
+    [self.tableView beginUpdates];
+}
+- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
+           atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
+{
+    switch(type)
+    {
+        case NSFetchedResultsChangeInsert:
+            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+    }
 }
 
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
+       atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
+      newIndexPath:(NSIndexPath *)newIndexPath
+{
+    UITableView *tableView = self.tableView;
+    
+    switch(type)
+    {
+            
+        case NSFetchedResultsChangeInsert:
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeUpdate:
+            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+            break;
+            
+        case NSFetchedResultsChangeMove:
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+{
+    [self.tableView endUpdates];
+}
 @end

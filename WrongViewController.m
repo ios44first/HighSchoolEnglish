@@ -41,9 +41,21 @@
     [self.navigationItem setLeftBarButtonItem:back];
     [back release];
     [backButton release];
+    UIImage* image1= [UIImage imageNamed:@"delete_pressed.png"];
+    CGRect frame_2= CGRectMake(0, 0, image1.size.width, image1.size.height);
+    UIButton* backButton1= [[UIButton alloc] initWithFrame:frame_2];
+    [backButton1 setBackgroundImage:image1 forState:UIControlStateNormal];
+    SEL s=self.editButtonItem.action;
+    [backButton1 addTarget:self action:s forControlEvents:UIControlEventTouchUpInside];
+    [backButton1 addTarget:self action:@selector(changeImg:) forControlEvents:UIControlEventTouchUpInside];
+    //定制自己的风格的 UIBarButtonItem
+    UIBarButtonItem* back1= [[UIBarButtonItem alloc] initWithCustomView:backButton1];
+    [self.navigationItem setRightBarButtonItem:back1];
+    [back1 release];
+    [backButton1 release];
     
     self.array=[NSMutableArray array];
-    DataFactory *factory=[DataFactory instance];
+    factory=[DataFactory instance];
     id delegate=[[UIApplication sharedApplication]delegate];
     factory.managedObjectContext=[delegate managedObjectContext];
     NSMutableArray *tem=[NSMutableArray array];
@@ -51,19 +63,19 @@
     {
         [tem addObject:temp];
     }
-    [self.array addObject:[NSArray arrayWithArray:tem]];
+    [self.array addObject:[NSMutableArray arrayWithArray:tem]];
     [tem removeAllObjects];
     for (id temp in [factory getData:@"ReadArtical" andSort:@"createDate"])
     {
         [tem addObject:temp];
     }
-    [self.array addObject:[NSArray arrayWithArray:tem]];
+    [self.array addObject:[NSMutableArray arrayWithArray:tem]];
     [tem removeAllObjects];
     for (id temp in [factory getData:@"DuoXuan" andSort:@"createDate"])
     {
         [tem addObject:temp];
     }
-    [self.array addObject:[NSArray arrayWithArray:tem]];
+    [self.array addObject:[NSMutableArray arrayWithArray:tem]];
     [tem removeAllObjects];
     num=[[NSMutableArray alloc]initWithObjects:@"1",@"1",@"1", nil];
 }
@@ -71,7 +83,20 @@
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
-
+-(void)changeImg:(UIButton *)sender
+{
+    if (isEditing)
+    {
+        isEditing=NO;
+        [sender setBackgroundImage:[UIImage imageNamed:@"delete_pressed.png"] forState:UIControlStateNormal];
+    }
+    else
+    {
+        isEditing=YES;
+        [sender setBackgroundImage:[UIImage imageNamed:@"done_pressed.png"] forState:UIControlStateNormal];
+    }
+    
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -158,6 +183,11 @@
         cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     }
     cell.imageView.image=[UIImage imageNamed:@"bg_point.png"];
+    [self configureCell:cell atIndexPath:indexPath];
+    return cell;
+}
+-(void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+{
     NSDateFormatter *format=[[NSDateFormatter alloc]init];
     [format setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
     if (indexPath.section==1)
@@ -167,15 +197,15 @@
         NSString *temp=@"";
         switch ([read.titleType intValue])
         {
-           case 15:temp=[temp stringByAppendingFormat:@"阅读理解"];break;
-           case 16:temp=[temp stringByAppendingFormat:@"补全阅读"];break;
-           case 17:temp=[temp stringByAppendingFormat:@"短文改错"];break;
-           case 18:temp=[temp stringByAppendingFormat:@"书面表达"];break;
-           case 19:temp=[temp stringByAppendingFormat:@"单词拼写"];break;
-           case 20:temp=[temp stringByAppendingFormat:@"阅读表达"];break;
-           case 21:temp=[temp stringByAppendingFormat:@"情景对话"];break;
-           case 24:temp=[temp stringByAppendingFormat:@"翻 译"];break;
-           case 28:temp=[temp stringByAppendingFormat:@"句型转换"];break;
+            case 15:temp=[temp stringByAppendingFormat:@"阅读理解"];break;
+            case 16:temp=[temp stringByAppendingFormat:@"补全阅读"];break;
+            case 17:temp=[temp stringByAppendingFormat:@"短文改错"];break;
+            case 18:temp=[temp stringByAppendingFormat:@"书面表达"];break;
+            case 19:temp=[temp stringByAppendingFormat:@"单词拼写"];break;
+            case 20:temp=[temp stringByAppendingFormat:@"阅读表达"];break;
+            case 21:temp=[temp stringByAppendingFormat:@"情景对话"];break;
+            case 24:temp=[temp stringByAppendingFormat:@"翻 译"];break;
+            case 28:temp=[temp stringByAppendingFormat:@"句型转换"];break;
         }
         cell.detailTextLabel.text=[NSString stringWithFormat:@"%@           %@",temp,[format stringFromDate:read.createDate]];
     }
@@ -196,10 +226,10 @@
     }
     else
     {
-        cell.textLabel.text=@"暂无标题。。。";
-        cell.detailTextLabel.text=@"暂无信息。。。";
+        cell.textLabel.text=[NSString stringWithFormat:@"暂无标题。。。"];
+        cell.detailTextLabel.text=[NSString stringWithFormat:@"暂无信息。。。"];
     }
-    return cell;
+    [format release];
 }
 
 // Override to support conditional editing of the table view.
@@ -212,7 +242,16 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        id tem = [[self.array objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+        NSMutableArray *a=[self.array objectAtIndex:indexPath.section];
+        [a removeObjectAtIndex:indexPath.row];
+        [factory.managedObjectContext deleteObject:tem];
+        [self.tableView reloadData];
+        NSError *error;
+        if (![factory.managedObjectContext save:&error]) {
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            abort();
+        }
     }   
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
@@ -284,9 +323,64 @@
             wanxing.isWrong=YES;
             [self.navigationController pushViewController:wanxing animated:YES];
             [wanxing release];
+            [q release];
         }
             break;
     }
+}
+#pragma mark -
+#pragma mark - NSFetchedResultsControllerDelegate
+-(void)controllerWillChangeContent:(NSFetchedResultsController *)controller
+{
+    [self.tableView beginUpdates];
+}
+- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
+           atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
+{
+    switch(type)
+    {
+        case NSFetchedResultsChangeInsert:
+            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+    }
+}
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
+       atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
+      newIndexPath:(NSIndexPath *)newIndexPath
+{
+    UITableView *tableView = self.tableView;
+    
+    switch(type)
+    {
+            
+        case NSFetchedResultsChangeInsert:
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeUpdate:
+            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+            break;
+            
+        case NSFetchedResultsChangeMove:
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+{
+    [self.tableView endUpdates];
 }
 
 @end

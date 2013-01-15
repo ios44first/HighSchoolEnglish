@@ -43,11 +43,9 @@
             abort();
     }
 
-    NSArray *dataArray=[NSArray array];
     id<NSFetchedResultsSectionInfo> sectionInfo=[[self.fetchedResultsController sections] objectAtIndex:0];
-    dataArray=[sectionInfo objects];
     //NSLog(@"%@",[[[sectionInfo objects] objectAtIndex:0] class]);
-    return dataArray;
+    return [sectionInfo objects];
 }
 
 +(DataFactory *)instance

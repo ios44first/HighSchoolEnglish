@@ -10,7 +10,11 @@
 #import "DataFactory.h"
 #import "NewWord.h"
 
-@interface NewWordViewController : UITableViewController
+@interface NewWordViewController : UITableViewController<NSFetchedResultsControllerDelegate>
+{
+    DataFactory *factory;
+    BOOL isEditing;
+}
 
 @property(retain,nonatomic) NSMutableArray *array;
 
