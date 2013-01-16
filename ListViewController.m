@@ -327,7 +327,6 @@
         case 15:
         case 16:
         case 17:
-        case 18:
         case 19:
         case 20:
         case 21:
@@ -342,6 +341,18 @@
             read.titleType=self.titleType;
             [self.navigationController pushViewController:read animated:YES];
             [read release];
+        }
+            break;
+        case 18:
+        {
+            ArticalViewController *artical=[[ArticalViewController alloc]init];
+            artical.arr=self.arrayData;
+            artical.strTitle=self.title;
+            artical.question=q;
+            artical.i=indexPath.row;
+            artical.titleType=self.titleType;
+            [self.navigationController pushViewController:artical animated:YES];
+            [artical release];
         }
             break;
         case 610:

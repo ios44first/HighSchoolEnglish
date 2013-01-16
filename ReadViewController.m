@@ -47,7 +47,7 @@
     tishiAnswer.editable=NO;
     [scrollView addSubview:tishiAnswer];
     
-    UIControl *con=[[UIControl alloc]initWithFrame:CGRectMake(0, 0, 320, 150)];
+    UIControl *con=[[UIControl alloc]initWithFrame:CGRectMake(0, 0, 320, 100)];
     [con addTarget:self action:@selector(goDown) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:con];
     [con release];
@@ -395,6 +395,7 @@
             self.artical=[self.arr objectAtIndex:++i];
         }
     }
+    [self goDown];
     [self setContain];
 }
 

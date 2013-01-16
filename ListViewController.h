@@ -16,6 +16,7 @@
 #import "BuQuanViewController.h"
 #import "NSString+Filter.h"
 #import "DanXuanTi.h"
+#import "ArticalViewController.h"
 
 @interface ListViewController : UITableViewController<NSXMLParserDelegate,EGORefreshTableHeaderDelegate ,UIScrollViewDelegate>
 {

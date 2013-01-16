@@ -351,6 +351,8 @@
 		0FBCDA2516A53B01000BF84F /* DuoXuan.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBCDA2416A53B01000BF84F /* DuoXuan.m */; };
 		0FBCDA3316A55CAD000BF84F /* delete_pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 0FBCDA3216A55CAD000BF84F /* delete_pressed.png */; };
 		0FBCDA3A16A56482000BF84F /* done_pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 0FBCDA3916A56482000BF84F /* done_pressed.png */; };
+		0FBCDA4416A57F2F000BF84F /* ArticalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBCDA4216A57F2F000BF84F /* ArticalViewController.m */; };
+		0FBCDA4516A57F2F000BF84F /* ArticalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FBCDA4316A57F2F000BF84F /* ArticalViewController.xib */; };
 		0FBFD7FC169A5FB200AAA559 /* doWorkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBFD7FA169A5FB200AAA559 /* doWorkViewController.m */; };
 		0FBFD7FD169A5FB200AAA559 /* doWorkViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FBFD7FB169A5FB200AAA559 /* doWorkViewController.xib */; };
 		0FC9A32B169A968D00DAA31B /* DanXuanTi.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC9A32A169A968D00DAA31B /* DanXuanTi.m */; };
@@ -750,6 +752,9 @@
 		0FBCDA2416A53B01000BF84F /* DuoXuan.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuoXuan.m; sourceTree = "<group>"; };
 		0FBCDA3216A55CAD000BF84F /* delete_pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete_pressed.png; sourceTree = "<group>"; };
 		0FBCDA3916A56482000BF84F /* done_pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = done_pressed.png; sourceTree = "<group>"; };
+		0FBCDA4116A57F2F000BF84F /* ArticalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArticalViewController.h; sourceTree = "<group>"; };
+		0FBCDA4216A57F2F000BF84F /* ArticalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArticalViewController.m; sourceTree = "<group>"; };
+		0FBCDA4316A57F2F000BF84F /* ArticalViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ArticalViewController.xib; sourceTree = "<group>"; };
 		0FBFD7F9169A5FB200AAA559 /* doWorkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = doWorkViewController.h; sourceTree = "<group>"; };
 		0FBFD7FA169A5FB200AAA559 /* doWorkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = doWorkViewController.m; sourceTree = "<group>"; };
 		0FBFD7FB169A5FB200AAA559 /* doWorkViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = doWorkViewController.xib; sourceTree = "<group>"; };
@@ -1446,6 +1451,9 @@
 				0FD12ED8169C19D900F43E6F /* ReadViewController.h */,
 				0FD12ED9169C19D900F43E6F /* ReadViewController.m */,
 				0FD12EDA169C19D900F43E6F /* ReadViewController.xib */,
+				0FBCDA4116A57F2F000BF84F /* ArticalViewController.h */,
+				0FBCDA4216A57F2F000BF84F /* ArticalViewController.m */,
+				0FBCDA4316A57F2F000BF84F /* ArticalViewController.xib */,
 			);
 			name = tiku;
 			sourceTree = "<group>";
@@ -1897,6 +1905,7 @@
 				0FFE1E0C16A2B736004C3B95 /* yejing.jpg in Resources */,
 				0FBCDA3316A55CAD000BF84F /* delete_pressed.png in Resources */,
 				0FBCDA3A16A56482000BF84F /* done_pressed.png in Resources */,
+				0FBCDA4516A57F2F000BF84F /* ArticalViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1941,6 +1950,7 @@
 				0FBCDA1F16A53B01000BF84F /* ReadArtical.m in Sources */,
 				0FBCDA2216A53B01000BF84F /* DanXuan.m in Sources */,
 				0FBCDA2516A53B01000BF84F /* DuoXuan.m in Sources */,
+				0FBCDA4416A57F2F000BF84F /* ArticalViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
