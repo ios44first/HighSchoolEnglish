@@ -26,6 +26,7 @@
      BOOL isShow;
 }
 
+@property(retain,nonatomic) NSMutableArray *madeArray;
 @property (retain,nonatomic) Questions *question;
 @property (assign,nonatomic) int i;
 @property(retain,nonatomic) NSArray *arr;

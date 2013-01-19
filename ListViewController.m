@@ -39,13 +39,14 @@
     //  update the last update date
     [_refreshHeaderView refreshLastUpdatedDate];
     
-    NSLog(@"%d,%d,%d",year,grade,titleType);
+    //NSLog(@"%d,%d,%d",year,grade,titleType);
     
     self.array=[NSMutableArray array];
     self.arrayData=[NSMutableArray array];
     self.str=[NSMutableString string];
     self.dictionary=[NSMutableDictionary dictionary];
     currentpagenum=0;
+
     self.areaDic=[NSDictionary dictionaryWithObjectsAndKeys:@"天津",@"120000",@"河北",@"130000",@"山西",@"140000",@"内蒙",@"150000",@"辽宁",@"210000",@"吉林",@"220000",@"黑龙江",@"230000",@"上海",@"310000",@"江苏",@"320000",@"浙江",@"330000",@"安徽",@"340000",@"福建",@"350000",@"江西",@"360000",@"山东",@"370000",@"河南",@"410000",@"湖北",@"420000",@"湖南",@"430000",@"广东",@"440000",@"广西",@"450000",@"海南",@"460000",@"重庆",@"500000",@"四川",@"510000",@"贵州",@"520000",@"云南",@"530000",@"西藏",@"540000",@"陕西",@"610000",@"甘肃",@"620000",@"青海",@"630000",@"宁夏",@"640000",@"新疆",@"650000",@"北京",@"110000", nil];
     [self getData];
     
@@ -61,6 +62,13 @@
     [backButton release];
     
     [self.tableView setSeparatorColor:[UIColor grayColor]];
+}
+- (void)viewWillAppear: (BOOL)animated
+{
+    NSString *path=[[NSBundle mainBundle] pathForResource:@"questionID" ofType:@"plist"];
+    madeArray=[[NSMutableArray alloc]initWithContentsOfFile:path];
+    //NSLog(@"%@",madeArray);
+    [self.tableView reloadData];
 }
 -(void)getData
 {
@@ -86,7 +94,7 @@
 }
 -(void)goBack
 {
-    [self.navigationController popViewControllerAnimated:YES];
+   [self.navigationController popViewControllerAnimated:YES];
 }
 #pragma mark - NSXMLParserDelegate 代理方法
 -(void)parserDidStartDocument:(NSXMLParser *)parser
@@ -284,7 +292,12 @@
         cell.detailTextLabel.text=[NSString stringWithFormat:@"%@                %@",self.title,[que.createDate substringToIndex:10]];
     else
         cell.detailTextLabel.text=[NSString stringWithFormat:@"%d年%@                %@",que.year,self.title,area];
-    cell.imageView.image=[UIImage imageNamed:@"bg_point.png"];
+    
+    if ([madeArray containsObject:[NSString stringWithFormat:@"%d",que.questionsId]])
+        cell.imageView.image=[UIImage imageNamed:@"bg_point_yi.png"];
+    else
+        cell.imageView.image=[UIImage imageNamed:@"bg_point_wei.png"];
+    
     return cell;
 }
 
@@ -303,6 +316,7 @@
             DanXuanTi *d=[[DanXuanTi alloc]init];
             detailViewController.danxuanti=d;
             [d release];
+          detailViewController.madeArray=[[NSMutableArray alloc]initWithArray:madeArray];
           detailViewController.arr=self.arrayData;
           detailViewController.strTitle=self.title;
           detailViewController.question=q;
@@ -315,6 +329,7 @@
         case 14:
         {
             WanXingViewController *wanxing=[[WanXingViewController alloc]init];
+            wanxing.madeArray=madeArray;
             wanxing.arr=self.arrayData;
             wanxing.strTitle=self.title;
             wanxing.question=q;
@@ -334,6 +349,7 @@
         case 28:
         {
             ReadViewController *read=[[ReadViewController alloc]init];
+            read.madeArray=madeArray;
             read.arr=self.arrayData;
             read.strTitle=self.title;
             read.question=q;
@@ -346,6 +362,7 @@
         case 18:
         {
             ArticalViewController *artical=[[ArticalViewController alloc]init];
+            artical.madeArray=madeArray;
             artical.arr=self.arrayData;
             artical.strTitle=self.title;
             artical.question=q;
@@ -363,6 +380,7 @@
         case 672:
         {
             TalkViewController *talk =[[TalkViewController alloc]init];
+            talk.madeArray=madeArray;
             talk.arr=self.arrayData;
             talk.question=q;
             talk.i=indexPath.row;
@@ -373,6 +391,7 @@
         case 675:
         {
             BuQuanViewController *buquan=[[BuQuanViewController alloc]init];
+            buquan.madeArray=madeArray;
             buquan.title=@"补全填空";
             buquan.arr=self.arrayData;
             buquan.question=q;

@@ -13,7 +13,7 @@
 @end
 
 @implementation BuQuanViewController
-@synthesize question,i,arr,listenTitle;
+@synthesize question,i,arr,listenTitle,madeArray;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -227,6 +227,13 @@
         [self.submitButton setBackgroundImage:[UIImage imageNamed:@"btn_listen_back_pressed.png"] forState:UIControlStateNormal];
     else
         [self.submitButton setBackgroundImage:[UIImage imageNamed:@"btn_listen_submit_pressed.png"] forState:UIControlStateNormal];
+    NSString *path=[[NSBundle mainBundle] pathForResource:@"questionID" ofType:@"plist"];
+    NSString *queNum=[NSString stringWithFormat:@"%d",self.question.questionsId];
+    if (![madeArray containsObject:queNum])
+    {
+        [madeArray addObject:queNum];
+        [madeArray writeToFile:path atomically:YES];
+    }
 }
 - (IBAction)nextTI:(UIButton *)sender
 {

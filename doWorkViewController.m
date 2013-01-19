@@ -13,7 +13,7 @@
 @end
 
 @implementation doWorkViewController
-@synthesize question,arr,strTitle,str,dictionary,i,titleType,isWrong;
+@synthesize question,arr,strTitle,str,dictionary,i,titleType,isWrong,madeArray;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -110,7 +110,7 @@
 
 -(void)goBack
 {
-    [self.navigationController popViewControllerAnimated:YES];
+   [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)setContain
 {
@@ -442,6 +442,14 @@
     }
     [alert show];
     [alert release];
+    
+    NSString *path=[[NSBundle mainBundle] pathForResource:@"questionID" ofType:@"plist"];
+    NSString *num=[NSString stringWithFormat:@"%d",self.danxuanti.tiId];
+    if (![madeArray containsObject:num])
+    {
+        [madeArray addObject:num];
+        [madeArray writeToFile:path atomically:YES];
+    }
 }
 
 - (IBAction)chooseAnswer:(UIButton *)sender

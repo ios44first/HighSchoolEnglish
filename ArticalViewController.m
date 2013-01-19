@@ -13,7 +13,7 @@
 @end
 
 @implementation ArticalViewController
-@synthesize question,arr,strTitle,str,dictionary,i,titleType,array=_array,stringAnswer,stringTishi;
+@synthesize question,arr,strTitle,str,dictionary,i,titleType,array=_array,stringAnswer,stringTishi,madeArray;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -306,6 +306,13 @@
 {
     [self downBut];
     tishiAnswer.text=self.stringAnswer;
+    NSString *path=[[NSBundle mainBundle] pathForResource:@"questionID" ofType:@"plist"];
+    NSString *queNum=[NSString stringWithFormat:@"%d",self.question.questionsId];
+    if (![madeArray containsObject:queNum])
+    {
+        [madeArray addObject:queNum];
+        [madeArray writeToFile:path atomically:YES];
+    }
 }
 
 - (IBAction)nextTi:(UIButton *)sender

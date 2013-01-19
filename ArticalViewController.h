@@ -20,6 +20,8 @@
     UILabel *content;
     BOOL isDown;
 }
+
+@property(retain,nonatomic) NSMutableArray *madeArray;
 @property(assign,nonatomic) int i,titleType;
 @property(retain,nonatomic)Questions *question;
 @property(retain,nonatomic) NSArray *arr;

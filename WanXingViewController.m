@@ -13,7 +13,7 @@
 @end
 
 @implementation WanXingViewController
-@synthesize question,arr,strTitle,str,dictionary,i,array,titleType,isWrong;
+@synthesize question,arr,strTitle,str,dictionary,i,array,titleType,isWrong,madeArray;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -259,6 +259,13 @@
           [alert show];
           [alert release];
      }
+    NSString *path=[[NSBundle mainBundle] pathForResource:@"questionID" ofType:@"plist"];
+    NSString *queNum=[NSString stringWithFormat:@"%d",self.question.questionsId];
+    if (![madeArray containsObject:queNum])
+    {
+        [madeArray addObject:queNum];
+        [madeArray writeToFile:path atomically:YES];
+    }
 }
 -(void)showTishi:(UIButton *)sender
 {

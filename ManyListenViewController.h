@@ -17,6 +17,7 @@
 {
     int currentpagenum;
     BOOL isChild;
+    NSMutableArray *madeArray;
     
     EGORefreshTableHeaderView *_refreshHeaderView;
     BOOL _reloading;

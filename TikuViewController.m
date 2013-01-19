@@ -43,11 +43,10 @@ const NSUInteger btnInterval = 60;
 	[scrollView setContentSize:CGSizeMake(btnNumber * btnInterval, btnHeight)];
 	scrollView.backgroundColor = [UIColor colorWithRed:0.22 green:0.77 blue:0.99 alpha:1.0];
 	[self.view addSubview:scrollView];
-    //[scrollView setContentOffset:CGPointMake(btnNumber * btnInterval-screenWidth, 0) animated:YES];
+    
     btnStretchImg= [UIImage imageNamed:@"select.png"];
     [self addTitleButtons];
     
-    NSLog(@"%d",self.grade);
 }
 
 - (IBAction)goToList:(UIButton *)sender

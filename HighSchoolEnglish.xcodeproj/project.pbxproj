@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		0F1128D5169FC5B90019B59C /* ListenChild.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1128D4169FC5B80019B59C /* ListenChild.m */; };
 		0F1128D9169FC5D50019B59C /* ListenMany.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F1128D8169FC5D50019B59C /* ListenMany.m */; };
+		0F5B639916AA6EE30052A77D /* questionID.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0F5B639816AA6EE30052A77D /* questionID.plist */; };
+		0F5B639C16AAA49C0052A77D /* bg_point_wei.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F5B639A16AAA49C0052A77D /* bg_point_wei.png */; };
+		0F5B639D16AAA49C0052A77D /* bg_point_yi.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F5B639B16AAA49C0052A77D /* bg_point_yi.png */; };
 		0F5C31D3169E8CD300972656 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F5C31D2169E8CD300972656 /* CFNetwork.framework */; };
 		0F5C31D5169E8CE600972656 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F5C31D4169E8CE600972656 /* AudioToolbox.framework */; };
 		0F5C31D7169E8CF000972656 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F5C31D6169E8CF000972656 /* MediaPlayer.framework */; };
@@ -390,6 +393,9 @@
 		0F1128D4169FC5B80019B59C /* ListenChild.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListenChild.m; sourceTree = "<group>"; };
 		0F1128D7169FC5D50019B59C /* ListenMany.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListenMany.h; sourceTree = "<group>"; };
 		0F1128D8169FC5D50019B59C /* ListenMany.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListenMany.m; sourceTree = "<group>"; };
+		0F5B639816AA6EE30052A77D /* questionID.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = questionID.plist; sourceTree = "<group>"; };
+		0F5B639A16AAA49C0052A77D /* bg_point_wei.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_point_wei.png; sourceTree = "<group>"; };
+		0F5B639B16AAA49C0052A77D /* bg_point_yi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_point_yi.png; sourceTree = "<group>"; };
 		0F5C31D2169E8CD300972656 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		0F5C31D4169E8CE600972656 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		0F5C31D6169E8CF000972656 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
@@ -884,6 +890,7 @@
 		0F71917716980FC600533C93 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				0F5B639816AA6EE30052A77D /* questionID.plist */,
 				0FCB72AD169D583000723A0B /* blackArrow.png */,
 				0FCB72AE169D583000723A0B /* blackArrow@2x.png */,
 				0FCB72AF169D583000723A0B /* blueArrow.png */,
@@ -907,6 +914,8 @@
 		0F71918D16980FE100533C93 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				0F5B639A16AAA49C0052A77D /* bg_point_wei.png */,
+				0F5B639B16AAA49C0052A77D /* bg_point_yi.png */,
 				0F5C31E1169EC65B00972656 /* translation_result1.png */,
 				0F5C31DD169EC0AF00972656 /* HY.png */,
 				0F5C31DE169EC0AF00972656 /* YH.png */,
@@ -1910,6 +1919,9 @@
 				0FBCDA3A16A56482000BF84F /* done_pressed.png in Resources */,
 				0FBCDA4516A57F2F000BF84F /* ArticalViewController.xib in Resources */,
 				0FBB9B4D16A93C8400E13AB2 /* btn_listen_back_pressed.png in Resources */,
+				0F5B639916AA6EE30052A77D /* questionID.plist in Resources */,
+				0F5B639C16AAA49C0052A77D /* bg_point_wei.png in Resources */,
+				0F5B639D16AAA49C0052A77D /* bg_point_yi.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

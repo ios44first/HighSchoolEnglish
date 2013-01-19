@@ -10,6 +10,7 @@
 
 @interface ListenMany : NSObject
 
+@property (assign,nonatomic) int listenId;
 @property (retain,nonatomic) NSString *listenTitle;
 @property (retain,nonatomic) NSString *midFile;
 @property (retain,nonatomic) NSString *original;

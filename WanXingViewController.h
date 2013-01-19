@@ -26,6 +26,7 @@
     UIImageView *imgV;
 }
 
+@property(retain,nonatomic) NSMutableArray *madeArray;
 @property(assign,nonatomic) int i,titleType;
 @property(assign,nonatomic) BOOL isWrong;
 @property(retain,nonatomic)Questions *question;

@@ -13,7 +13,7 @@
 @end
 
 @implementation ManyViewController
-@synthesize listen,i,arr;
+@synthesize listen,i,arr,madeArray;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -233,6 +233,14 @@
         [self.submitButton setBackgroundImage:[UIImage imageNamed:@"btn_listen_back_pressed.png"] forState:UIControlStateNormal];
     else
         [self.submitButton setBackgroundImage:[UIImage imageNamed:@"btn_listen_submit_pressed.png"] forState:UIControlStateNormal];
+    NSString *path=[[NSBundle mainBundle] pathForResource:@"questionID" ofType:@"plist"];
+    NSString *queNum=[NSString stringWithFormat:@"%d",self.listen.listenId];
+    NSLog(@"%@",queNum);
+    if (![madeArray containsObject:queNum])
+    {
+        [madeArray addObject:queNum];
+        [madeArray writeToFile:path atomically:YES];
+    }
 }
 
 - (IBAction)nextTI:(UIButton *)sender

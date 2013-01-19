@@ -23,6 +23,7 @@
     UIImageView *imgV;
 }
 
+@property(retain,nonatomic) NSMutableArray *madeArray;
 @property(assign,nonatomic) BOOL isWrong;
 @property(retain,nonatomic)ReadArtical *artical;
 @property(assign,nonatomic) int i,titleType;

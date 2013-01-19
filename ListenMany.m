@@ -10,6 +10,6 @@
 
 @implementation ListenMany
 
-@synthesize listenTitle,midFile,original,childArray,createTime;
+@synthesize listenTitle,midFile,original,childArray,createTime,listenId;
 
 @end

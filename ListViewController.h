@@ -21,6 +21,7 @@
 @interface ListViewController : UITableViewController<NSXMLParserDelegate,EGORefreshTableHeaderDelegate ,UIScrollViewDelegate>
 {
     int currentpagenum;
+    NSMutableArray *madeArray;
     
     EGORefreshTableHeaderView *_refreshHeaderView;
     BOOL _reloading;

@@ -73,6 +73,13 @@
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
+- (void)viewWillAppear: (BOOL)animated
+{
+    NSString *path=[[NSBundle mainBundle] pathForResource:@"questionID" ofType:@"plist"];
+    madeArray=[[NSMutableArray alloc]initWithContentsOfFile:path];
+    NSLog(@"%@",madeArray);
+    [self.tableView reloadData];
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -93,6 +100,10 @@
             [self.dictionaryChild removeAllObjects];
         else
             [self.dictionary removeAllObjects];
+    }
+    else if ([elementName isEqualToString:@"id"])
+    {
+        [str setString:@""];
     }
     else if ([elementName isEqualToString:@"title"])
     {
@@ -145,6 +156,11 @@
         isChild=NO;
         [self.dictionary setObject:[NSArray arrayWithArray:self.arrayChild] forKey:elementName];
     }
+    else if ([elementName isEqualToString:@"id"])
+    {
+        if (!isChild)
+            [self.dictionary setObject:[NSString stringWithString:str] forKey:elementName];
+    }
     else if ([elementName isEqualToString:@"title"])
     {
         if (isChild)
@@ -188,6 +204,7 @@
     for (id element in self.array)
     {
         ListenMany *many=[[ListenMany alloc]init];
+        many.listenId=[[element objectForKey:@"id"] intValue];
         many.listenTitle=[element objectForKey:@"title"];
         many.midFile=[element objectForKey:@"midfile"];
         many.original=[element objectForKey:@"original"];
@@ -246,7 +263,11 @@
         cell.textLabel.text=[NSString filterString:many.listenTitle];
     [cell.detailTextLabel setFont:[UIFont fontWithName:@"Thonburi" size:13]];
     cell.detailTextLabel.text=[NSString stringWithFormat:@"%@                %@",self.title,[many.createTime substringToIndex:10]];
-    cell.imageView.image=[UIImage imageNamed:@"bg_point.png"];
+    
+    if ([madeArray containsObject:[NSString stringWithFormat:@"%d",many.listenId]])
+        cell.imageView.image=[UIImage imageNamed:@"bg_point_yi.png"];
+    else
+        cell.imageView.image=[UIImage imageNamed:@"bg_point_wei.png"];
     return cell;
 }
 
@@ -255,6 +276,7 @@
 {
      ManyViewController *detailViewController = [[ManyViewController alloc] init];
     ListenMany *lis=[self.arrayData objectAtIndex:indexPath.row];
+    detailViewController.madeArray=madeArray;
     detailViewController.listen=lis;
     detailViewController.i=indexPath.row;
     detailViewController.arr=self.arrayData;
