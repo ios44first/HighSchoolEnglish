@@ -31,9 +31,9 @@
         <attribute name="titleType" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="DanXuan" positionX="160" positionY="192" width="128" height="180"/>
-        <element name="DuoXuan" positionX="160" positionY="192" width="128" height="105"/>
-        <element name="NewWord" positionX="160" positionY="192" width="128" height="105"/>
-        <element name="ReadArtical" positionX="160" positionY="192" width="128" height="120"/>
+        <element name="DanXuan" positionX="189" positionY="192" width="128" height="180"/>
+        <element name="DuoXuan" positionX="54" positionY="189" width="128" height="105"/>
+        <element name="NewWord" positionX="324" positionY="189" width="128" height="105"/>
+        <element name="ReadArtical" positionX="-83" positionY="189" width="128" height="120"/>
     </elements>
 </model>

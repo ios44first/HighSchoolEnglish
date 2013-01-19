@@ -13,7 +13,7 @@
 @end
 
 @implementation TalkViewController
-@synthesize question,i,arr;
+@synthesize question,i,arr,listenTitle,selectA,selectB,selectC,butA,butB,butC;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -28,6 +28,7 @@
 {
     [super viewDidLoad];
     self.navigationItem.title=@"英语听力";
+    [self setLabelButton];
     
     UIImage* image= [UIImage imageNamed:@"return_pressed.png"];
     CGRect frame_1= CGRectMake(0, 0, image.size.width, image.size.height);
@@ -62,6 +63,45 @@
     self.sliderAV.value=0;
     isPlay=NO;
     isShow=NO;
+}
+-(void)setLabelButton
+{
+    self.listenTitle=[[UILabel alloc]initWithFrame:CGRectMake(10, 10, 300, 120)];
+    [self.listenTitle setBackgroundColor:[UIColor clearColor]];
+    [self.view addSubview:self.listenTitle];
+    
+    self.butA=[UIButton buttonWithType:UIButtonTypeCustom];
+    [self.butA setFrame:CGRectMake(20, 150, 20, 20)];
+    [self.butA addTarget:self action:@selector(butSelect:) forControlEvents:UIControlEventTouchUpInside];
+    [self.butA setTag:1];
+    [self.butA setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"btn_radio_off.png"]]];
+    [self.view addSubview:self.butA];
+    
+    self.butB=[UIButton buttonWithType:UIButtonTypeCustom];
+    [self.butB setFrame:CGRectMake(20, 180, 20, 20)];
+    [self.butB addTarget:self action:@selector(butSelect:) forControlEvents:UIControlEventTouchUpInside];
+    [self.butB setTag:2];
+    [self.butB setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"btn_radio_off.png"]]];
+    [self.view addSubview:self.butB];
+    
+    self.butC=[UIButton buttonWithType:UIButtonTypeCustom];
+    [self.butC setFrame:CGRectMake(20, 210, 20, 20)];
+    [self.butC addTarget:self action:@selector(butSelect:) forControlEvents:UIControlEventTouchUpInside];
+    [self.butC setTag:3];
+    [self.butC setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"btn_radio_off.png"]]];
+    [self.view addSubview:self.butC];
+    
+    self.selectA=[[UILabel alloc]initWithFrame:CGRectMake(50, 148, 250, 21)];
+    [self.selectA setBackgroundColor:[UIColor clearColor]];
+    [self.view addSubview:self.selectA];
+    
+    self.selectB=[[UILabel alloc]initWithFrame:CGRectMake(50, 179, 250, 21)];
+    [self.selectB setBackgroundColor:[UIColor clearColor]];
+    [self.view addSubview:self.selectB];
+    
+    self.selectC=[[UILabel alloc]initWithFrame:CGRectMake(50, 209, 250, 21)];
+    [self.selectC setBackgroundColor:[UIColor clearColor]];
+    [self.view addSubview:self.selectC];
 }
 -(void)changeValue
 {
@@ -126,6 +166,12 @@
 			[self.sliderAV setEnabled:NO];
 		}
 	}
+    if ([streamer isIdle])
+    {
+        isPlay=NO;
+        self.sliderAV.value=0;
+        [self.butPlay setBackgroundImage:[UIImage imageNamed:@"btn_play_pressed.png"] forState:UIControlStateNormal];
+    }
 }
 #pragma mark -
 #pragma mark 隐藏tabbar
@@ -176,21 +222,16 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)dealloc {
-    [_listenTitle release];
-    [_selectA release];
-    [_selectB release];
-    [_selectC release];
-    [_butA release];
-    [_butB release];
-    [_butC release];
+- (void)dealloc
+{
     [_sliderAV release];
     [_butPlay release];
+    [_submitButton release];
     [super dealloc];
 }
 #pragma mark -
 #pragma mark Button method
-- (IBAction)butSelect:(UIButton *)sender
+- (void)butSelect:(UIButton *)sender
 {
     switch (sender.tag)
     {
@@ -221,13 +262,13 @@
     if (isPlay)
     {
         isPlay=NO;
-        [self.butPlay setImage:[UIImage imageNamed:@"btn_play_pressed.png"] forState:UIControlStateNormal];
+        [self.butPlay setBackgroundImage:[UIImage imageNamed:@"btn_play_pressed.png"] forState:UIControlStateNormal];
         [streamer pause];
     }
     else
     {
         isPlay=YES;
-        [self.butPlay setImage:[UIImage imageNamed:@"btn_pause_pressed.png"] forState:UIControlStateNormal];
+        [self.butPlay setBackgroundImage:[UIImage imageNamed:@"btn_pause_pressed.png"] forState:UIControlStateNormal];
         if (streamer)
             [streamer start];
         else
@@ -269,11 +310,11 @@
     NSArray *viewArray=[NSArray arrayWithObjects:self.listenTitle,self.butA,self.butB,self.butC,self.selectA,self.selectB,self.selectC,resultView, nil];
     [self moveLR:viewArray];
     [UIView commitAnimations];
-    /*isPlay=NO;
-    [self.butPlay setImage:[UIImage imageNamed:@"btn_play_pressed.png"] forState:UIControlStateNormal];
-    [streamer stop];
-    [self destroyStreamer];
-    self.sliderAV.value=0;*/
+
+    if (isShow)
+        [self.submitButton setBackgroundImage:[UIImage imageNamed:@"btn_listen_back_pressed.png"] forState:UIControlStateNormal];
+    else
+        [self.submitButton setBackgroundImage:[UIImage imageNamed:@"btn_listen_submit_pressed.png"] forState:UIControlStateNormal];
 }
 
 - (IBAction)nextTI:(UIButton *)sender
@@ -282,7 +323,7 @@
     [self destroyStreamer];
     isPlay=NO;
     answer=nil;
-    [self.butPlay setImage:[UIImage imageNamed:@"btn_play_pressed.png"] forState:UIControlStateNormal];
+    [self.butPlay setBackgroundImage:[UIImage imageNamed:@"btn_play_pressed.png"] forState:UIControlStateNormal];
     if (isShow)
     {
         [self submitAnswer:nil];

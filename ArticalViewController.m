@@ -62,7 +62,7 @@
     [self.navigationItem setLeftBarButtonItem:back];
     [back release];
     [backButton release];
-    
+
     [self setContain];
 }
 -(void)goBack

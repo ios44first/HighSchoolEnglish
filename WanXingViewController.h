@@ -11,14 +11,19 @@
 #import "WanXing.h"
 #import "NSString+Filter.h"
 #import "DuoXuan.h"
+#import <QuartzCore/QuartzCore.h>
 
-@interface WanXingViewController : UIViewController<NSXMLParserDelegate>
+@interface WanXingViewController : UIViewController<NSXMLParserDelegate,UIAlertViewDelegate>
 {
     UIScrollView *scrollView;
     UIImageView *imgView;
     char answer[20];
     NSString *wanxingContain;
     BOOL isDown;
+    UITextView *message;
+    NSString *msg;
+    NSString *title;
+    UIImageView *imgV;
 }
 
 @property(assign,nonatomic) int i,titleType;

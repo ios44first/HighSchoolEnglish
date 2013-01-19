@@ -11,10 +11,15 @@
 #import "DanXuanTi.h"
 #import "NSString+Filter.h"
 #import "DanXuan.h"
+#import <QuartzCore/QuartzCore.h>
 
-@interface doWorkViewController : UIViewController<NSXMLParserDelegate>
+@interface doWorkViewController : UIViewController<NSXMLParserDelegate,UIAlertViewDelegate>
 {
     NSString *answer;
+    UITextView *message;
+    NSString *msg;
+    NSString *title;
+    UIImageView *imgV;
 }
 
 @property(assign,nonatomic) BOOL isWrong;

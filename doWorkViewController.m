@@ -79,10 +79,35 @@
         NSLog(@"添加题目失败, %@, %@", error, [error userInfo]);
         abort();
     }
-    UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"温馨提示：" message:@"收藏题目成功！" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];
-    [alert show];
-    [alert release];
+    
+    [self drawRect];
 }
+- (void)drawRect
+{
+    UIGraphicsBeginImageContext(CGSizeMake(320, 310));
+    [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    UIImageWriteToSavedPhotosAlbum(viewImage, nil, nil, nil);
+    imgV=[[UIImageView alloc]initWithImage:viewImage];
+    imgV.frame=CGRectMake(0, 0, 320, 310);
+    [self.view addSubview:imgV];
+    
+    CABasicAnimation *animation=[CABasicAnimation animationWithKeyPath:@"transform.scale"];//制定操作的属性名
+    animation.timingFunction=[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
+    animation.toValue=[NSNumber numberWithFloat:0.0f];
+    [animation setDuration:1.0f];
+    [animation setDelegate:self];
+    [imgV.layer addAnimation:animation forKey:@"animation"];
+    
+    CAKeyframeAnimation *animationPosition=[CAKeyframeAnimation animationWithKeyPath:@"position"];//制定操作的属性名
+    NSArray *values=[NSArray arrayWithObjects:[NSValue valueWithCGPoint:CGPointMake(160, 155)],[NSValue valueWithCGPoint:CGPointMake(300, -20)], nil];
+    [animationPosition setValues:values];
+    [animationPosition setDuration:1.0f];
+    [animationPosition setDelegate:self];
+    [imgV.layer addAnimation:animationPosition forKey:@"img-position"];
+}
+
 -(void)goBack
 {
     [self.navigationController popViewControllerAnimated:YES];
@@ -249,9 +274,52 @@
         self.danxuanti.hint3=@"";
     self.danxuanti.createdate=[self.dictionary objectForKey:@"createdate"];
    
-    NSLog(@"%@",self.danxuanti.tiTitle);
+    //NSLog(@"%@",self.danxuanti.tiTitle);
 }
 
+#pragma mark -
+#pragma mark UIAlertViewDelegate Methods
+-(void)willPresentAlertView:(UIAlertView *)alertView
+{
+    alertView.frame=CGRectMake(10, 150, 300, 180);
+    for (UIView *view in  alertView.subviews)
+    {
+        [view removeFromSuperview];
+    }
+    UIImageView *iv=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 300, 180)];
+    iv.image=[UIImage imageNamed:@"bg_reviewwords.png"];
+    [alertView addSubview:iv];
+    
+    UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(45, 0, 210, 36)];
+    label.text=title;
+    label.backgroundColor=[UIColor clearColor];
+    label.textAlignment=NSTextAlignmentCenter;
+    label.textColor=[UIColor colorWithRed:0.22 green:0.77 blue:0.99 alpha:1.0];
+    [alertView addSubview:label];
+    
+    UIButton *close=[UIButton buttonWithType:UIButtonTypeCustom];
+    [close setImage:[UIImage imageNamed:@"btn_closereview_pressed.png"] forState:UIControlStateNormal];
+    [close addTarget:self action:@selector(closeAlert:) forControlEvents:UIControlEventTouchUpInside];
+    close.frame=CGRectMake(255, 0, 45, 36);
+    [alertView addSubview:close];
+    
+    message = [[UITextView alloc] initWithFrame:CGRectMake(10, 40, 280, 120)];
+    message.editable=NO;
+    message.textColor=[UIColor colorWithRed:0.22 green:0.77 blue:0.99 alpha:1.0];
+    message.font=[UIFont systemFontOfSize:17];
+    message.textAlignment=NSTextAlignmentCenter;
+    [message setBackgroundColor:[UIColor clearColor]];
+    message.text=msg;
+    [alertView addSubview:message];
+}
+-(void)closeAlert:(UIButton *)sender
+{
+    UIAlertView *sup=(UIAlertView *)[sender superview];
+    [sup dismissWithClickedButtonIndex:0 animated:YES];
+}
+
+#pragma mark -
+#pragma mark 隐藏tabBar
 - (void)viewWillAppear: (BOOL)animated
 {
     [self hideTabBar:YES];
@@ -349,6 +417,8 @@
 {
     UIAlertView *alert;
     NSString *an=[NSString stringWithFormat:@"%@\n%@\n%@",self.danxuanti.hint1,self.danxuanti.hint2,self.danxuanti.hint3];
+     msg=[NSString filterString:an];
+    title=@"提示：";
     alert=[[UIAlertView alloc]initWithTitle:@"提示：" message:[NSString filterString:an] delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];
     [alert show];
     [alert release];
@@ -358,11 +428,16 @@
 - (IBAction)submitAnswer:(UIButton *)sender
 {   
     UIAlertView *alert;
+    title=@"答题结果";
     if ([answer isEqualToString:self.danxuanti.result])
+    {
+        msg=@"恭喜你答对了！";
        alert=[[UIAlertView alloc]initWithTitle:@"答题结果" message:@"恭喜你答对了！" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];
+    }
     else
     {
         NSString *an=[NSString stringWithFormat:@"很遗憾您答错了，正确答案是%@",self.danxuanti.result];
+        msg=an;
         alert=[[UIAlertView alloc]initWithTitle:@"答题结果" message:an delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];
     }
     [alert show];

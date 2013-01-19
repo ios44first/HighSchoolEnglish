@@ -229,11 +229,10 @@
     [self moveLR:viewArray];
     [UIView commitAnimations];
     
-    isPlay=NO;
-    [self.butPlay setImage:[UIImage imageNamed:@"btn_play_pressed.png"] forState:UIControlStateNormal];
-    [streamer stop];
-    [self destroyStreamer];
-    self.sliderAV.value=0;
+    if (isShow)
+        [self.submitButton setBackgroundImage:[UIImage imageNamed:@"btn_listen_back_pressed.png"] forState:UIControlStateNormal];
+    else
+        [self.submitButton setBackgroundImage:[UIImage imageNamed:@"btn_listen_submit_pressed.png"] forState:UIControlStateNormal];
 }
 
 - (IBAction)nextTI:(UIButton *)sender
@@ -314,6 +313,12 @@
 			[self.sliderAV setEnabled:NO];
 		}
 	}
+    if ([streamer isIdle])
+    {
+        isPlay=NO;
+        self.sliderAV.value=0;
+        [self.butPlay setImage:[UIImage imageNamed:@"btn_play_pressed.png"] forState:UIControlStateNormal];
+    }
 }
 #pragma mark -
 #pragma mark 隐藏tabbar
@@ -366,4 +371,8 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)dealloc {
+    [_submitButton release];
+    [super dealloc];
+}
 @end

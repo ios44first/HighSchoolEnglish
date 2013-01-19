@@ -27,26 +27,28 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+//设置导航背景图片
     UIImage *image=[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"titlebar" ofType:@"png"]];
+//题库页面
     TikuViewController *tiku=[[TikuViewController alloc]init];
+//设置年级参数
     tiku.grade=self.grade;
     UINavigationController *na1=[[UINavigationController alloc]initWithRootViewController:tiku];
     na1.navigationBar.tintColor=[UIColor colorWithPatternImage:image];
-
+//词典页面
     DicViewController *dic=[[DicViewController alloc]init];
     UINavigationController *na2=[[UINavigationController alloc]initWithRootViewController:dic];
     na2.navigationBar.tintColor=[UIColor colorWithPatternImage:image];
-    
+//听力页面    
     ListenViewController *lis=[[ListenViewController alloc]init];
     lis.grade=self.grade;
     UINavigationController *na3=[[UINavigationController alloc]initWithRootViewController:lis];
     na3.navigationBar.tintColor=[UIColor colorWithPatternImage:image];
-    
+//更多页面    
     MoreViewController *more=[[MoreViewController alloc]init];
     UINavigationController *na4=[[UINavigationController alloc]initWithRootViewController:more];
     na4.navigationBar.tintColor=[UIColor colorWithPatternImage:image];
-    
+//初始化tabBar    
     UITabBarController *tab=[[UITabBarController alloc]init];
     tab.viewControllers=[NSArray arrayWithObjects:na1,na2,na3,na4, nil];
     //tab.tabBar.frame=CGRectMake(0, 435, 320, 50);
@@ -62,7 +64,7 @@
     [na2 release];
     [na3 release];
     [na4 release];
-    
+//用四幅图片覆盖掉tabBar的选项    
     imgview1=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"smart_selected.png"]];
     imgview1.frame=CGRectMake(0, 410, 80, 50);
     [self.view addSubview:imgview1];
@@ -75,20 +77,22 @@
     imgview4=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"more_normal.png"]];
     imgview4.frame=CGRectMake(240, 410, 80, 50);
     [self.view addSubview:imgview4];
-    
+//添加清扫手势，用来返回到选择年级页面
     UISwipeGestureRecognizer *swipe=[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(backView)];
     swipe.direction=UISwipeGestureRecognizerDirectionRight;
     [self.view addGestureRecognizer:swipe];
     [swipe release];
 }
+
 -(void)backView
-{
+{//返回选择年级页面
     ChooseViewController *choose=[[ChooseViewController alloc]init];
     [self presentViewController:choose animated:YES completion:nil];
     [choose release];
 }
+
 -(void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
-{
+{//tabBar的代理方法，控制tabBar上面的图片的显示
     switch (tabBarController.selectedIndex)
     {
         case 0:

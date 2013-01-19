@@ -16,8 +16,8 @@
 
 @property(retain,nonatomic) NSManagedObjectContext *managedObjectContext;
 @property(retain,nonatomic)NSFetchedResultsController *fetchedResultsController;
-
+//获取数据
 -(NSArray *)getData:(NSString *)entityName andSort:(NSString *)sort;
-+(DataFactory *)instance;
++(DataFactory *)instance;// 单例模式
 
 @end

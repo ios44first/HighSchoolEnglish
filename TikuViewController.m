@@ -108,7 +108,6 @@ const NSUInteger btnInterval = 60;
 	}
 }
 
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

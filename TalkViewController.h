@@ -31,17 +31,17 @@
 @property (assign,nonatomic) int i;
 @property(retain,nonatomic) NSArray *arr;
 
-@property (retain, nonatomic) IBOutlet UILabel *listenTitle;
-@property (retain, nonatomic) IBOutlet UILabel *selectA;
-@property (retain, nonatomic) IBOutlet UILabel *selectB;
-@property (retain, nonatomic) IBOutlet UILabel *selectC;
-@property (retain, nonatomic) IBOutlet UIButton *butA;
-@property (retain, nonatomic) IBOutlet UIButton *butB;
-@property (retain, nonatomic) IBOutlet UIButton *butC;
+@property (retain, nonatomic) UILabel *listenTitle;
+@property (retain, nonatomic) UILabel *selectA;
+@property (retain, nonatomic) UILabel *selectB;
+@property (retain, nonatomic) UILabel *selectC;
+@property (retain, nonatomic) UIButton *butA;
+@property (retain, nonatomic) UIButton *butB;
+@property (retain, nonatomic) UIButton *butC;
 @property (retain, nonatomic) IBOutlet UISlider *sliderAV;
 @property (retain, nonatomic) IBOutlet UIButton *butPlay;
+@property (retain, nonatomic) IBOutlet UIButton *submitButton;
 
-- (IBAction)butSelect:(UIButton *)sender;
 - (IBAction)playStop:(UIButton *)sender;
 - (IBAction)submitAnswer:(UIButton *)sender;
 - (IBAction)nextTI:(UIButton *)sender;

@@ -86,10 +86,35 @@
         NSLog(@"添加题目失败, %@, %@", error, [error userInfo]);
         abort();
     }
-    UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"温馨提示：" message:@"收藏题目成功！" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];
-    [alert show];
-    [alert release];
+    
+    [self drawRect];
 }
+- (void)drawRect
+{
+    UIGraphicsBeginImageContext(CGSizeMake(320, 330));
+    [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    UIImageWriteToSavedPhotosAlbum(viewImage, nil, nil, nil);
+    imgV=[[UIImageView alloc]initWithImage:viewImage];
+    imgV.frame=CGRectMake(0, 0, 320, 330);
+    [self.view addSubview:imgV];
+    
+    CABasicAnimation *animation=[CABasicAnimation animationWithKeyPath:@"transform.scale"];//制定操作的属性名
+    animation.timingFunction=[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
+    animation.toValue=[NSNumber numberWithFloat:0.0f];
+    [animation setDuration:1.0f];
+    [animation setDelegate:self];
+    [imgV.layer addAnimation:animation forKey:@"animation"];
+    
+    CAKeyframeAnimation *animationPosition=[CAKeyframeAnimation animationWithKeyPath:@"position"];//制定操作的属性名
+    NSArray *values=[NSArray arrayWithObjects:[NSValue valueWithCGPoint:CGPointMake(160, 155)],[NSValue valueWithCGPoint:CGPointMake(300, -20)], nil];
+    [animationPosition setValues:values];
+    [animationPosition setDuration:1.0f];
+    [animationPosition setDelegate:self];
+    [imgV.layer addAnimation:animationPosition forKey:@"img-position"];
+}
+
 -(void)goBack
 {
     [self.navigationController popViewControllerAnimated:YES];
@@ -202,23 +227,46 @@
 }
 -(void)submitAns
 {
-     NSLog(@"您选了%s",answer);
-    for (int m=0; m<20; m++)
+    //NSLog(@"您选了%s",answer);
+    int num=0;
+    NSString *result=@"您还有";
+    for (int n=0; n<20; n++)
     {
-        WanXing *wan=[self.array objectAtIndex:m];
-        UILabel *label=(UILabel *)[scrollView viewWithTag:1+m];
-        if ([[NSString stringWithFormat:@"%c",answer[m]] isEqualToString:wan.result])
-            label.text=[NSString stringWithFormat:@" √ 您选了%c。回答正确！",answer[m]];
-        else
-            label.text=[NSString stringWithFormat:@" × 您选了%c，正确答案是%@。",answer[m],wan.result];
-        //NSLog(@"%@",wan.result);
+        if (answer[n]=='0')
+        {
+            num++;
+            result=[result stringByAppendingFormat:@" %d题",n+1];
+        }
     }
+    result = [result stringByAppendingFormat:@" 共 %d 道题未做。",num];
+    if (num==0)
+    {
+        for (int m=0; m<20; m++)
+        {
+            WanXing *wan=[self.array objectAtIndex:m];
+            UILabel *label=(UILabel *)[scrollView viewWithTag:1+m];
+            if ([[NSString stringWithFormat:@"%c",answer[m]] isEqualToString:wan.result])
+                label.text=[NSString stringWithFormat:@" √ 您选了%c。回答正确！",answer[m]];
+            else
+                label.text=[NSString stringWithFormat:@" × 您选了%c，正确答案是%@。",answer[m],wan.result];
+        }
+    }
+     else
+     {
+         title=@"温馨提示";
+         msg=result;
+         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"温馨提示" message:result delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];
+          [alert show];
+          [alert release];
+     }
 }
 -(void)showTishi:(UIButton *)sender
 {
     int num=sender.tag-21;
     WanXing *wan=[self.array objectAtIndex:num];
     NSString *showString=[NSString stringWithFormat:@"%@\n%@\n%@",wan.hint1,wan.hint2,wan.hint3];
+    title=@"提示信息";
+    msg=[NSString filterString:showString];
     UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示信息" message:[NSString filterString:showString] delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];
     [alert show];
     [alert release];
@@ -265,7 +313,7 @@
         default:
             break;
     }
-    NSLog(@"%d,%s",x,answer);
+    //NSLog(@"%d,%s",x,answer);
 }
 #pragma mark - NSXMLParserDelegate 代理方法
 -(void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict
@@ -419,6 +467,48 @@
     //NSLog(@"%@",wanxingContain);
     //NSLog(@"%d",[self.array count]);
 }
+
+#pragma mark -
+#pragma mark UIAlertViewDelegate Methods
+-(void)willPresentAlertView:(UIAlertView *)alertView
+{
+    alertView.frame=CGRectMake(10, 150, 300, 180);
+    for (UIView *view in  alertView.subviews)
+    {
+        [view removeFromSuperview];
+    }
+    UIImageView *iv=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 300, 180)];
+    iv.image=[UIImage imageNamed:@"bg_reviewwords.png"];
+    [alertView addSubview:iv];
+    
+    UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(45, 0, 210, 36)];
+    label.text=title;
+    label.backgroundColor=[UIColor clearColor];
+    label.textAlignment=NSTextAlignmentCenter;
+    label.textColor=[UIColor colorWithRed:0.22 green:0.77 blue:0.99 alpha:1.0];
+    [alertView addSubview:label];
+    
+    UIButton *close=[UIButton buttonWithType:UIButtonTypeCustom];
+    [close setImage:[UIImage imageNamed:@"btn_closereview_pressed.png"] forState:UIControlStateNormal];
+    [close addTarget:self action:@selector(closeAlert:) forControlEvents:UIControlEventTouchUpInside];
+    close.frame=CGRectMake(255, 0, 45, 36);
+    [alertView addSubview:close];
+    
+    message = [[UITextView alloc] initWithFrame:CGRectMake(10, 40, 280, 120)];
+    message.editable=NO;
+    message.textColor=[UIColor colorWithRed:0.22 green:0.77 blue:0.99 alpha:1.0];
+    message.font=[UIFont systemFontOfSize:17];
+    message.textAlignment=NSTextAlignmentCenter;
+    [message setBackgroundColor:[UIColor clearColor]];
+    message.text=msg;
+    [alertView addSubview:message];
+}
+-(void)closeAlert:(UIButton *)sender
+{
+    UIAlertView *sup=(UIAlertView *)[sender superview];
+    [sup dismissWithClickedButtonIndex:0 animated:YES];
+}
+
 #pragma mark - 按钮
 - (IBAction)downBut:(UIButton *)sender
 {
@@ -464,7 +554,6 @@
             self.question.questionsId=[duo.tiId intValue];
         }
     }
-    
     [self setContain];
 }
 - (void)viewWillAppear: (BOOL)animated

@@ -11,6 +11,7 @@
 #import "WanXing.h"
 #import "NSString+Filter.h"
 #import "ReadArtical.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface ReadViewController : UIViewController<NSXMLParserDelegate>
 {
@@ -19,6 +20,7 @@
     UITextView *tishiAnswer;
     NSString *readContain;
     BOOL isDown;
+    UIImageView *imgV;
 }
 
 @property(assign,nonatomic) BOOL isWrong;

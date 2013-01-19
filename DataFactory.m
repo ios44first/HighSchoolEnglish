@@ -47,7 +47,7 @@
     //NSLog(@"%@",[[[sectionInfo objects] objectAtIndex:0] class]);
     return [sectionInfo objects];
 }
-
+//单例模式
 +(DataFactory *)instance
 {
     static DataFactory *dataFactory;

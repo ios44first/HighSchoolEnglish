@@ -29,9 +29,10 @@
 @property (retain,nonatomic) Questions *question;
 @property (assign,nonatomic) int i;
 @property(retain,nonatomic) NSArray *arr;
-@property (retain, nonatomic) IBOutlet UITextView *listenTitle;
+@property (retain, nonatomic) UITextView *listenTitle;
 @property (retain, nonatomic) IBOutlet UISlider *sliderAV;
 @property (retain, nonatomic) IBOutlet UIButton *butPlay;
+@property (retain, nonatomic) IBOutlet UIButton *submitButton;
 
 - (IBAction)submitButton:(UIButton *)sender;
 - (IBAction)nextTI:(UIButton *)sender;

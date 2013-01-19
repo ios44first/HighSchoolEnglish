@@ -13,7 +13,7 @@
 @end
 
 @implementation BuQuanViewController
-@synthesize question,i,arr;
+@synthesize question,i,arr,listenTitle;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -38,6 +38,10 @@
     [self.navigationItem setLeftBarButtonItem:back];
     [back release];
     [backButton release];
+    
+    self.listenTitle=[[UITextView alloc]initWithFrame:CGRectMake(0, 10, 320, 320)];
+    [self.listenTitle setBackgroundColor:[UIColor clearColor]];
+    [self.view addSubview:self.listenTitle];
     
     [self.sliderAV addTarget:self action:@selector(changeValue) forControlEvents:UIControlEventTouchUpInside];
     
@@ -122,6 +126,12 @@
 			[self.sliderAV setEnabled:NO];
 		}
 	}
+    if ([streamer isIdle])
+    {
+        isPlay=NO;
+        self.sliderAV.value=0;
+        [self.butPlay setImage:[UIImage imageNamed:@"btn_play_pressed.png"] forState:UIControlStateNormal];
+    }
 }
 -(void)goBack
 {
@@ -179,9 +189,9 @@
 }
 
 - (void)dealloc {
-    [_listenTitle release];
     [_sliderAV release];
     [_butPlay release];
+    [_submitButton release];
     [super dealloc];
 }
 -(void)moveLR:(NSArray *)viewArray
@@ -213,11 +223,10 @@
     NSArray *viewArray=[NSArray arrayWithObjects:self.listenTitle,resultView, nil];
     [self moveLR:viewArray];
     [UIView commitAnimations];
-    /*isPlay=NO;
-    [self.butPlay setImage:[UIImage imageNamed:@"btn_play_pressed.png"] forState:UIControlStateNormal];
-    [streamer stop];
-    [self destroyStreamer];
-    self.sliderAV.value=0;*/
+    if (isShow)
+        [self.submitButton setBackgroundImage:[UIImage imageNamed:@"btn_listen_back_pressed.png"] forState:UIControlStateNormal];
+    else
+        [self.submitButton setBackgroundImage:[UIImage imageNamed:@"btn_listen_submit_pressed.png"] forState:UIControlStateNormal];
 }
 - (IBAction)nextTI:(UIButton *)sender
 {

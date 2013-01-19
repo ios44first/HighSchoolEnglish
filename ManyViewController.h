@@ -35,6 +35,7 @@
 
 @property (retain, nonatomic) IBOutlet UISlider *sliderAV;
 @property (retain, nonatomic) IBOutlet UIButton *butPlay;
+@property (retain, nonatomic) IBOutlet UIButton *submitButton;
 
 - (IBAction)playStop:(UIButton *)sender;
 - (IBAction)submitAnswer:(UIButton *)sender;
