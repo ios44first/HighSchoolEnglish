@@ -61,7 +61,7 @@
     [back release];
     [backButton release];
     
-    [self.tableView setSeparatorColor:[UIColor grayColor]];
+    //[self.tableView setSeparatorColor:[UIColor grayColor]];
 }
 - (void)viewWillAppear: (BOOL)animated
 {
@@ -267,7 +267,10 @@
 {
     return [self.arrayData count]+1;
 }
-
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 47;
+}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
@@ -302,17 +305,26 @@
     }
     else
     {
-        cell.accessoryType=UITableViewCellAccessoryNone;
-        cell.textLabel.text=@"                   Loding ...";
-        cell.textLabel.textAlignment=NSTextAlignmentRight;
-        cell.backgroundColor=[UIColor grayColor];
-        cell.imageView.image=nil;
-        cell.detailTextLabel.text=@"";
-        UIActivityIndicatorView *activityIndicator=[[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:(UIActivityIndicatorViewStyleWhiteLarge)];
-        activityIndicator.color=[UIColor colorWithRed:0.22 green:0.66 blue:1 alpha:1.0];
-        activityIndicator.frame=CGRectMake(20, 5, 30, 30);
-        [activityIndicator startAnimating];
-        [cell addSubview:activityIndicator];
+        if (self.tableView.contentSize.height<420)
+        {
+            cell.accessoryType=UITableViewCellAccessoryNone;
+            cell.imageView.image=nil;
+            cell.detailTextLabel.text=@"";
+        }
+        else
+        {
+            cell.accessoryType=UITableViewCellAccessoryNone;
+            cell.imageView.image=nil;
+            cell.detailTextLabel.text=@"";
+            cell.textLabel.text=@"                   Loding ...";
+            cell.textLabel.textAlignment=NSTextAlignmentRight;
+            cell.backgroundColor=[UIColor grayColor];
+            UIActivityIndicatorView *activityIndicator=[[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:(UIActivityIndicatorViewStyleWhiteLarge)];
+            activityIndicator.color=[UIColor colorWithRed:0.22 green:0.66 blue:1 alpha:1.0];
+            activityIndicator.frame=CGRectMake(20, 5, 30, 30);
+            [activityIndicator startAnimating];
+            [cell addSubview:activityIndicator];
+        }
     }
     return cell;
 }
@@ -321,103 +333,106 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Questions *q=[self.arrayData objectAtIndex:indexPath.row];
-    NSLog(@"%d",q.questionsId);
-    switch (self.titleType)
+    if (indexPath.row<[self.arrayData count])
     {
-        case 1:
-        case 13:
+        Questions *q=[self.arrayData objectAtIndex:indexPath.row];
+        NSLog(@"%d",q.questionsId);
+        switch (self.titleType)
         {
-          doWorkViewController *detailViewController = [[doWorkViewController alloc] init];
-            DanXuanTi *d=[[DanXuanTi alloc]init];
-            detailViewController.danxuanti=d;
-            [d release];
-          detailViewController.madeArray=[[NSMutableArray alloc]initWithArray:madeArray];
-          detailViewController.arr=self.arrayData;
-          detailViewController.strTitle=self.title;
-          detailViewController.question=q;
-          detailViewController.i=indexPath.row;
-          detailViewController.titleType=self.titleType;
-          [self.navigationController pushViewController:detailViewController animated:YES];
-          [detailViewController release];
+            case 1:
+            case 13:
+            {
+                doWorkViewController *detailViewController = [[doWorkViewController alloc] init];
+                DanXuanTi *d=[[DanXuanTi alloc]init];
+                detailViewController.danxuanti=d;
+                [d release];
+                detailViewController.madeArray=[[NSMutableArray alloc]initWithArray:madeArray];
+                detailViewController.arr=self.arrayData;
+                detailViewController.strTitle=self.title;
+                detailViewController.question=q;
+                detailViewController.i=indexPath.row;
+                detailViewController.titleType=self.titleType;
+                [self.navigationController pushViewController:detailViewController animated:YES];
+                [detailViewController release];
+            }
+                break;
+            case 14:
+            {
+                WanXingViewController *wanxing=[[WanXingViewController alloc]init];
+                wanxing.madeArray=[[NSMutableArray alloc]initWithArray:madeArray];
+                wanxing.arr=self.arrayData;
+                wanxing.strTitle=self.title;
+                wanxing.question=q;
+                wanxing.i=indexPath.row;
+                wanxing.titleType=self.titleType;
+                [self.navigationController pushViewController:wanxing animated:YES];
+                [wanxing release];
+            }
+                break;
+            case 15:
+            case 16:
+            case 17:
+            case 19:
+            case 20:
+            case 21:
+            case 24:
+            case 28:
+            {
+                ReadViewController *read=[[ReadViewController alloc]init];
+                read.madeArray=[[NSMutableArray alloc]initWithArray:madeArray];
+                read.arr=self.arrayData;
+                read.strTitle=self.title;
+                read.question=q;
+                read.i=indexPath.row;
+                read.titleType=self.titleType;
+                [self.navigationController pushViewController:read animated:YES];
+                [read release];
+            }
+                break;
+            case 18:
+            {
+                ArticalViewController *artical=[[ArticalViewController alloc]init];
+                artical.madeArray=[[NSMutableArray alloc]initWithArray:madeArray];
+                artical.arr=self.arrayData;
+                artical.strTitle=self.title;
+                artical.question=q;
+                artical.i=indexPath.row;
+                artical.titleType=self.titleType;
+                [self.navigationController pushViewController:artical animated:YES];
+                [artical release];
+            }
+                break;
+            case 610:
+            case 641:
+            case 669:
+            case 670:
+            case 671:
+            case 672:
+            {
+                TalkViewController *talk =[[TalkViewController alloc]init];
+                talk.madeArray=[[NSMutableArray alloc]initWithArray:madeArray];
+                talk.arr=self.arrayData;
+                talk.question=q;
+                talk.i=indexPath.row;
+                [self.navigationController pushViewController:talk animated:YES];
+                [talk release];
+            }
+                break;
+            case 675:
+            {
+                BuQuanViewController *buquan=[[BuQuanViewController alloc]init];
+                buquan.madeArray=[[NSMutableArray alloc]initWithArray:madeArray];
+                buquan.title=@"补全填空";
+                buquan.arr=self.arrayData;
+                buquan.question=q;
+                buquan.i=indexPath.row;
+                [self.navigationController pushViewController:buquan animated:YES];
+                [buquan release];
+            }
+                break;
+            default:
+                break;
         }
-            break;
-        case 14:
-        {
-            WanXingViewController *wanxing=[[WanXingViewController alloc]init];
-            wanxing.madeArray=[[NSMutableArray alloc]initWithArray:madeArray];
-            wanxing.arr=self.arrayData;
-            wanxing.strTitle=self.title;
-            wanxing.question=q;
-            wanxing.i=indexPath.row;
-            wanxing.titleType=self.titleType;
-            [self.navigationController pushViewController:wanxing animated:YES];
-            [wanxing release];
-        }
-            break;
-        case 15:
-        case 16:
-        case 17:
-        case 19:
-        case 20:
-        case 21:
-        case 24:
-        case 28:
-        {
-            ReadViewController *read=[[ReadViewController alloc]init];
-            read.madeArray=[[NSMutableArray alloc]initWithArray:madeArray];
-            read.arr=self.arrayData;
-            read.strTitle=self.title;
-            read.question=q;
-            read.i=indexPath.row;
-            read.titleType=self.titleType;
-            [self.navigationController pushViewController:read animated:YES];
-            [read release];
-        }
-            break;
-        case 18:
-        {
-            ArticalViewController *artical=[[ArticalViewController alloc]init];
-            artical.madeArray=[[NSMutableArray alloc]initWithArray:madeArray];
-            artical.arr=self.arrayData;
-            artical.strTitle=self.title;
-            artical.question=q;
-            artical.i=indexPath.row;
-            artical.titleType=self.titleType;
-            [self.navigationController pushViewController:artical animated:YES];
-            [artical release];
-        }
-            break;
-        case 610:
-        case 641:
-        case 669:
-        case 670:
-        case 671:
-        case 672:
-        {
-            TalkViewController *talk =[[TalkViewController alloc]init];
-            talk.madeArray=[[NSMutableArray alloc]initWithArray:madeArray];
-            talk.arr=self.arrayData;
-            talk.question=q;
-            talk.i=indexPath.row;
-            [self.navigationController pushViewController:talk animated:YES];
-            [talk release];
-        }
-            break;
-        case 675:
-        {
-            BuQuanViewController *buquan=[[BuQuanViewController alloc]init];
-            buquan.madeArray=[[NSMutableArray alloc]initWithArray:madeArray];
-            buquan.title=@"补全填空";
-            buquan.arr=self.arrayData;
-            buquan.question=q;
-            buquan.i=indexPath.row;
-            [self.navigationController pushViewController:buquan animated:YES];
-            [buquan release];
-        }
-            break;
-        default:
-            break;
     }
 }
 #pragma mark -

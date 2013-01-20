@@ -246,7 +246,10 @@
 {
     return [self.arrayData count]+1;
 }
-
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 47;
+}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
@@ -273,17 +276,26 @@
     }
     else
     {
-        cell.accessoryType=UITableViewCellAccessoryNone;
-        cell.textLabel.text=@"                   Loding ...";
-        cell.textLabel.textAlignment=NSTextAlignmentRight;
-        cell.backgroundColor=[UIColor grayColor];
-        cell.imageView.image=nil;
-        cell.detailTextLabel.text=@"";
-        UIActivityIndicatorView *activityIndicator=[[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:(UIActivityIndicatorViewStyleWhiteLarge)];
-        activityIndicator.color=[UIColor colorWithRed:0.22 green:0.66 blue:1 alpha:1.0];
-        activityIndicator.frame=CGRectMake(20, 5, 30, 30);
-        [activityIndicator startAnimating];
-        [cell addSubview:activityIndicator];
+        if (self.tableView.contentSize.height<420)
+        {
+            cell.accessoryType=UITableViewCellAccessoryNone;
+            cell.imageView.image=nil;
+            cell.detailTextLabel.text=@"";
+        }
+        else
+        {
+            cell.accessoryType=UITableViewCellAccessoryNone;
+            cell.imageView.image=nil;
+            cell.detailTextLabel.text=@"";
+            cell.textLabel.text=@"                   Loding ...";
+            cell.textLabel.textAlignment=NSTextAlignmentRight;
+            cell.backgroundColor=[UIColor grayColor];
+            UIActivityIndicatorView *activityIndicator=[[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:(UIActivityIndicatorViewStyleWhiteLarge)];
+            activityIndicator.color=[UIColor colorWithRed:0.22 green:0.66 blue:1 alpha:1.0];
+            activityIndicator.frame=CGRectMake(20, 5, 30, 30);
+            [activityIndicator startAnimating];
+            [cell addSubview:activityIndicator];
+        }
     }
     
     return cell;
@@ -292,14 +304,17 @@
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-     ManyViewController *detailViewController = [[ManyViewController alloc] init];
-    ListenMany *lis=[self.arrayData objectAtIndex:indexPath.row];
-    detailViewController.madeArray=[[NSMutableArray alloc]initWithArray:madeArray];
-    detailViewController.listen=lis;
-    detailViewController.i=indexPath.row;
-    detailViewController.arr=self.arrayData;
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     [detailViewController release];
+    if (indexPath.row<[self.arrayData count])
+    {
+        ManyViewController *detailViewController = [[ManyViewController alloc] init];
+        ListenMany *lis=[self.arrayData objectAtIndex:indexPath.row];
+        detailViewController.madeArray=[[NSMutableArray alloc]initWithArray:madeArray];
+        detailViewController.listen=lis;
+        detailViewController.i=indexPath.row;
+        detailViewController.arr=self.arrayData;
+        [self.navigationController pushViewController:detailViewController animated:YES];
+        [detailViewController release];
+    }
 }
 
 #pragma mark -
