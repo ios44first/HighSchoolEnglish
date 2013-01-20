@@ -265,7 +265,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.arrayData count];
+    return [self.arrayData count]+1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -275,29 +275,45 @@
     if (nil==cell)
     {
         cell=[[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
-        cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     }
-    Questions *que=[self.arrayData objectAtIndex:indexPath.row];
-    if (que.queTitle==nil)
-        cell.textLabel.text=@"暂无标题";
+    if (indexPath.row<[self.arrayData count])
+    {
+        cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
+        Questions *que=[self.arrayData objectAtIndex:indexPath.row];
+        if (que.queTitle==nil)
+            cell.textLabel.text=@"暂无标题";
+        else
+            cell.textLabel.text=[NSString filterString:que.queTitle];
+        [cell.detailTextLabel setFont:[UIFont fontWithName:@"Thonburi" size:13]];
+        NSString *area=nil;
+        if ([self.areaDic.allKeys containsObject:que.areaId])
+            area=[areaDic objectForKey:que.areaId];
+        else
+            area=@"全国";
+        if (self.titleType>100)
+            cell.detailTextLabel.text=[NSString stringWithFormat:@"%@                %@",self.title,[que.createDate substringToIndex:10]];
+        else
+            cell.detailTextLabel.text=[NSString stringWithFormat:@"%d年%@                %@",que.year,self.title,area];
+        
+        if ([madeArray containsObject:[NSString stringWithFormat:@"%d",que.questionsId]])
+            cell.imageView.image=[UIImage imageNamed:@"bg_point_yi.png"];
+        else
+            cell.imageView.image=[UIImage imageNamed:@"bg_point_wei.png"];
+    }
     else
-        cell.textLabel.text=[NSString filterString:que.queTitle];
-    [cell.detailTextLabel setFont:[UIFont fontWithName:@"Thonburi" size:13]];
-    NSString *area=nil;
-    if ([self.areaDic.allKeys containsObject:que.areaId])
-        area=[areaDic objectForKey:que.areaId];
-    else
-        area=@"全国";
-    if (self.titleType>100)
-        cell.detailTextLabel.text=[NSString stringWithFormat:@"%@                %@",self.title,[que.createDate substringToIndex:10]];
-    else
-        cell.detailTextLabel.text=[NSString stringWithFormat:@"%d年%@                %@",que.year,self.title,area];
-    
-    if ([madeArray containsObject:[NSString stringWithFormat:@"%d",que.questionsId]])
-        cell.imageView.image=[UIImage imageNamed:@"bg_point_yi.png"];
-    else
-        cell.imageView.image=[UIImage imageNamed:@"bg_point_wei.png"];
-    
+    {
+        cell.accessoryType=UITableViewCellAccessoryNone;
+        cell.textLabel.text=@"                   Loding ...";
+        cell.textLabel.textAlignment=NSTextAlignmentRight;
+        cell.backgroundColor=[UIColor grayColor];
+        cell.imageView.image=nil;
+        cell.detailTextLabel.text=@"";
+        UIActivityIndicatorView *activityIndicator=[[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:(UIActivityIndicatorViewStyleWhiteLarge)];
+        activityIndicator.color=[UIColor colorWithRed:0.22 green:0.66 blue:1 alpha:1.0];
+        activityIndicator.frame=CGRectMake(20, 5, 30, 30);
+        [activityIndicator startAnimating];
+        [cell addSubview:activityIndicator];
+    }
     return cell;
 }
 
@@ -329,7 +345,7 @@
         case 14:
         {
             WanXingViewController *wanxing=[[WanXingViewController alloc]init];
-            wanxing.madeArray=madeArray;
+            wanxing.madeArray=[[NSMutableArray alloc]initWithArray:madeArray];
             wanxing.arr=self.arrayData;
             wanxing.strTitle=self.title;
             wanxing.question=q;
@@ -349,7 +365,7 @@
         case 28:
         {
             ReadViewController *read=[[ReadViewController alloc]init];
-            read.madeArray=madeArray;
+            read.madeArray=[[NSMutableArray alloc]initWithArray:madeArray];
             read.arr=self.arrayData;
             read.strTitle=self.title;
             read.question=q;
@@ -362,7 +378,7 @@
         case 18:
         {
             ArticalViewController *artical=[[ArticalViewController alloc]init];
-            artical.madeArray=madeArray;
+            artical.madeArray=[[NSMutableArray alloc]initWithArray:madeArray];
             artical.arr=self.arrayData;
             artical.strTitle=self.title;
             artical.question=q;
@@ -380,7 +396,7 @@
         case 672:
         {
             TalkViewController *talk =[[TalkViewController alloc]init];
-            talk.madeArray=madeArray;
+            talk.madeArray=[[NSMutableArray alloc]initWithArray:madeArray];
             talk.arr=self.arrayData;
             talk.question=q;
             talk.i=indexPath.row;
@@ -391,7 +407,7 @@
         case 675:
         {
             BuQuanViewController *buquan=[[BuQuanViewController alloc]init];
-            buquan.madeArray=madeArray;
+            buquan.madeArray=[[NSMutableArray alloc]initWithArray:madeArray];
             buquan.title=@"补全填空";
             buquan.arr=self.arrayData;
             buquan.question=q;

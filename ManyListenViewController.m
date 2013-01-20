@@ -77,7 +77,7 @@
 {
     NSString *path=[[NSBundle mainBundle] pathForResource:@"questionID" ofType:@"plist"];
     madeArray=[[NSMutableArray alloc]initWithContentsOfFile:path];
-    NSLog(@"%@",madeArray);
+    //NSLog(@"%@",madeArray);
     [self.tableView reloadData];
 }
 
@@ -244,7 +244,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.arrayData count];
+    return [self.arrayData count]+1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -254,20 +254,38 @@
     if (nil==cell)
     {
         cell=[[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
-        cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     }
-    ListenMany *many=[self.arrayData objectAtIndex:indexPath.row];
-    if (many.listenTitle==nil)
-        cell.textLabel.text=@"暂无标题";
+    if (indexPath.row<[self.arrayData count])
+    {
+        cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
+        ListenMany *many=[self.arrayData objectAtIndex:indexPath.row];
+        if (many.listenTitle==nil)
+            cell.textLabel.text=@"暂无标题";
+        else
+            cell.textLabel.text=[NSString filterString:many.listenTitle];
+        [cell.detailTextLabel setFont:[UIFont fontWithName:@"Thonburi" size:13]];
+        cell.detailTextLabel.text=[NSString stringWithFormat:@"%@                %@",self.title,[many.createTime substringToIndex:10]];
+        
+        if ([madeArray containsObject:[NSString stringWithFormat:@"%d",many.listenId]])
+            cell.imageView.image=[UIImage imageNamed:@"bg_point_yi.png"];
+        else
+            cell.imageView.image=[UIImage imageNamed:@"bg_point_wei.png"];
+    }
     else
-        cell.textLabel.text=[NSString filterString:many.listenTitle];
-    [cell.detailTextLabel setFont:[UIFont fontWithName:@"Thonburi" size:13]];
-    cell.detailTextLabel.text=[NSString stringWithFormat:@"%@                %@",self.title,[many.createTime substringToIndex:10]];
+    {
+        cell.accessoryType=UITableViewCellAccessoryNone;
+        cell.textLabel.text=@"                   Loding ...";
+        cell.textLabel.textAlignment=NSTextAlignmentRight;
+        cell.backgroundColor=[UIColor grayColor];
+        cell.imageView.image=nil;
+        cell.detailTextLabel.text=@"";
+        UIActivityIndicatorView *activityIndicator=[[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:(UIActivityIndicatorViewStyleWhiteLarge)];
+        activityIndicator.color=[UIColor colorWithRed:0.22 green:0.66 blue:1 alpha:1.0];
+        activityIndicator.frame=CGRectMake(20, 5, 30, 30);
+        [activityIndicator startAnimating];
+        [cell addSubview:activityIndicator];
+    }
     
-    if ([madeArray containsObject:[NSString stringWithFormat:@"%d",many.listenId]])
-        cell.imageView.image=[UIImage imageNamed:@"bg_point_yi.png"];
-    else
-        cell.imageView.image=[UIImage imageNamed:@"bg_point_wei.png"];
     return cell;
 }
 
@@ -276,7 +294,7 @@
 {
      ManyViewController *detailViewController = [[ManyViewController alloc] init];
     ListenMany *lis=[self.arrayData objectAtIndex:indexPath.row];
-    detailViewController.madeArray=madeArray;
+    detailViewController.madeArray=[[NSMutableArray alloc]initWithArray:madeArray];
     detailViewController.listen=lis;
     detailViewController.i=indexPath.row;
     detailViewController.arr=self.arrayData;

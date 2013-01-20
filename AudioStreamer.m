@@ -179,6 +179,8 @@ static void ASReadStreamCallBack
 
 @implementation AudioStreamer
 
+@synthesize fileLength;
+@synthesize seekTime;
 @synthesize errorCode;
 @synthesize state;
 @synthesize bitRate;
@@ -621,7 +623,7 @@ static void ASReadStreamCallBack
 		//
 		stream = CFReadStreamCreateForHTTPRequest(NULL, message);
 		CFRelease(message);
-		
+        
 		//
 		// Enable stream redirection
 		//
@@ -1019,7 +1021,7 @@ cleanup:
 			{
 				[self failWithErrorCode:AS_GET_AUDIO_TIME_FAILED];
 			}
-
+            
 			double progress = seekTime + queueTime.mSampleTime / sampleRate;
 			if (progress < 0.0)
 			{

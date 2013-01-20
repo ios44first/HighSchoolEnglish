@@ -67,6 +67,7 @@
 -(void)setLabelButton
 {
     self.listenTitle=[[UILabel alloc]initWithFrame:CGRectMake(10, 10, 300, 120)];
+    self.listenTitle.numberOfLines=0;
     [self.listenTitle setBackgroundColor:[UIColor clearColor]];
     [self.view addSubview:self.listenTitle];
     
@@ -154,8 +155,8 @@
 {
 	if (streamer.bitRate != 0.0)
 	{
-		double progress = streamer.progress;
-		double duration = streamer.duration;
+		double progress = streamer.progress*1.8;
+		double duration = streamer.duration+5;
 		if (duration > 0)
 		{
 			[self.sliderAV setEnabled:YES];

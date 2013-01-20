@@ -294,7 +294,7 @@
     label.text=title;
     label.backgroundColor=[UIColor clearColor];
     label.textAlignment=NSTextAlignmentCenter;
-    label.textColor=[UIColor colorWithRed:0.22 green:0.77 blue:0.99 alpha:1.0];
+    label.textColor=[UIColor colorWithRed:0.22 green:0.66 blue:1 alpha:1.0];
     [alertView addSubview:label];
     
     UIButton *close=[UIButton buttonWithType:UIButtonTypeCustom];
@@ -305,7 +305,7 @@
     
     message = [[UITextView alloc] initWithFrame:CGRectMake(10, 40, 280, 120)];
     message.editable=NO;
-    message.textColor=[UIColor colorWithRed:0.22 green:0.77 blue:0.99 alpha:1.0];
+    message.textColor=[UIColor colorWithRed:0.22 green:0.66 blue:1 alpha:1.0];
     message.font=[UIFont systemFontOfSize:17];
     message.textAlignment=NSTextAlignmentCenter;
     [message setBackgroundColor:[UIColor clearColor]];

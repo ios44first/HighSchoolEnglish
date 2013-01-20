@@ -170,6 +170,8 @@ extern NSString * const ASStatusChangedNotification;
 #endif
 }
 
+@property (readonly) NSInteger fileLength;
+@property (readonly) double seekTime;
 @property AudioStreamerErrorCode errorCode;
 @property (readonly) AudioStreamerState state;
 @property (readonly) double progress;

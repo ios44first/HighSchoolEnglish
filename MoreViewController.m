@@ -44,7 +44,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    return 3;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -66,7 +66,10 @@
             break;
         case 2:
             cell.imageView.image=[UIImage imageNamed:@"icon_member.png"];
-            cell.textLabel.text=@"会员管理";
+            cell.textLabel.text=@"关于我们";
+        /*case 2:
+            cell.imageView.image=[UIImage imageNamed:@"icon_member.png"];
+            cell.textLabel.text=@"会员管理";*/
             break;
         case 3:
             cell.imageView.image=[UIImage imageNamed:@"icon_favorite.png"];

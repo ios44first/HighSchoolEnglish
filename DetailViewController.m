@@ -128,19 +128,33 @@
 {
     if ([self.array count]>0)
     {
-        [factory.managedObjectContext deleteObject:[self.array objectAtIndex:index]];
+        id tem=[self.array objectAtIndex:index];
+        [factory.managedObjectContext deleteObject:tem];
+        [self.array removeObjectAtIndex:index];
         NSError *error;
         if (![factory.managedObjectContext save:&error])
         {
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
         }
-        [self getData];
-        if ([self.array count]>0&&--index<[self.array count])
+        //[self getData];
+        if ([self.array count]>0)
         {
-            word=[self.array objectAtIndex:index];
-            contain.text=[NSString stringWithFormat:@"%@\n%@",word.title,word.result];
+            --index;
+            if (-1<index&&index<[self.array count])
+            {
+                word=[self.array objectAtIndex:index];
+                contain.text=[NSString stringWithFormat:@"%@\n%@",word.title,word.result];
+            }
+            else
+            {
+                index=0;
+                word=[self.array objectAtIndex:0];
+                contain.text=[NSString stringWithFormat:@"%@\n%@",word.title,word.result];
+            }
         }
+        else
+            contain.text=@"暂无内容。。。";
     }
 }
 -(void)nextOne

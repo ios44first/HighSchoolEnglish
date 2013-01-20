@@ -222,6 +222,7 @@
     }
     contain=[contain stringByAppendingFormat:@"\n\n%@",self.listen.original];
     resultView.text=[NSString filterString:contain];
+   // NSLog(@"%@",resultView.text);
     
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration:1.0f];
@@ -235,7 +236,7 @@
         [self.submitButton setBackgroundImage:[UIImage imageNamed:@"btn_listen_submit_pressed.png"] forState:UIControlStateNormal];
     NSString *path=[[NSBundle mainBundle] pathForResource:@"questionID" ofType:@"plist"];
     NSString *queNum=[NSString stringWithFormat:@"%d",self.listen.listenId];
-    NSLog(@"%@",queNum);
+    //NSLog(@"%@",queNum);
     if (![madeArray containsObject:queNum])
     {
         [madeArray addObject:queNum];

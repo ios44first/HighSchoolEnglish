@@ -67,9 +67,38 @@
         NSLog(@"添加生词失败, %@, %@", error, [error userInfo]);
         abort();
     }
-    UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"温馨提示：" message:@"收藏生词成功！" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];
-    [alert show];
-    [alert release];
+    
+    [self drawRect];
+    [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(removeImageView) userInfo:nil repeats:NO];
+}
+-(void)removeImageView
+{
+     [imgV removeFromSuperview];
+}
+- (void)drawRect
+{
+    UIGraphicsBeginImageContext(CGSizeMake(320, 330));
+    [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    UIImageWriteToSavedPhotosAlbum(viewImage, nil, nil, nil);
+    imgV=[[UIImageView alloc]initWithImage:viewImage];
+    imgV.frame=CGRectMake(0, 0, 320, 330);
+    [self.view addSubview:imgV];
+    
+    CABasicAnimation *animation=[CABasicAnimation animationWithKeyPath:@"transform.scale"];//制定操作的属性名
+    animation.timingFunction=[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
+    animation.toValue=[NSNumber numberWithFloat:0.0f];
+    [animation setDuration:1.0f];
+    [animation setDelegate:self];
+    [imgV.layer addAnimation:animation forKey:@"animation"];
+    
+    CAKeyframeAnimation *animationPosition=[CAKeyframeAnimation animationWithKeyPath:@"position"];//制定操作的属性名
+    NSArray *values=[NSArray arrayWithObjects:[NSValue valueWithCGPoint:CGPointMake(160, 155)],[NSValue valueWithCGPoint:CGPointMake(300, -20)], nil];
+    [animationPosition setValues:values];
+    [animationPosition setDuration:1.0f];
+    [animationPosition setDelegate:self];
+    [imgV.layer addAnimation:animationPosition forKey:@"img-position"];
 }
 
 -(void)changeType

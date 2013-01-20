@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
 #import "NewWord.h"
 
 @interface DicViewController : UIViewController<UITextFieldDelegate>
@@ -14,6 +15,7 @@
     BOOL exChangeL;
     //UIBarButtonItem* back;
     UIButton* backButton;
+    UIImageView *imgV;
 }
 @property (retain, nonatomic) IBOutlet UITextField *inputWord;
 @property (retain, nonatomic) IBOutlet UITextView *translationView;

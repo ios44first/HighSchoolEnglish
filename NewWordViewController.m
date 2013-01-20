@@ -129,8 +129,9 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
-        [factory.managedObjectContext deleteObject:[factory.fetchedResultsController objectAtIndexPath:indexPath]];
+        id tem=[self.array objectAtIndex:indexPath.row];
         [self.array removeObjectAtIndex:indexPath.row];
+        [factory.managedObjectContext deleteObject:tem];
         [self.tableView reloadData];
         NSError *error;
         if (![factory.managedObjectContext save:&error]) {
