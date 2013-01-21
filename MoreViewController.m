@@ -44,7 +44,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    return 5;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -65,20 +65,25 @@
             cell.textLabel.text=@"错题本";
             break;
         case 2:
-            cell.imageView.image=[UIImage imageNamed:@"icon_member.png"];
-            cell.textLabel.text=@"关于我们";
-        /*case 2:
-            cell.imageView.image=[UIImage imageNamed:@"icon_member.png"];
-            cell.textLabel.text=@"会员管理";*/
+            cell.imageView.image=[UIImage imageNamed:@"icon_sync.png"];
+            cell.textLabel.text=@"会员管理";
             break;
         case 3:
+            cell.imageView.image=[UIImage imageNamed:@"icon_member.png"];
+            cell.textLabel.text=@"关于我们";
+            break;
+        case 4:
+            cell.imageView.image=[UIImage imageNamed:@"icon_exit.png"];
+            cell.textLabel.text=@"退出程序";
+            break;
+        /*case 3:
             cell.imageView.image=[UIImage imageNamed:@"icon_favorite.png"];
             cell.textLabel.text=@"信息同步";
             break;
         case 4:
             cell.imageView.image=[UIImage imageNamed:@"icon_sync.png"];
             cell.textLabel.text=@"应用推荐";
-            break;
+            break;*/
             
         default:
             break;
@@ -110,8 +115,6 @@
         }
             break;
         case 2:
-        case 3:
-        case 4:
         {
             LoginViewController *detailViewController = [[LoginViewController alloc] init];
             detailViewController.title=@"会 员 登 陆";
@@ -119,7 +122,71 @@
             [detailViewController release];
         }
             break;
+        case 3:
+        {
+            AboutViewController *about=[[AboutViewController alloc]init];
+            [self.navigationController pushViewController:about animated:YES];
+            [about release];
+        }
+            break;
+        case 4:
+        {
+            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:nil, nil];
+            [alert show];
+            [alert release];
+        }
+        break;
+        
     }
+}
+#pragma mark -
+#pragma mark UIAlertViewDelegate Methods
+-(void)willPresentAlertView:(UIAlertView *)alertView
+{
+    alertView.frame=CGRectMake(35, 150, 250, 130);
+    for (UIView *view in  alertView.subviews)
+    {
+        [view removeFromSuperview];
+    }
+    UIImageView *iv=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 250, 130)];
+    iv.image=[UIImage imageNamed:@"bg_reviewwords.png"];
+    [alertView addSubview:iv];
+    
+    UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(45, 20, 160, 60)];
+    label.text=@"您确定要退出吗？";
+    label.backgroundColor=[UIColor clearColor];
+    label.textAlignment=NSTextAlignmentCenter;
+    label.textColor=[UIColor colorWithRed:0.22 green:0.66 blue:1 alpha:1.0];
+    [alertView addSubview:label];
+    
+    UIButton *close=[UIButton buttonWithType:UIButtonTypeCustom];
+    [close setImage:[UIImage imageNamed:@"btn_closereview_pressed.png"] forState:UIControlStateNormal];
+    close.tag=10;
+    [close addTarget:self action:@selector(closeAlert:) forControlEvents:UIControlEventTouchUpInside];
+    close.frame=CGRectMake(205, 0, 45, 36);
+    [alertView addSubview:close];
+    UIButton *cancel=[UIButton buttonWithType:UIButtonTypeCustom];
+    [cancel setImage:[UIImage imageNamed:@"member_btn_cancel.png"] forState:UIControlStateNormal];
+    cancel.tag=11;
+    [cancel addTarget:self action:@selector(closeAlert:) forControlEvents:UIControlEventTouchUpInside];
+    cancel.frame=CGRectMake(30, 84, 80, 32);
+    [alertView addSubview:cancel];
+    UIButton *ok=[UIButton buttonWithType:UIButtonTypeCustom];
+    [ok setImage:[UIImage imageNamed:@"member_btn_ok.png"] forState:UIControlStateNormal];
+    ok.tag=12;
+    [ok addTarget:self action:@selector(closeAlert:) forControlEvents:UIControlEventTouchUpInside];
+    ok.frame=CGRectMake(140, 84, 80, 32);
+    [alertView addSubview:ok];
+}
+-(void)closeAlert:(UIButton *)sender
+{
+    if (sender.tag!=12)
+    {
+        UIAlertView *sup=(UIAlertView *)[sender superview];
+        [sup dismissWithClickedButtonIndex:0 animated:YES];
+    }
+    else
+        exit(0);
 }
 
 @end

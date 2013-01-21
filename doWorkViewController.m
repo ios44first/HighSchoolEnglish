@@ -83,7 +83,7 @@
     [self drawRect];
 }
 - (void)drawRect
-{
+{   //截图
     UIGraphicsBeginImageContext(CGSizeMake(320, 310));
     [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
     UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();
@@ -92,14 +92,14 @@
     imgV=[[UIImageView alloc]initWithImage:viewImage];
     imgV.frame=CGRectMake(0, 0, 320, 310);
     [self.view addSubview:imgV];
-    
+    //变小
     CABasicAnimation *animation=[CABasicAnimation animationWithKeyPath:@"transform.scale"];//制定操作的属性名
     animation.timingFunction=[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
     animation.toValue=[NSNumber numberWithFloat:0.0f];
     [animation setDuration:1.0f];
     [animation setDelegate:self];
     [imgV.layer addAnimation:animation forKey:@"animation"];
-    
+    //移动
     CAKeyframeAnimation *animationPosition=[CAKeyframeAnimation animationWithKeyPath:@"position"];//制定操作的属性名
     NSArray *values=[NSArray arrayWithObjects:[NSValue valueWithCGPoint:CGPointMake(160, 155)],[NSValue valueWithCGPoint:CGPointMake(300, -20)], nil];
     [animationPosition setValues:values];

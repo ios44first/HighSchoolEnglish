@@ -10,7 +10,8 @@
 #import "DetailViewController.h"
 #import "WrongViewController.h"
 #import "LoginViewController.h"
+#import "AboutViewController.h"
 
-@interface MoreViewController : UITableViewController
+@interface MoreViewController : UITableViewController<UIAlertViewDelegate>
 
 @end
