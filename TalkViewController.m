@@ -66,7 +66,9 @@
 }
 -(void)setLabelButton
 {
-    self.listenTitle=[[UILabel alloc]initWithFrame:CGRectMake(10, 10, 300, 120)];
+    UILabel *la=[[UILabel alloc]initWithFrame:CGRectMake(10, 10, 300, 120)];
+    self.listenTitle=la;
+    [la release];
     self.listenTitle.numberOfLines=0;
     [self.listenTitle setBackgroundColor:[UIColor clearColor]];
     [self.view addSubview:self.listenTitle];
@@ -92,15 +94,21 @@
     [self.butC setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"btn_radio_off.png"]]];
     [self.view addSubview:self.butC];
     
-    self.selectA=[[UILabel alloc]initWithFrame:CGRectMake(50, 148, 250, 21)];
+    UILabel *la1=[[UILabel alloc]initWithFrame:CGRectMake(50, 148, 250, 21)];
+    self.selectA=la1;
+    [la1 release];
     [self.selectA setBackgroundColor:[UIColor clearColor]];
     [self.view addSubview:self.selectA];
     
-    self.selectB=[[UILabel alloc]initWithFrame:CGRectMake(50, 179, 250, 21)];
+    UILabel *la2=[[UILabel alloc]initWithFrame:CGRectMake(50, 179, 250, 21)];
+    self.selectB=la2;
+    [la2 release];
     [self.selectB setBackgroundColor:[UIColor clearColor]];
     [self.view addSubview:self.selectB];
     
-    self.selectC=[[UILabel alloc]initWithFrame:CGRectMake(50, 209, 250, 21)];
+    UILabel *la3=[[UILabel alloc]initWithFrame:CGRectMake(50, 209, 250, 21)];
+    self.selectC=la3;
+    [la3 release];
     [self.selectC setBackgroundColor:[UIColor clearColor]];
     [self.view addSubview:self.selectC];
 }

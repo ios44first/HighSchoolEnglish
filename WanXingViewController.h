@@ -24,6 +24,7 @@
     NSString *msg;
     NSString *title;
     UIImageView *imgV;
+    UILabel *resultLabel;
 }
 
 @property(retain,nonatomic) NSMutableArray *madeArray;

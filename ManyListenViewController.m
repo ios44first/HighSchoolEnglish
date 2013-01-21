@@ -308,7 +308,9 @@
     {
         ManyViewController *detailViewController = [[ManyViewController alloc] init];
         ListenMany *lis=[self.arrayData objectAtIndex:indexPath.row];
-        detailViewController.madeArray=[[NSMutableArray alloc]initWithArray:madeArray];
+        NSMutableArray *ma=[[NSMutableArray alloc]initWithArray:madeArray];
+        detailViewController.madeArray=ma;
+        [ma release];
         detailViewController.listen=lis;
         detailViewController.i=indexPath.row;
         detailViewController.arr=self.arrayData;

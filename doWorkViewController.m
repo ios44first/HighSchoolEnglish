@@ -81,6 +81,11 @@
     }
     
     [self drawRect];
+    [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(removeImageView) userInfo:nil repeats:NO];
+}
+-(void)removeImageView
+{
+    [imgV removeFromSuperview];
 }
 - (void)drawRect
 {   //截图
@@ -289,6 +294,7 @@
     UIImageView *iv=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 300, 180)];
     iv.image=[UIImage imageNamed:@"bg_reviewwords.png"];
     [alertView addSubview:iv];
+    [iv release];
     
     UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(45, 0, 210, 36)];
     label.text=title;
@@ -296,6 +302,7 @@
     label.textAlignment=NSTextAlignmentCenter;
     label.textColor=[UIColor colorWithRed:0.22 green:0.66 blue:1 alpha:1.0];
     [alertView addSubview:label];
+    [label release];
     
     UIButton *close=[UIButton buttonWithType:UIButtonTypeCustom];
     [close setImage:[UIImage imageNamed:@"btn_closereview_pressed.png"] forState:UIControlStateNormal];

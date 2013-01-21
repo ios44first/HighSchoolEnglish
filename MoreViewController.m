@@ -151,6 +151,7 @@
     UIImageView *iv=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 250, 130)];
     iv.image=[UIImage imageNamed:@"bg_reviewwords.png"];
     [alertView addSubview:iv];
+    [iv release];
     
     UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(45, 20, 160, 60)];
     label.text=@"您确定要退出吗？";
@@ -158,6 +159,7 @@
     label.textAlignment=NSTextAlignmentCenter;
     label.textColor=[UIColor colorWithRed:0.22 green:0.66 blue:1 alpha:1.0];
     [alertView addSubview:label];
+    [label release];
     
     UIButton *close=[UIButton buttonWithType:UIButtonTypeCustom];
     [close setImage:[UIImage imageNamed:@"btn_closereview_pressed.png"] forState:UIControlStateNormal];

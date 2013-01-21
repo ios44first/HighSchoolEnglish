@@ -39,7 +39,9 @@
     [back release];
     [backButton release];
     
-    self.listenTitle=[[UITextView alloc]initWithFrame:CGRectMake(0, 10, 320, 320)];
+    UITextView *tv=[[UITextView alloc]initWithFrame:CGRectMake(0, 10, 320, 320)];
+    self.listenTitle=tv;
+    [tv release];
     [self.listenTitle setBackgroundColor:[UIColor clearColor]];
     [self.view addSubview:self.listenTitle];
     

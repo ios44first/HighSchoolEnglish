@@ -346,7 +346,9 @@
                 DanXuanTi *d=[[DanXuanTi alloc]init];
                 detailViewController.danxuanti=d;
                 [d release];
-                detailViewController.madeArray=[[NSMutableArray alloc]initWithArray:madeArray];
+                NSMutableArray *ma=[[NSMutableArray alloc]initWithArray:madeArray];
+                detailViewController.madeArray=ma;
+                [ma release];
                 detailViewController.arr=self.arrayData;
                 detailViewController.strTitle=self.title;
                 detailViewController.question=q;
@@ -359,7 +361,9 @@
             case 14:
             {
                 WanXingViewController *wanxing=[[WanXingViewController alloc]init];
-                wanxing.madeArray=[[NSMutableArray alloc]initWithArray:madeArray];
+                NSMutableArray *ma=[[NSMutableArray alloc]initWithArray:madeArray];
+                wanxing.madeArray=ma;
+                [ma release];
                 wanxing.arr=self.arrayData;
                 wanxing.strTitle=self.title;
                 wanxing.question=q;
@@ -379,7 +383,9 @@
             case 28:
             {
                 ReadViewController *read=[[ReadViewController alloc]init];
-                read.madeArray=[[NSMutableArray alloc]initWithArray:madeArray];
+                NSMutableArray *ma=[[NSMutableArray alloc]initWithArray:madeArray];
+                read.madeArray=ma;
+                [ma release];
                 read.arr=self.arrayData;
                 read.strTitle=self.title;
                 read.question=q;
@@ -392,7 +398,9 @@
             case 18:
             {
                 ArticalViewController *artical=[[ArticalViewController alloc]init];
-                artical.madeArray=[[NSMutableArray alloc]initWithArray:madeArray];
+                NSMutableArray *ma=[[NSMutableArray alloc]initWithArray:madeArray];
+                artical.madeArray=ma;
+                [ma release];
                 artical.arr=self.arrayData;
                 artical.strTitle=self.title;
                 artical.question=q;
@@ -410,7 +418,9 @@
             case 672:
             {
                 TalkViewController *talk =[[TalkViewController alloc]init];
-                talk.madeArray=[[NSMutableArray alloc]initWithArray:madeArray];
+                NSMutableArray *ma=[[NSMutableArray alloc]initWithArray:madeArray];
+                talk.madeArray=ma;
+                [ma release];
                 talk.arr=self.arrayData;
                 talk.question=q;
                 talk.i=indexPath.row;
@@ -421,7 +431,9 @@
             case 675:
             {
                 BuQuanViewController *buquan=[[BuQuanViewController alloc]init];
-                buquan.madeArray=[[NSMutableArray alloc]initWithArray:madeArray];
+                NSMutableArray *ma=[[NSMutableArray alloc]initWithArray:madeArray];
+                buquan.madeArray=ma;
+                [ma release];
                 buquan.title=@"补全填空";
                 buquan.arr=self.arrayData;
                 buquan.question=q;

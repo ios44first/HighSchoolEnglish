@@ -35,7 +35,7 @@
     scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 420, 320 , 150)];
 	scrollView.userInteractionEnabled = YES;
 	scrollView.scrollEnabled = YES;
-	[scrollView setContentSize:CGSizeMake(320, 2860)];
+	[scrollView setContentSize:CGSizeMake(320, 2900)];
     [scrollView setBackgroundColor:[UIColor clearColor]];
     imgView=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"bg_answersheet.png"]];
     imgView.frame=CGRectMake(0, 420, 320, 150);
@@ -86,8 +86,14 @@
         NSLog(@"添加题目失败, %@, %@", error, [error userInfo]);
         abort();
     }
-    
+    if (isDown)
+        [self downBut:nil];
     [self drawRect];
+    [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(removeImageView) userInfo:nil repeats:NO];
+}
+-(void)removeImageView
+{
+    [imgV removeFromSuperview];
 }
 - (void)drawRect
 {
@@ -224,6 +230,12 @@
     [submitAn setImage:[UIImage imageNamed:@"btn_submit_pressed.png"] forState:UIControlStateNormal];
     [submitAn addTarget:self action:@selector(submitAns) forControlEvents:UIControlEventTouchUpInside];
     [scrollView addSubview:submitAn];
+    resultLabel=[[UILabel alloc]initWithFrame:CGRectMake(0, 2860, 320, 35)];
+    resultLabel.backgroundColor=[UIColor clearColor];
+    resultLabel.textAlignment=NSTextAlignmentCenter;
+    resultLabel.text=@"";
+    [scrollView addSubview:resultLabel];
+    [resultLabel release];
 }
 -(void)submitAns
 {
@@ -241,15 +253,20 @@
     result = [result stringByAppendingFormat:@" 共 %d 道题未做。",num];
     if (num==0)
     {
+        int rightNum=0;
         for (int m=0; m<20; m++)
         {
             WanXing *wan=[self.array objectAtIndex:m];
             UILabel *label=(UILabel *)[scrollView viewWithTag:1+m];
             if ([[NSString stringWithFormat:@"%c",answer[m]] isEqualToString:wan.result])
+            {
+                rightNum += 1;
                 label.text=[NSString stringWithFormat:@" √ 您选了%c。回答正确！",answer[m]];
+            }
             else
                 label.text=[NSString stringWithFormat:@" × 您选了%c，正确答案是%@。",answer[m],wan.result];
         }
+        resultLabel.text=[NSString stringWithFormat:@"您答对了%d题，共20题。",rightNum];
     }
      else
      {
@@ -487,6 +504,7 @@
     UIImageView *iv=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 300, 180)];
     iv.image=[UIImage imageNamed:@"bg_reviewwords.png"];
     [alertView addSubview:iv];
+    [iv release];
     
     UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(45, 0, 210, 36)];
     label.text=title;
@@ -494,6 +512,7 @@
     label.textAlignment=NSTextAlignmentCenter;
     label.textColor=[UIColor colorWithRed:0.22 green:0.66 blue:0.99 alpha:1.0];
     [alertView addSubview:label];
+    [label release];
     
     UIButton *close=[UIButton buttonWithType:UIButtonTypeCustom];
     [close setImage:[UIImage imageNamed:@"btn_closereview_pressed.png"] forState:UIControlStateNormal];

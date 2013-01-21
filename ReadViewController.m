@@ -96,8 +96,13 @@
         NSLog(@"添加题目失败, %@, %@", error, [error userInfo]);
         abort();
     }
-    
+    [self goDown];
     [self drawRect];
+    [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(removeImageView) userInfo:nil repeats:NO];
+}
+-(void)removeImageView
+{
+    [imgV removeFromSuperview];
 }
 - (void)drawRect
 {
