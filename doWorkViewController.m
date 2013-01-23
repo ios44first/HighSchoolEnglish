@@ -140,9 +140,6 @@
 }
 
 #pragma mark - NSXMLParserDelegate 代理方法
--(void)parserDidStartDocument:(NSXMLParser *)parser
-{
-}
 -(void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict
 {
     if ([elementName isEqualToString:@"item"])

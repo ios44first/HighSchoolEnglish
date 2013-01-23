@@ -97,10 +97,10 @@
    [self.navigationController popViewControllerAnimated:YES];
 }
 #pragma mark - NSXMLParserDelegate 代理方法
--(void)parserDidStartDocument:(NSXMLParser *)parser
-{//解析开始的时候调用该方法。
-    //NSLog(@"开始解析。。。parserDidStartDocument");
-}
+//-(void)parserDidStartDocument:(NSXMLParser *)parser
+//{//解析开始的时候调用该方法。
+//    //NSLog(@"开始解析。。。parserDidStartDocument");
+//}
 -(void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict
 {//在XML document中,当解析器在解析的时候遇到了一个新的element时会被调用该方法。
     //NSLog(@"StartElement。。。");
