@@ -379,6 +379,7 @@
 		0FCB72C2169D587800723A0B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FCB72C1169D587800723A0B /* QuartzCore.framework */; };
 		0FCB72D2169D8BB000723A0B /* TalkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FCB72D0169D8BB000723A0B /* TalkViewController.m */; };
 		0FCB72D3169D8BB000723A0B /* TalkViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FCB72D1169D8BB000723A0B /* TalkViewController.xib */; };
+		0FCDBFCE16B012610080E3DD /* local.caf in Resources */ = {isa = PBXBuildFile; fileRef = 0FCDBFCD16B012610080E3DD /* local.caf */; };
 		0FD12EDB169C19D900F43E6F /* ReadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FD12ED9169C19D900F43E6F /* ReadViewController.m */; };
 		0FD12EDC169C19D900F43E6F /* ReadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FD12EDA169C19D900F43E6F /* ReadViewController.xib */; };
 		0FD3DAB216A39A910008D439 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FFE1E5C16A2D095004C3B95 /* CoreData.framework */; };
@@ -796,6 +797,7 @@
 		0FCB72CF169D8BB000723A0B /* TalkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TalkViewController.h; sourceTree = "<group>"; };
 		0FCB72D0169D8BB000723A0B /* TalkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TalkViewController.m; sourceTree = "<group>"; };
 		0FCB72D1169D8BB000723A0B /* TalkViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TalkViewController.xib; sourceTree = "<group>"; };
+		0FCDBFCD16B012610080E3DD /* local.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = local.caf; path = HighSchoolEnglish/local.caf; sourceTree = "<group>"; };
 		0FD12ED8169C19D900F43E6F /* ReadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReadViewController.h; sourceTree = "<group>"; };
 		0FD12ED9169C19D900F43E6F /* ReadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReadViewController.m; sourceTree = "<group>"; };
 		0FD12EDA169C19D900F43E6F /* ReadViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReadViewController.xib; sourceTree = "<group>"; };
@@ -1515,6 +1517,7 @@
 		0FAC8D8716983F6800732D7D /* more */ = {
 			isa = PBXGroup;
 			children = (
+				0FCDBFCD16B012610080E3DD /* local.caf */,
 				0FAC8D8816983FAB00732D7D /* MoreViewController.h */,
 				0FAC8D8916983FAC00732D7D /* MoreViewController.m */,
 				0FAC8D8A16983FAC00732D7D /* MoreViewController.xib */,
@@ -1939,6 +1942,7 @@
 				0F40C49E16AC0A170002FF0F /* member_btn_cancel.png in Resources */,
 				0F40C49F16AC0A170002FF0F /* member_btn_ok.png in Resources */,
 				0F40C4A916AC11A90002FF0F /* AboutViewController.xib in Resources */,
+				0FCDBFCE16B012610080E3DD /* local.caf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

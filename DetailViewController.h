@@ -17,6 +17,9 @@
     NewWord *word;
     UITextView *contain;
     DataFactory *factory;
+    UITextView *message;
+    NSString *msg;
+    NSString *title;
 }
 
 @property(retain,nonatomic) NSMutableArray *array;

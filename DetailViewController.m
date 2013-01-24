@@ -56,62 +56,102 @@
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
+#pragma mark -
+#pragma mark UIAlertViewDelegate Methods
 -(void)willPresentAlertView:(UIAlertView *)alertView
 {
-    alertView.frame=CGRectMake(10, 150, 300, 165);
-    for (UIView *view in  alertView.subviews)
+    if (alertView.tag==100)
     {
-        if ([view isKindOfClass:[UILabel class]])
+        alertView.frame=CGRectMake(10, 150, 300, 165);
+        for (UIView *view in  alertView.subviews)
         {
-            UILabel *label=(UILabel *)view;
-            label.textColor=[UIColor colorWithRed:0.22 green:0.77 blue:0.99 alpha:1.0];
+            if ([view isKindOfClass:[UILabel class]])
+            {
+                UILabel *label=(UILabel *)view;
+                label.textColor=[UIColor colorWithRed:0.22 green:0.77 blue:0.99 alpha:1.0];
+            }
+            if ([view isKindOfClass:[UIImageView class]])
+            {
+                UIImageView *img=(UIImageView *)view;
+                img.image=[UIImage imageNamed:@"bg_reviewwords.png"];
+            }
+            if (view.tag==1)
+            {
+                [view removeFromSuperview];
+            }
         }
-        if ([view isKindOfClass:[UIImageView class]])
+        
+        UIButton *close=[UIButton buttonWithType:UIButtonTypeCustom];
+        [close setImage:[UIImage imageNamed:@"btn_closereview_pressed.png"] forState:UIControlStateNormal];
+        [close addTarget:self action:@selector(closeAlert:) forControlEvents:UIControlEventTouchUpInside];
+        close.frame=CGRectMake(255, 0, 45, 36);
+        [alertView addSubview:close];
+        contain=[[UITextView alloc]initWithFrame:CGRectMake(10, 40, 280, 80)];
+        contain.backgroundColor=[UIColor clearColor];
+        contain.editable=NO;
+        [self getData];
+        index=0;
+        if ([self.array count]>0)
         {
-            UIImageView *img=(UIImageView *)view;
-            img.image=[UIImage imageNamed:@"bg_reviewwords.png"];
+            word=[self.array objectAtIndex:0];
+            contain.text=[NSString stringWithFormat:@"%@\n%@",word.title,word.result];
         }
-        if (view.tag==1)
+        else
+            contain.text=@"暂无内容。。。";
+        contain.font=[UIFont systemFontOfSize:17];
+        [alertView addSubview:contain];
+        [contain release];
+        UIButton *preButton=[UIButton buttonWithType:UIButtonTypeCustom];
+        [preButton setImage:[UIImage imageNamed:@"btn_previous_pressed.png"] forState:UIControlStateNormal];
+        [preButton addTarget:self action:@selector(preOne) forControlEvents:UIControlEventTouchUpInside];
+        preButton.frame=CGRectMake(12, 120, 82, 38);
+        [alertView addSubview:preButton];
+        UIButton *deleteButton=[UIButton buttonWithType:UIButtonTypeCustom];
+        [deleteButton setImage:[UIImage imageNamed:@"btn_delete_curword_pressed.png"] forState:UIControlStateNormal];
+        [deleteButton addTarget:self action:@selector(deleteOne) forControlEvents:UIControlEventTouchUpInside];
+        deleteButton.frame=CGRectMake(108, 120, 82, 38);
+        [alertView addSubview:deleteButton];
+        UIButton *nextButton=[UIButton buttonWithType:UIButtonTypeCustom];
+        [nextButton setImage:[UIImage imageNamed:@"btn_next_pressed.png"] forState:UIControlStateNormal];
+        [nextButton addTarget:self action:@selector(nextOne) forControlEvents:UIControlEventTouchUpInside];
+        nextButton.frame=CGRectMake(204, 120, 82, 38);
+        [alertView addSubview:nextButton];
+    }
+    else
+    {
+        alertView.frame=CGRectMake(10, 150, 300, 180);
+        for (UIView *view in  alertView.subviews)
         {
             [view removeFromSuperview];
         }
+        UIImageView *iv=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 300, 180)];
+        iv.image=[UIImage imageNamed:@"bg_reviewwords.png"];
+        [alertView addSubview:iv];
+        [iv release];
+        
+        UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(45, 0, 210, 36)];
+        label.text=title;
+        label.backgroundColor=[UIColor clearColor];
+        label.textAlignment=NSTextAlignmentCenter;
+        label.textColor=[UIColor colorWithRed:0.22 green:0.66 blue:1 alpha:1.0];
+        [alertView addSubview:label];
+        [label release];
+        
+        UIButton *close=[UIButton buttonWithType:UIButtonTypeCustom];
+        [close setImage:[UIImage imageNamed:@"btn_closereview_pressed.png"] forState:UIControlStateNormal];
+        [close addTarget:self action:@selector(closeAlert:) forControlEvents:UIControlEventTouchUpInside];
+        close.frame=CGRectMake(255, 0, 45, 36);
+        [alertView addSubview:close];
+        
+        message = [[UITextView alloc] initWithFrame:CGRectMake(10, 40, 280, 120)];
+        message.editable=NO;
+        message.textColor=[UIColor colorWithRed:0.22 green:0.66 blue:1 alpha:1.0];
+        message.font=[UIFont systemFontOfSize:17];
+        message.textAlignment=NSTextAlignmentCenter;
+        [message setBackgroundColor:[UIColor clearColor]];
+        message.text=msg;
+        [alertView addSubview:message];
     }
-    
-    UIButton *close=[UIButton buttonWithType:UIButtonTypeCustom];
-    [close setImage:[UIImage imageNamed:@"btn_closereview_pressed.png"] forState:UIControlStateNormal];
-    [close addTarget:self action:@selector(closeAlert:) forControlEvents:UIControlEventTouchUpInside];
-    close.frame=CGRectMake(255, 0, 45, 36);
-    [alertView addSubview:close];
-    contain=[[UITextView alloc]initWithFrame:CGRectMake(10, 40, 280, 80)];
-    contain.backgroundColor=[UIColor clearColor];
-    contain.editable=NO;
-    [self getData];
-    index=0;
-    if ([self.array count]>0)
-    {
-        word=[self.array objectAtIndex:0];
-        contain.text=[NSString stringWithFormat:@"%@\n%@",word.title,word.result];
-    }
-    else
-        contain.text=@"暂无内容。。。";
-    contain.font=[UIFont systemFontOfSize:17];
-    [alertView addSubview:contain];
-    [contain release];
-    UIButton *preButton=[UIButton buttonWithType:UIButtonTypeCustom];
-    [preButton setImage:[UIImage imageNamed:@"btn_previous_pressed.png"] forState:UIControlStateNormal];
-    [preButton addTarget:self action:@selector(preOne) forControlEvents:UIControlEventTouchUpInside];
-    preButton.frame=CGRectMake(12, 120, 82, 38);
-    [alertView addSubview:preButton];
-    UIButton *deleteButton=[UIButton buttonWithType:UIButtonTypeCustom];
-    [deleteButton setImage:[UIImage imageNamed:@"btn_delete_curword_pressed.png"] forState:UIControlStateNormal];
-    [deleteButton addTarget:self action:@selector(deleteOne) forControlEvents:UIControlEventTouchUpInside];
-    deleteButton.frame=CGRectMake(108, 120, 82, 38);
-    [alertView addSubview:deleteButton];
-    UIButton *nextButton=[UIButton buttonWithType:UIButtonTypeCustom];
-    [nextButton setImage:[UIImage imageNamed:@"btn_next_pressed.png"] forState:UIControlStateNormal];
-    [nextButton addTarget:self action:@selector(nextOne) forControlEvents:UIControlEventTouchUpInside];
-    nextButton.frame=CGRectMake(204, 120, 82, 38);
-    [alertView addSubview:nextButton];
 }
 -(void)preOne
 {
@@ -173,7 +213,7 @@
     UIAlertView *sup=(UIAlertView *)[sender superview];
     [sup dismissWithClickedButtonIndex:0 animated:YES];
 }
-
+#pragma mark -
 - (IBAction)wordList:(UIButton *)sender
 {
     NewWordViewController *newWord=[[NewWordViewController alloc]init];
@@ -185,6 +225,7 @@
 - (IBAction)wordAlert:(UIButton *)sender
 {
     UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"生 词 回 顾" message:@"" delegate:self cancelButtonTitle:@"返   回" otherButtonTitles:nil, nil];
+    alert.tag=100;
     [alert show];
     [alert release];
 }
@@ -237,10 +278,32 @@
 
 - (IBAction)submitTime:(UIButton *)sender
 {
-    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"温馨提示：" message:[NSString stringWithFormat:@"生词提醒时间设置成功！\n%@   将提醒您查看生词本。",self.timeView.text] delegate:nil cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];
+    title=@"温馨提示：";
+    msg=[NSString stringWithFormat:@"生词提醒时间设置成功！\n%@   将提醒您查看生词本。",self.timeView.text];
+    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"温馨提示：" message:[NSString stringWithFormat:@"生词提醒时间设置成功！\n%@   将提醒您查看生词本。",self.timeView.text] delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];
     [alert show];
     [alert release];
+    //设置闹钟
+    NSString *hour=[self.timeView.text substringToIndex:2];
+    NSString *minute=[self.timeView.text substringFromIndex:11];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    NSString *dageStr = [NSString stringWithFormat:@"%@ %d:%@:00",[[[NSDate date] description] substringToIndex:10],[hour intValue],minute];
+    [dateFormatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
+    NSDate *_date =  [dateFormatter dateFromString:dageStr];
+    //NSLog(@"%@,%@",_date,[NSDate dateWithTimeIntervalSinceNow:10]);
+    UILocalNotification *notification=[[UILocalNotification alloc] init];
+    if (notification!=nil)
+    {
+        notification.fireDate=_date; //设置响应时间,单位 秒
+        notification.timeZone=[NSTimeZone defaultTimeZone];
+        notification.soundName = @"local.caf";          //加入声音
+        notification.alertBody = [NSString stringWithFormat:NSLocalizedString(@"您回顾生词的时间到了！",@"It is time to learn the new world!")];  //弹出对话框
+        [[UIApplication sharedApplication]   scheduleLocalNotification:notification];
+    }
+    [dateFormatter release];
+    [notification release];
 }
+
 
 - (void)didReceiveMemoryWarning
 {
