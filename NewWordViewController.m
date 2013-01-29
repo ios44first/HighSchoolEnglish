@@ -106,7 +106,7 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
         cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     }
-    cell.imageView.image=[UIImage imageNamed:@"bg_point.png"];
+    cell.imageView.image=[UIImage imageNamed:@"icon_word.png"];
     
     [self configureCell:cell atIndexPath:indexPath];
     
@@ -116,7 +116,40 @@
 {
     NewWord *word=[self.array objectAtIndex:indexPath.row];
     cell.textLabel.text=word.title;
-    cell.detailTextLabel.text=word.result;
+    UIFont *font=[UIFont systemFontOfSize:14];
+    NSMutableString *string = [NSMutableString stringWithString:word.result];
+    [string replaceOccurrencesOfString:@"\n" withString:@" " options:0 range:NSMakeRange(0, string.length)];
+    CGSize size=[string sizeWithFont:font constrainedToSize:CGSizeMake(MAXFLOAT, 20) lineBreakMode:(NSLineBreakByTruncatingTail)];
+    UIScrollView *sc=[[UIScrollView alloc]initWithFrame:CGRectMake(50, 22, 240, 20)];
+    sc.userInteractionEnabled=NO;
+    [sc setContentSize:size];
+    [sc setBackgroundColor:[UIColor redColor]];
+    [cell addSubview:sc];
+    [sc release];
+    
+    UILabel *content=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 240, 20)];
+    //NSLog(@"%f,%f",size.width,size.height);
+    if (size.width>250)
+    {
+        content.frame=CGRectMake(0, 0, size.width, 20);
+        [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(rollLabel:) userInfo:sc repeats:YES];
+    }
+    content.textColor=[UIColor colorWithRed:0 green:0.7 blue:1 alpha:1.0];
+    content.font=font;
+    content.text=string;
+    [sc addSubview:content];
+    [content release];
+    cell.detailTextLabel.text=@"  ";
+}
+-(void)rollLabel:(NSTimer *)theTimer
+{
+    UIScrollView *scr=[theTimer userInfo];
+    if (scr.contentOffset.x<scr.contentSize.width-244)
+    {
+        [scr setContentOffset:CGPointMake(scr.contentOffset.x+4, 0) animated:YES];
+    }
+    else
+        [scr setContentOffset:CGPointMake(-80, 0) animated:YES];
 }
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath

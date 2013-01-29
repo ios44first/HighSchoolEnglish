@@ -122,6 +122,137 @@
     }
 }
 
+- (IBAction)searchWord:(UIButton *)sender
+{
+    [self.inputWord resignFirstResponder];
+    NSString *input=self.inputWord.text;
+    if ([input length]==0)
+    {
+        return;
+    }
+    //NSStringEncoding enCode=CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+    /*NSString *urlStr=nil;
+    if (exChangeL)
+    {
+        urlStr=[[NSString stringWithFormat:@"http://api.liqwei.com/translate/?language=en|zh-CN&content=%@",input] stringByAddingPercentEscapesUsingEncoding:enCode];
+    }
+    else
+    {
+        urlStr=[[NSString stringWithFormat:@"http://api.liqwei.com/translate/?language=zh-CN|en&content=%@",input]stringByAddingPercentEscapesUsingEncoding:enCode];
+    }*/
+    NSString *urlStr=[[NSString stringWithFormat:@"http://dict.qq.com/dict?q=%@",input]stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSURL *url=[NSURL URLWithString:urlStr];
+    NSError *error=nil;
+    NSString *resutStr=[NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&error];
+    NSDictionary *dic=[resutStr JSONValue];
+    NSArray *array=nil;
+    if ([[dic allKeys] containsObject:@"local"])
+    {
+        array = [dic valueForKey:@"local"];
+    }
+    if (array!=nil)
+    {
+        NSDictionary *one=[array objectAtIndex:0];
+        if ([[one allKeys] containsObject:@"pho"])
+        {
+            NSArray *yin=[one valueForKey:@"pho"];
+            //NSDictionary *d=[arr objectAtIndex:0];
+            NSArray *arr=[NSArray array];
+            NSMutableString *result=[[NSMutableString alloc]init];
+            if ([[one allKeys] containsObject:@"des2"])
+            {
+                arr=[one valueForKey:@"des2"];
+            }
+            else
+            {
+                result=[[NSMutableString alloc]initWithFormat:@"[%@]\n",[yin objectAtIndex:0]];
+                arr=[one valueForKey:@"des"];
+            }
+            for (NSDictionary *des in arr)
+            {
+                if ([[des allKeys] containsObject:@"p"])
+                {
+                    [result appendFormat:@"%@  ",[des valueForKey:@"p"]];
+                }
+                if ([[des allKeys] containsObject:@"d"])
+                {
+                    [result appendFormat:@"%@\n",[des valueForKey:@"d"]];
+                }
+                if ([[des allKeys] containsObject:@"word"])
+                {
+                    [result appendFormat:@"※%@\n  ",[des valueForKey:@"word"]];
+                }
+                if ([[des allKeys] containsObject:@"pho"])
+                {
+                    [result appendFormat:@"   [%@]\n",[NSString Unicode10:[[des valueForKey:@"pho"] objectAtIndex:0]]];
+                }
+                if ([[des allKeys] containsObject:@"des"])
+                {
+                    NSArray *a=[des valueForKey:@"des"];
+                    for (NSDictionary *d in a)
+                    {
+                        if ([[d allKeys] containsObject:@"p"])
+                        {
+                            [result appendFormat:@"%@  ",[d valueForKey:@"p"]];
+                        }
+                        if ([[d allKeys] containsObject:@"d"])
+                        {
+                            [result appendFormat:@"%@\n",[d valueForKey:@"d"]];
+                        }
+                    }
+                }
+                [result appendFormat:@"\n"];
+            }
+            self.translationView.text=[NSString Unicode10:result];
+        }
+        else
+        {
+            NSArray *des2=[one valueForKey:@"des2"];
+            //NSLog(@"%@",des2);
+            NSMutableString *result=[[NSMutableString alloc]init];
+            for (NSDictionary *des in des2)
+            {
+                if ([[des allKeys] containsObject:@"word"])
+                {
+                    [result appendFormat:@"※%@\n",[des valueForKey:@"word"]];
+                }
+                if ([[des allKeys] containsObject:@"pho"])
+                {
+                    [result appendFormat:@"   [%@]\n",[NSString Unicode10:[[des valueForKey:@"pho"] objectAtIndex:0]]];
+                }
+                if ([[des allKeys] containsObject:@"des"])
+                {
+                    for (NSDictionary *d in [des valueForKey:@"des"])
+                    {
+                        [result appendFormat:@"   %@  %@\n",[d valueForKey:@"p"],[d valueForKey:@"d"]];
+                    }
+                }
+                [result appendFormat:@"\n"];
+            }
+             self.translationView.text=[NSString Unicode10:[NSString filterString:result]];
+        }
+    }
+    else if([[dic allKeys] containsObject:@"netdes"])
+    {
+        NSArray *one=[dic valueForKey:@"netdes"];
+        NSDictionary *word=[one objectAtIndex:0];
+        NSArray *shortArray=[word valueForKey:@"des"];
+        NSDictionary *oneWord=[shortArray objectAtIndex:0];
+        NSString *re=[oneWord valueForKey:@"d"];
+        self.translationView.text=[NSString Unicode10:[NSString filterString:re]];
+    }
+    else
+    {
+        self.translationView.text=@"Sorry 暂无结果。。。";
+    }
+}
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    [self searchWord:nil];
+    return YES;
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -133,33 +264,5 @@
     [_translationView release];
     [super dealloc];
 }
-- (IBAction)searchWord:(UIButton *)sender
-{
-    [self.inputWord resignFirstResponder];
-    NSString *input=self.inputWord.text;
-    if ([input length]==0)
-    {
-        return;
-    }
-    NSString *urlStr=nil;
-    NSStringEncoding enCode=CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
-    if (exChangeL)
-    {
-        urlStr=[[NSString stringWithFormat:@"http://api.liqwei.com/translate/?language=en|zh-CN&content=%@",input] stringByAddingPercentEscapesUsingEncoding:enCode];
-    }
-    else
-    {
-        urlStr=[[NSString stringWithFormat:@"http://api.liqwei.com/translate/?language=zh-CN|en&content=%@",input]stringByAddingPercentEscapesUsingEncoding:enCode];
-    }
-    NSURL *url=[NSURL URLWithString:urlStr];
-    NSError *error=nil;
-    NSString *resutStr=[NSString stringWithContentsOfURL:url encoding:enCode error:&error];
-    self.translationView.text=resutStr;
-}
--(BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    [textField resignFirstResponder];
-    [self searchWord:nil];
-    return YES;
-}
+
 @end

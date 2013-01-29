@@ -9,7 +9,11 @@
 #import <Foundation/Foundation.h>
 
 @interface NSString (Filter)
+
 + (NSString *)filterString:(NSString *)string;
++ (NSString *)Unicode10:(NSString *)string;
+
 -(NSString *) genHtmlStr:(NSString *)newStr;
 -(NSString *)flattenHTML:(NSString *)htmlstr;
+
 @end

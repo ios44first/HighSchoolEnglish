@@ -48,6 +48,18 @@
     else
         return @"";
 }
++ (NSString *)Unicode10:(NSString *)string
+{
+    NSMutableString *unicodeStr = [NSMutableString stringWithString:string];
+    NSDictionary * replacements = [NSDictionary dictionaryWithObjectsAndKeys:@"æ", @"&#230;", @"ð", @"&#240;", @"ŋ", @"&#331;", @"ɑ", @"&#593;",@"ɒ", @"&#594;",@"ɔ", @"&#596;",@"ə", @"&#601;",@"ɛ", @"&#603;",@"ɜ", @"&#604;",@"ɡ", @"&#609;",@"ɪ", @"&#618;",@"ʃ", @"&#643;",@"ʊ", @"&#650;",@"ʌ", @"&#652;",@"ʒ", @"&#658;",@"ˈ", @"&#712;",@"ˌ", @"&#716;",@"ː", @"&#720;",@"θ", @"&#952;",@"'", @"&#39;",nil];
+    for (NSString * htmlEntity in replacements)
+    {
+        [unicodeStr replaceOccurrencesOfString:htmlEntity withString:[replacements objectForKey:htmlEntity] options:0 range:NSMakeRange(0, [unicodeStr length])];
+    }
+    return [[[NSString alloc] initWithString:unicodeStr] autorelease]
+    ;
+}
+
 -(NSString *) genHtmlStr:(NSString *)newStr
 {
     NSMutableString *htmlStr = [NSMutableString stringWithString:newStr];

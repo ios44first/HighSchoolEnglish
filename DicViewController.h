@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 #import "NewWord.h"
+#import "JSON.h"
+#import "NSString+Filter.h"
 
 @interface DicViewController : UIViewController<UITextFieldDelegate>
 {

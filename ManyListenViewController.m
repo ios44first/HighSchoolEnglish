@@ -335,11 +335,20 @@
 }
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    if (self.tableView.contentOffset.y < -20||self.tableView.contentOffset.y == (self.tableView.contentSize.height - self.tableView.frame.size.height) )
+    if (self.tableView.contentOffset.y == (self.tableView.contentSize.height - self.tableView.frame.size.height) )
     {
         [self.array removeAllObjects];
         [self.arrayChild removeAllObjects];
         [self getData];
+        [self.tableView reloadData];
+    }
+    else if (self.tableView.contentOffset.y < -20)
+    {
+        [self.array removeAllObjects];
+        [self.arrayChild removeAllObjects];
+        [self.arrayData removeAllObjects];
+        [self getData];
+        sleep(2.0);
         [self.tableView reloadData];
     }
 }
