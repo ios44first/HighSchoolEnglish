@@ -203,6 +203,12 @@
                 }
                 [result appendFormat:@"\n"];
             }
+            if ([result length]==0)
+            {
+                NSArray *shortA=[one valueForKey:@"des"];
+                NSDictionary *dicOne=[shortA objectAtIndex:0];
+                [result appendString:[dicOne valueForKey:@"d"]];
+            }
             self.translationView.text=[NSString Unicode10:result];
         }
         else
@@ -228,6 +234,12 @@
                     }
                 }
                 [result appendFormat:@"\n"];
+            }
+            if ([result length]==0)
+            {
+                NSArray *shortA=[one valueForKey:@"des"];
+                NSDictionary *dicOne=[shortA objectAtIndex:0];
+                [result appendString:[dicOne valueForKey:@"d"]];
             }
              self.translationView.text=[NSString Unicode10:[NSString filterString:result]];
         }
