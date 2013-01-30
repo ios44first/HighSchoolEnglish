@@ -33,7 +33,7 @@
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]]];
     self.navigationItem.title=@"英语听力";
     self.scroll.delegate=self;
-    NSLog(@"%d",self.grade);
+    //NSLog(@"%d",self.grade);
 }
 
 - (void)didReceiveMemoryWarning

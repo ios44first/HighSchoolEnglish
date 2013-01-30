@@ -123,7 +123,7 @@
     UIScrollView *sc=[[UIScrollView alloc]initWithFrame:CGRectMake(50, 22, 240, 20)];
     sc.userInteractionEnabled=NO;
     [sc setContentSize:size];
-    [sc setBackgroundColor:[UIColor redColor]];
+    //[sc setBackgroundColor:[UIColor redColor]];
     [cell addSubview:sc];
     [sc release];
     
@@ -191,9 +191,15 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    NewWord *word=[self.array objectAtIndex:indexPath.row];
+    WordViewController *wordView=[[WordViewController alloc] init];
+    wordView.newword=word;
+    wordView.i=indexPath.row;
+    wordView.array=self.array;
+    [self.navigationController pushViewController:wordView animated:YES];
+    [wordView release];
 }
-#pragma mark -
+
 #pragma mark - NSFetchedResultsControllerDelegate
 -(void)controllerWillChangeContent:(NSFetchedResultsController *)controller
 {

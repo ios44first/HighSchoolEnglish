@@ -27,8 +27,9 @@
 {
     [super viewDidLoad];
      self.navigationItem.title=@"更多";
-    
-    self.tableView=[[UITableView alloc]initWithFrame:self.view.frame style:UITableViewStyleGrouped];
+    UITableView *table=[[UITableView alloc]initWithFrame:self.view.frame style:UITableViewStyleGrouped];
+    self.tableView=table;
+    [table release];
 }
 
 - (void)didReceiveMemoryWarning

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "DataFactory.h"
 #import "NewWord.h"
+#import "WordViewController.h"
 
 @interface NewWordViewController : UITableViewController<NSFetchedResultsControllerDelegate>
 {

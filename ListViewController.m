@@ -474,7 +474,7 @@
         [self.array removeAllObjects];
         [self.arrayData removeAllObjects];
         [self getData];
-        sleep(2.0);
+        //sleep(2.0);
         [self.tableView reloadData];
     }
 } 
@@ -486,7 +486,7 @@
 #pragma mark EGORefreshTableHeaderDelegate Methods
 - (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
     [self reloadTableViewDataSource];
-    [self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:3.0];
+    [self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:1.0];
 }
 - (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
     return _reloading; // should return if data source model is reloading

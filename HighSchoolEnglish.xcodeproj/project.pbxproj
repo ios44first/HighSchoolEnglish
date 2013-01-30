@@ -390,6 +390,7 @@
 		0FD12EDC169C19D900F43E6F /* ReadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FD12EDA169C19D900F43E6F /* ReadViewController.xib */; };
 		0FD3DAB216A39A910008D439 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FFE1E5C16A2D095004C3B95 /* CoreData.framework */; };
 		0FD3DAB516A39AB50008D439 /* DataFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FD3DAB416A39AB50008D439 /* DataFactory.m */; };
+		0FDE819616B8D147001D2F6F /* WordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FDE819516B8D147001D2F6F /* WordViewController.m */; };
 		0FFB0C9516A17819009C16FB /* NSString+Filter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FFB0C9416A17819009C16FB /* NSString+Filter.m */; };
 		0FFE1E0116A2B04C004C3B95 /* WrongViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FFE1E0016A2B04C004C3B95 /* WrongViewController.m */; };
 		0FFE1E0516A2B05F004C3B95 /* NewWordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FFE1E0416A2B05F004C3B95 /* NewWordViewController.m */; };
@@ -822,6 +823,8 @@
 		0FD12EDA169C19D900F43E6F /* ReadViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReadViewController.xib; sourceTree = "<group>"; };
 		0FD3DAB316A39AB50008D439 /* DataFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataFactory.h; sourceTree = "<group>"; };
 		0FD3DAB416A39AB50008D439 /* DataFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataFactory.m; sourceTree = "<group>"; };
+		0FDE819416B8D147001D2F6F /* WordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordViewController.h; sourceTree = "<group>"; };
+		0FDE819516B8D147001D2F6F /* WordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WordViewController.m; sourceTree = "<group>"; };
 		0FFB0C9316A17819009C16FB /* NSString+Filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Filter.h"; sourceTree = "<group>"; };
 		0FFB0C9416A17819009C16FB /* NSString+Filter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Filter.m"; sourceTree = "<group>"; };
 		0FFE1DFF16A2B04C004C3B95 /* WrongViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WrongViewController.h; sourceTree = "<group>"; };
@@ -1574,6 +1577,8 @@
 				0F40C4A516AC11A90002FF0F /* AboutViewController.h */,
 				0F40C4A616AC11A90002FF0F /* AboutViewController.m */,
 				0F40C4A716AC11A90002FF0F /* AboutViewController.xib */,
+				0FDE819416B8D147001D2F6F /* WordViewController.h */,
+				0FDE819516B8D147001D2F6F /* WordViewController.m */,
 			);
 			name = more;
 			sourceTree = "<group>";
@@ -2035,6 +2040,7 @@
 				0F81896416B65F2100E4920C /* SBJsonBase.m in Sources */,
 				0F81896516B65F2100E4920C /* SBJsonParser.m in Sources */,
 				0F81896616B65F2100E4920C /* SBJsonWriter.m in Sources */,
+				0FDE819616B8D147001D2F6F /* WordViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

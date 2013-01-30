@@ -210,6 +210,7 @@
                 [result appendString:[dicOne valueForKey:@"d"]];
             }
             self.translationView.text=[NSString Unicode10:result];
+            [result release];
         }
         else
         {
@@ -242,6 +243,7 @@
                 [result appendString:[dicOne valueForKey:@"d"]];
             }
              self.translationView.text=[NSString Unicode10:[NSString filterString:result]];
+            [result release];
         }
     }
     else if([[dic allKeys] containsObject:@"netdes"])

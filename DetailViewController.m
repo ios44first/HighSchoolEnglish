@@ -244,13 +244,17 @@
     int newMinute=[minute intValue];
     if (sender.tag==1)
     {
-        if (newHour>-1&&newHour<24)
+        if (newHour>-1&&newHour<23)
            newHour += 1;
+        else if(newHour==23)
+            newHour = 0;
     }
     else if (sender.tag==2)
     {
-        if (newMinute>-1&&newMinute<60)
+        if (newMinute>-1&&newMinute<59)
             newMinute += 1;
+        else if (newMinute==59)
+            newMinute = 0;
     }
     NSString *result=[NSString stringWithFormat:@"%02d    :    %02d",newHour,newMinute];
     self.timeView.text=result;
@@ -266,11 +270,15 @@
     {
         if (newHour>0&&newHour<25)
             newHour -= 1;
+        else if(newHour==0)
+            newHour = 23;
     }
     else if (sender.tag==4)
     {
         if (newMinute>0&&newMinute<61)
             newMinute -= 1;
+        else if (newMinute==0)
+            newMinute = 59;
     }
     NSString *result=[NSString stringWithFormat:@"%02d    :    %02d",newHour,newMinute];
     self.timeView.text=result;
