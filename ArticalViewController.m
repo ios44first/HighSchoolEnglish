@@ -28,11 +28,12 @@
 {
     [super viewDidLoad];
     self.navigationItem.title=[NSString stringWithFormat:@"%@",self.strTitle];
+//初始化解析用到的属性
     self.str=[NSMutableString string];
     self.array=[NSMutableArray array];
     self.dictionary=[NSMutableDictionary dictionary];
     imgURL=nil;
-    
+//初始化显示提示和答案的scroll
     scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 420, 320 , 150)];
 	scrollView.userInteractionEnabled = YES;
 	scrollView.scrollEnabled = YES;
@@ -47,6 +48,7 @@
     tishiAnswer.backgroundColor=[UIColor clearColor];
     tishiAnswer.editable=NO;
     [scrollView addSubview:tishiAnswer];
+//添加一个control用来隐藏下面的scroll
     UIControl *con=[[UIControl alloc]initWithFrame:CGRectMake(0, 0, 320, 100)];
     [con addTarget:self action:@selector(goDown) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:con];
@@ -70,7 +72,7 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)setContain
-{
+{//开始解析
     NSString *string=[NSString stringWithFormat:@"http://api.winclass.net/serviceaction.do?method=gettheme&subjectid=3&id=%d",self.question.questionsId];
     NSURL *newsURL=[[NSURL alloc]initWithString:string];
     NSData *xmlData=[[NSData alloc] initWithContentsOfURL:newsURL];
@@ -80,7 +82,7 @@
     [newsURL release];
     [xmlData release];
     [parserTool release];
-    
+//设置 解析后显示的题干
     NSString *contain1=[NSString stringWithFormat:@"\n参考答案："];
     if ([self.array count]>0)
     {
@@ -297,13 +299,13 @@
 #pragma mark -
 #pragma mark - button
 - (IBAction)showTishi:(UIButton *)sender
-{
+{//显示提示
     [self downBut];
     tishiAnswer.text=self.stringTishi;
 }
 
 - (IBAction)showAnswer:(UIButton *)sender
-{
+{//显示答案
     [self downBut];
     tishiAnswer.text=self.stringAnswer;
     NSString *path=[[NSBundle mainBundle] pathForResource:@"questionID" ofType:@"plist"];
@@ -316,7 +318,7 @@
 }
 
 - (IBAction)nextTi:(UIButton *)sender
-{
+{//下一题
     [self.dictionary removeAllObjects];
     [self.array removeAllObjects];
     if (i<[self.arr count]-1)
@@ -327,7 +329,7 @@
     [self setContain];
 }
 - (void)goDown
-{
+{//下移scroll
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration:1.0f];
     if (isDown)
@@ -343,7 +345,7 @@
     [UIView commitAnimations];
 }
 - (void)downBut
-{
+{//显示下面的scroll
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration:1.0f];
     if (!isDown)

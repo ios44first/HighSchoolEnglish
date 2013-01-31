@@ -27,6 +27,8 @@
 {
     [super viewDidLoad];
      self.navigationItem.title=@"更多";
+    
+//设置table显示的样式为分组
     UITableView *table=[[UITableView alloc]initWithFrame:self.view.frame style:UITableViewStyleGrouped];
     self.tableView=table;
     [table release];
@@ -65,7 +67,7 @@
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
-    if (indexPath.section==0)
+    if (indexPath.section==0)  //第一组
     {
         switch (indexPath.row)
         {
@@ -86,7 +88,7 @@
         }
 
     }
-    if (indexPath.section==1)
+    if (indexPath.section==1)  //第二组
     {
         switch (indexPath.row)
         {
@@ -171,18 +173,21 @@
 }
 #pragma mark -
 #pragma mark UIAlertViewDelegate Methods
+//重写 alert
 -(void)willPresentAlertView:(UIAlertView *)alertView
 {
     alertView.frame=CGRectMake(35, 150, 250, 130);
+    //移除alert中原有的视图组件
     for (UIView *view in  alertView.subviews)
     {
         [view removeFromSuperview];
     }
+    //设置alert的背景图片
     UIImageView *iv=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 250, 130)];
     iv.image=[UIImage imageNamed:@"bg_reviewwords.png"];
     [alertView addSubview:iv];
     [iv release];
-    
+//alert的标题
     UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(45, 20, 160, 60)];
     label.text=@"您确定要退出吗？";
     label.backgroundColor=[UIColor clearColor];
@@ -190,7 +195,7 @@
     label.textColor=[UIColor colorWithRed:0.22 green:0.66 blue:1 alpha:1.0];
     [alertView addSubview:label];
     [label release];
-    
+//alert的关闭按钮
     UIButton *close=[UIButton buttonWithType:UIButtonTypeCustom];
     [close setImage:[UIImage imageNamed:@"btn_closereview_pressed.png"] forState:UIControlStateNormal];
     close.tag=10;
@@ -211,7 +216,7 @@
     [alertView addSubview:ok];
 }
 -(void)closeAlert:(UIButton *)sender
-{
+{//退出程序
     if (sender.tag!=12)
     {
         UIAlertView *sup=(UIAlertView *)[sender superview];

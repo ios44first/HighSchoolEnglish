@@ -28,10 +28,11 @@
 {
     [super viewDidLoad];
     self.navigationItem.title=[NSString stringWithFormat:@"%@",self.strTitle];
+//初始化解析用到的属性
     self.str=[NSMutableString string];
     self.array=[NSMutableArray array];
     self.dictionary=[NSMutableDictionary dictionary];
-    
+//初始化下方显示提示和答案的scroll
     scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 420, 320 , 150)];
 	scrollView.userInteractionEnabled = YES;
 	scrollView.scrollEnabled = YES;
@@ -46,7 +47,7 @@
     tishiAnswer.backgroundColor=[UIColor clearColor];
     tishiAnswer.editable=NO;
     [scrollView addSubview:tishiAnswer];
-    
+//设置一个control，用来下移scroll
     UIControl *con=[[UIControl alloc]initWithFrame:CGRectMake(0, 0, 320, 100)];
     [con addTarget:self action:@selector(goDown) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:con];
@@ -63,7 +64,7 @@
     [back release];
     [backButton release];
     
-    if (!isWrong)
+    if (!isWrong)//如果不是错题状态，则在导航上显示收藏按钮
     {
         UIImage* image1= [UIImage imageNamed:@"btn_favorite_normal.png"];
         CGRect frame_2= CGRectMake(0, 0, image1.size.width, image1.size.height);
@@ -80,7 +81,7 @@
     [self setContain];
 }
 -(void)addQuestion
-{
+{//收藏题目
     id delegate=[[UIApplication sharedApplication]delegate];
     NSManagedObjectContext *managedObjectContext=[delegate managedObjectContext];
     ReadArtical *read=[NSEntityDescription insertNewObjectForEntityForName:@"ReadArtical" inManagedObjectContext:managedObjectContext];
@@ -105,7 +106,7 @@
     [imgV removeFromSuperview];
 }
 - (void)drawRect
-{
+{//截图
     UIGraphicsBeginImageContext(CGSizeMake(320, 330));
     [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
     UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();
@@ -136,7 +137,7 @@
 }
 -(void)setContain
 {
-    if (!isWrong)
+    if (!isWrong)//如果不是错题 则进行解析 并把解析后的信息显示出来
     {
         NSString *string=[NSString stringWithFormat:@"http://api.winclass.net/serviceaction.do?method=gettheme&subjectid=3&id=%d",self.question.questionsId];
         NSURL *newsURL=[[NSURL alloc]initWithString:string];
@@ -187,7 +188,7 @@
         }
         self.stringTishi=[NSString stringWithString:[NSString filterString:contain2]];
     }
-    else
+    else//根据错题来 显示内容
     {
         self.allContain.text=self.artical.contain;
         self.stringAnswer=self.artical.result;
@@ -364,13 +365,13 @@
 }
 #pragma mark - 按钮
 - (IBAction)showTishi:(UIButton *)sender
-{
+{//显示提示
     [self downBut];
     tishiAnswer.text=self.stringTishi;
 }
 
 - (IBAction)showAnswer:(UIButton *)sender
-{
+{//显示答案
     [self downBut];
     tishiAnswer.text=self.stringAnswer;
     NSString *path=[[NSBundle mainBundle] pathForResource:@"questionID" ofType:@"plist"];
@@ -382,7 +383,7 @@
     }
 }
 - (void)goDown
-{
+{//下移 scroll
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration:1.0f];
     if (isDown)
@@ -398,7 +399,7 @@
     [UIView commitAnimations];
 }
 - (void)downBut
-{
+{//弹出 scroll
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration:1.0f];
     if (!isDown)
@@ -414,7 +415,7 @@
     [UIView commitAnimations];
 }
 - (IBAction)nextTi:(UIButton *)sender
-{
+{//下一题
     if (!isWrong)
     {
         [self.dictionary removeAllObjects];
@@ -435,7 +436,7 @@
     [self goDown];
     [self setContain];
 }
-
+#pragma mark - 隐藏tabbar
 - (void)viewWillAppear: (BOOL)animated
 {
     [self hideTabBar:YES];

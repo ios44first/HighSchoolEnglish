@@ -36,7 +36,7 @@ const NSUInteger btnInterval = 60;
     year=1999;
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]]];
     self.navigationItem.title=@"智能题库";
-    
+//初始化显示选择年份按钮的scrollView
     scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, btnHeight)];
 	scrollView.userInteractionEnabled = YES;
 	scrollView.scrollEnabled = YES;
@@ -50,7 +50,7 @@ const NSUInteger btnInterval = 60;
 }
 
 - (IBAction)goToList:(UIButton *)sender
-{
+{//点击题型按钮进入tableView列表，传过去参数进行解析
     ListViewController *list=[[ListViewController alloc]init];
     list.grade=grade;
     list.year=year;
@@ -66,7 +66,7 @@ const NSUInteger btnInterval = 60;
 }
 
 - (void)addTitleButtons
-{
+{//给显示年份的按钮的标题
 	UIButton *btn;
 	
 	for (int i = 0; i < btnNumber; i++) {
@@ -83,7 +83,7 @@ const NSUInteger btnInterval = 60;
 	[self selectButtonAtIndex:0];
 }
 - (void)selectButtonAtIndex:(NSUInteger)index
-{
+{//选择年份按钮
 	UIButton *selectedBtn = [[scrollView subviews] objectAtIndex:index];
 	[selectedBtn setBackgroundImage:btnStretchImg forState:UIControlStateNormal];
 	[selectedBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];

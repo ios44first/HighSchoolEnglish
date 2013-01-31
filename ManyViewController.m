@@ -38,9 +38,9 @@
     [self.navigationItem setLeftBarButtonItem:back];
     [back release];
     [backButton release];
-    
+//进度条
     [self.sliderAV addTarget:self action:@selector(changeValue) forControlEvents:UIControlEventTouchUpInside];
-    
+//显示答案和听力原文的textView
     resultView=[[UITextView alloc]initWithFrame:CGRectMake(320, 10, 320, 320)];
     [resultView setBackgroundColor:[UIColor clearColor]];
     resultView.editable=NO;
@@ -54,7 +54,7 @@
     [self setData];
 }
 -(void)setData
-{
+{//根据解析后的数据，初始化题干和按钮
     for (int j=0; j<5; j++)
     {
         answer[j]='0';
@@ -130,7 +130,7 @@
     isPlay=NO;
 }
 -(void)chooseAnswer:(UIButton *)sender
-{
+{//选择答案
     int x=sender.tag/10;
     int y=sender.tag%10;
     UIButton *b1=(UIButton *)[listenView viewWithTag:x*10+1];
@@ -159,7 +159,7 @@
     }
 }
 -(void)changeValue
-{
+{//改变听力进度
     if (streamer.duration)
 	{
 		double newSeekTime = (self.sliderAV.value / 100.0) * streamer.duration;
@@ -169,7 +169,7 @@
 #pragma mark -
 #pragma mark BUtton Action
 - (IBAction)playStop:(UIButton *)sender
-{
+{// 开始  暂停
     if (isPlay)
     {
         isPlay=NO;
@@ -190,7 +190,7 @@
     }
 }
 -(void)moveLR:(NSArray *)viewArray
-{
+{//左右移动
     if (isShow)
     {
         isShow=NO;
@@ -209,7 +209,7 @@
     }
 }
 - (IBAction)submitAnswer:(UIButton *)sender
-{
+{//提交答案
     NSString *contain=@"";
     for (ListenChild *child in self.listen.childArray)
     {
@@ -245,7 +245,7 @@
 }
 
 - (IBAction)nextTI:(UIButton *)sender
-{
+{//下一题
     [streamer stop];
     [self destroyStreamer];
     isPlay=NO;

@@ -38,15 +38,15 @@
     [self.navigationItem setLeftBarButtonItem:back];
     [back release];
     [backButton release];
-    
+//显示题干的textView
     UITextView *tv=[[UITextView alloc]initWithFrame:CGRectMake(0, 10, 320, 320)];
     self.listenTitle=tv;
     [tv release];
     [self.listenTitle setBackgroundColor:[UIColor clearColor]];
     [self.view addSubview:self.listenTitle];
-    
+//进度条
     [self.sliderAV addTarget:self action:@selector(changeValue) forControlEvents:UIControlEventTouchUpInside];
-    
+//显示答案和听力原文的textView
     resultView=[[UITextView alloc]initWithFrame:CGRectMake(320, 10, 320, 300)];
     [resultView setBackgroundColor:[UIColor clearColor]];
     resultView.editable=NO;
@@ -56,7 +56,7 @@
     [self setData];
 }
 -(void)setData
-{
+{//获得数据
     if (self.question.queTitle!=nil)
         self.listenTitle.text=[NSString filterString:self.question.queTitle];
     else
@@ -67,7 +67,7 @@
     isShow=NO;
 }
 -(void)changeValue
-{
+{//拖动进度条，改变进度
     if (streamer.duration)
 	{
 		double newSeekTime = (self.sliderAV.value / 100.0) * streamer.duration;
@@ -197,7 +197,7 @@
     [super dealloc];
 }
 -(void)moveLR:(NSArray *)viewArray
-{
+{//左移右移
     if (isShow)
     {
         isShow=NO;
@@ -217,7 +217,7 @@
     }
 }
 - (IBAction)submitButton:(UIButton *)sender
-{
+{//提交答案，显示听力原文
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration:1.0f];
     NSString *contain=[NSString stringWithFormat:@"\n答案为：\n%@.\n\n%@",self.question.answer,self.question.original];
@@ -238,7 +238,7 @@
     }
 }
 - (IBAction)nextTI:(UIButton *)sender
-{
+{//下一题
     [streamer stop];
     [self destroyStreamer];
     isPlay=NO;
@@ -255,7 +255,7 @@
 }
 
 - (IBAction)playStop:(UIButton *)sender
-{
+{//开始  暂停
     if (isPlay)
     {
         isPlay=NO;

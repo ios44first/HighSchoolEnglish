@@ -32,35 +32,37 @@
     UIButton* backButton= [[UIButton alloc] initWithFrame:frame_1];
     [backButton setBackgroundImage:image forState:UIControlStateNormal];
     [backButton addTarget:self action:@selector(goBack) forControlEvents:UIControlEventTouchUpInside];
-    //定制自己的风格的 UIBarButtonItem
+//定制自己的风格的 UIBarButtonItem
     UIBarButtonItem* back= [[UIBarButtonItem alloc] initWithCustomView:backButton];
     [self.navigationItem setLeftBarButtonItem:back];
     [back release];
     [backButton release];
     
     self.array=[NSMutableArray array];
-    [self getData];
+    [self getData];     //获取数据
 }
 -(void)getData
 {
     [self.array removeAllObjects];
-    factory=[DataFactory instance];
+    factory=[DataFactory instance];//获取数据库操作类的单例
+//通过代理得到上下文
     id delegate=[[UIApplication sharedApplication]delegate];
     factory.managedObjectContext=[delegate managedObjectContext];
+//访问数据库获得数据
     for (id temp in [factory getData:@"NewWord" andSort:@"createDate"])
     {
         [self.array addObject:temp];
     }
 }
 -(void)goBack
-{
+{//返回
     [self.navigationController popViewControllerAnimated:YES];
 }
 #pragma mark -
 #pragma mark UIAlertViewDelegate Methods
 -(void)willPresentAlertView:(UIAlertView *)alertView
 {
-    if (alertView.tag==100)
+    if (alertView.tag==100) //显示生词的alert
     {
         alertView.frame=CGRectMake(10, 150, 300, 165);
         for (UIView *view in  alertView.subviews)
@@ -117,7 +119,7 @@
         nextButton.frame=CGRectMake(204, 120, 82, 38);
         [alertView addSubview:nextButton];
     }
-    else
+    else  //显示信息提示的alert
     {
         alertView.frame=CGRectMake(10, 150, 300, 180);
         for (UIView *view in  alertView.subviews)
@@ -154,7 +156,7 @@
     }
 }
 -(void)preOne
-{
+{//上一个单词
     if ([self.array count]>0)
     {
         if (index>0&&index<[self.array count])
@@ -165,7 +167,7 @@
     }
 }
 -(void)deleteOne
-{
+{//删除当前单词
     if ([self.array count]>0)
     {
         id tem=[self.array objectAtIndex:index];
@@ -198,7 +200,7 @@
     }
 }
 -(void)nextOne
-{
+{//下一个单词
     if ([self.array count]>0)
     {
         if (index>-1&&index<[self.array count]-1)
@@ -209,13 +211,13 @@
     }
 }
 -(void)closeAlert:(UIButton *)sender
-{
+{//关闭alert
     UIAlertView *sup=(UIAlertView *)[sender superview];
     [sup dismissWithClickedButtonIndex:0 animated:YES];
 }
 #pragma mark -
 - (IBAction)wordList:(UIButton *)sender
-{
+{//进入生词列表
     NewWordViewController *newWord=[[NewWordViewController alloc]init];
     newWord.title=@"生 词 本";
     [self.navigationController pushViewController:newWord animated:YES];
@@ -223,7 +225,7 @@
 }
 
 - (IBAction)wordAlert:(UIButton *)sender
-{
+{//显示生词的alert
     UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"生 词 回 顾" message:@"" delegate:self cancelButtonTitle:@"返   回" otherButtonTitles:nil, nil];
     alert.tag=100;
     [alert show];
@@ -235,7 +237,7 @@
 }
 
 - (IBAction)addTime:(UIButton *)sender
-{
+{//上调时间
     NSString *hour=[self.timeView.text substringToIndex:2];
     NSString *minute=[self.timeView.text substringFromIndex:11];
     //NSLog(@"-%@-%@-",hour,minute);
@@ -261,7 +263,7 @@
 }
 
 - (IBAction)reduceTime:(UIButton *)sender
-{
+{//下调时间
     NSString *hour=[self.timeView.text substringToIndex:2];
     NSString *minute=[self.timeView.text substringFromIndex:11];
     int newHour=[hour intValue];
@@ -285,7 +287,7 @@
 }
 
 - (IBAction)submitTime:(UIButton *)sender
-{
+{//设置 查看生词的提醒
     title=@"温馨提示：";
     msg=[NSString stringWithFormat:@"生词提醒时间设置成功！\n%@   将提醒您查看生词本。",self.timeView.text];
     UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"温馨提示：" message:[NSString stringWithFormat:@"生词提醒时间设置成功！\n%@   将提醒您查看生词本。",self.timeView.text] delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];

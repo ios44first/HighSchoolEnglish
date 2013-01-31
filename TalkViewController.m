@@ -40,9 +40,9 @@
     [self.navigationItem setLeftBarButtonItem:back];
     [back release];
     [backButton release];
-    
+//设置进度条
     [self.sliderAV addTarget:self action:@selector(changeValue) forControlEvents:UIControlEventTouchUpInside];
-    
+//显示答案和听力原文的视图，初始化在屏幕的右方，提交答案的时候 可以显示出来
     resultView=[[UITextView alloc]initWithFrame:CGRectMake(320, 10, 320, 300)];
     [resultView setBackgroundColor:[UIColor clearColor]];
     resultView.editable=NO;
@@ -52,7 +52,7 @@
     [self setData];
 }
 -(void)setData
-{
+{//显示听力题干内容
     if (self.question.queTitle!=nil)
         self.listenTitle.text=[NSString filterString:self.question.queTitle];
     else
@@ -65,7 +65,7 @@
     isShow=NO;
 }
 -(void)setLabelButton
-{
+{//初始化 按钮 和 选项的位置大小
     UILabel *la=[[UILabel alloc]initWithFrame:CGRectMake(10, 10, 300, 120)];
     self.listenTitle=la;
     [la release];
@@ -113,7 +113,7 @@
     [self.view addSubview:self.selectC];
 }
 -(void)changeValue
-{
+{//改变 听力的当前进度
     if (streamer.duration)
 	{
 		double newSeekTime = (self.sliderAV.value / 100.0) * streamer.duration;
@@ -123,7 +123,7 @@
 #pragma mark -
 #pragma mark 音频流
 - (void)destroyStreamer
-{
+{//销毁音频流
 	if (streamer)
 	{
 		[[NSNotificationCenter defaultCenter]
@@ -138,7 +138,7 @@
 	}
 }
 - (void)createStreamer
-{
+{//创建音频流
 	if (streamer)
 	{
 		return;
@@ -160,7 +160,7 @@
 
 }
 - (void)updateProgress:(NSTimer *)updatedTimer
-{
+{//更新进度条
 	if (streamer.bitRate != 0.0)
 	{
 		double progress = streamer.progress*1.8;
@@ -267,7 +267,7 @@
 }
 
 - (IBAction)playStop:(UIButton *)sender
-{
+{//停止  播放
     if (isPlay)
     {
         isPlay=NO;
@@ -288,7 +288,7 @@
     }
 }
 -(void)moveLR:(NSArray *)viewArray
-{
+{//控制 视图的 左移右移
     if (isShow)
     {
         isShow=NO;
@@ -307,7 +307,7 @@
     }
 }
 - (IBAction)submitAnswer:(UIButton *)sender
-{
+{//提交答案，显示原文
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration:1.0f];
     NSString *contain=nil;
@@ -334,7 +334,7 @@
 }
 
 - (IBAction)nextTI:(UIButton *)sender
-{
+{//下一题
     [streamer stop];
     [self destroyStreamer];
     isPlay=NO;

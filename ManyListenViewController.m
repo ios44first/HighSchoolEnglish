@@ -27,6 +27,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+//初始化显示下拉刷新的视图
     if (_refreshHeaderView == nil) {
         EGORefreshTableHeaderView *view = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];
         view.delegate = self;
@@ -35,7 +36,7 @@
         [view release];
     }
     [_refreshHeaderView refreshLastUpdatedDate];
-    
+//初始化 解析用到的 属性
     self.array=[NSMutableArray array];
     self.arrayChild=[NSMutableArray array];
     self.arrayData=[NSMutableArray array];
@@ -57,7 +58,7 @@
     [backButton release];
 }
 -(void)getData
-{
+{//开始解析  获得数据
     isChild=NO;
     NSString *string=[NSString stringWithFormat:@"http://api.winclass.net/serviceaction.do?method=getlisteningthemes&currentpagenum=%d&pagesize=20&listentype=%d",++currentpagenum,self.titleType];
     NSURL *newsURL=[[NSURL alloc]initWithString:string];
@@ -74,7 +75,7 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)viewWillAppear: (BOOL)animated
-{
+{//显示本视图前调用的方法
     NSString *path=[[NSBundle mainBundle] pathForResource:@"questionID" ofType:@"plist"];
     madeArray=[[NSMutableArray alloc]initWithContentsOfFile:path];
     //NSLog(@"%@",madeArray);
@@ -88,7 +89,7 @@
 }
 #pragma mark - NSXMLParserDelegate 代理方法
 -(void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict
-{
+{//解析时遇到 节点的开始
     if ([elementName isEqualToString:@"childThemeList"])
     {
         isChild=YES;
@@ -139,11 +140,11 @@
     }
 }
 -(void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
-{
+{//获得节点的内容
     [str appendString:string];
 }
 -(void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
-{
+{//解析到节点结束的时候
     if ([elementName isEqualToString:@"item"])
     {
         if (isChild)
@@ -199,7 +200,7 @@
     }
 }
 -(void)parserDidEndDocument:(NSXMLParser *)parser
-{
+{//解析完成的时候调用，整理解析后得到的数据
     NSMutableArray *arr=[NSMutableArray array];
     for (id element in self.array)
     {
@@ -259,7 +260,7 @@
         cell=[[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
     }
     if (indexPath.row<[self.arrayData count])
-    {
+    {//初始化cell的内容
         cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
         ListenMany *many=[self.arrayData objectAtIndex:indexPath.row];
         if (many.listenTitle==nil)
@@ -275,7 +276,7 @@
             cell.imageView.image=[UIImage imageNamed:@"bg_point_wei.png"];
     }
     else
-    {
+    {//设置上拉加载更多的cell的内容
         if (self.tableView.contentSize.height<420)
         {
             cell.accessoryType=UITableViewCellAccessoryNone;
@@ -335,14 +336,14 @@
 }
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    if (self.tableView.contentOffset.y == (self.tableView.contentSize.height - self.tableView.frame.size.height) )
+    if (self.tableView.contentOffset.y == (self.tableView.contentSize.height - self.tableView.frame.size.height) )//上拉加载更多
     {
         [self.array removeAllObjects];
         [self.arrayChild removeAllObjects];
         [self getData];
         [self.tableView reloadData];
     }
-    else if (self.tableView.contentOffset.y < -20)
+    else if (self.tableView.contentOffset.y < -20)//下拉刷新
     {
         [self.array removeAllObjects];
         [self.arrayChild removeAllObjects];

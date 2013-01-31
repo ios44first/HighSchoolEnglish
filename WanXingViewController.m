@@ -28,10 +28,11 @@
 {
     [super viewDidLoad];
     self.navigationItem.title=[NSString stringWithFormat:@"%@",self.strTitle];
+//初始化属性
     self.str=[NSMutableString string];
     self.array=[NSMutableArray array];
     self.dictionary=[NSMutableDictionary dictionary];
-    
+//初始化下方做题的scrollView
     scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 420, 320 , 150)];
 	scrollView.userInteractionEnabled = YES;
 	scrollView.scrollEnabled = YES;
@@ -52,7 +53,7 @@
     [self.navigationItem setLeftBarButtonItem:back];
     [back release];
     [backButton release];
-    
+//如果不是错题状态，显示导航栏的收藏按钮
     if (!self.isWrong)
     {
         UIImage* image1= [UIImage imageNamed:@"btn_favorite_normal.png"];
@@ -70,7 +71,7 @@
     [self setContain];
 }
 -(void)addQuestion
-{
+{//收藏题目
     id delegate=[[UIApplication sharedApplication]delegate];
     NSManagedObjectContext *managedObjectContext=[delegate managedObjectContext];
     DuoXuan *duo=[NSEntityDescription insertNewObjectForEntityForName:@"DuoXuan" inManagedObjectContext:managedObjectContext];
@@ -96,7 +97,7 @@
     [imgV removeFromSuperview];
 }
 - (void)drawRect
-{
+{//收藏错题的动画
     UIGraphicsBeginImageContext(CGSizeMake(320, 330));
     [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
     UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();
@@ -126,7 +127,7 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)setContain
-{
+{//开始解析
     NSLog(@"%d",self.question.questionsId);
     [self.dictionary removeAllObjects];
     [self.array removeAllObjects];
@@ -146,7 +147,7 @@
     //NSLog(@"--%c--",answer[10][2]);
 }
 -(void)setScrollView
-{
+{//初始化做题的scrollview的内容
     for (int j=0; j<20; j++)
     {
         answer[j]='0';
@@ -155,76 +156,83 @@
     {
         [view removeFromSuperview];
     }
-    for (int n=0; n<20; n++)
+    //for (int n=0; n<20; n++)
+    int n=0;
+    for (WanXing *wan in self.array)
     {
-        UILabel *num=[[UILabel alloc]initWithFrame:CGRectMake(5, 140*n+5, 25, 25)];
-        num.text=[NSString stringWithFormat:@"%d.",n+1];
-        [num setBackgroundColor:[UIColor clearColor]];
-        [scrollView addSubview:num];
-        [num release];
-        UILabel *ans=[[UILabel alloc]initWithFrame:CGRectMake(30, 140*n+5, 220, 25)];
-        ans.text=@"请选择：";
-        ans.tag=1+n;
-        [ans setBackgroundColor:[UIColor clearColor]];
-        [scrollView addSubview:ans];
-        [ans release];
-        UIButton *tishi=[UIButton buttonWithType:UIButtonTypeCustom];
-        tishi.frame=CGRectMake(250, 140*n+5, 60, 25);
-        [tishi addTarget:self action:@selector(showTishi:) forControlEvents:UIControlEventTouchUpInside];
-        [tishi setImage:[UIImage imageNamed:@"btn_prompt_pressed.png"] forState:UIControlStateNormal];
-        tishi.tag=21+n;
-        [scrollView addSubview:tishi];
-        UIButton *selectA=[UIButton buttonWithType:UIButtonTypeCustom];
-        selectA.frame=CGRectMake(20, 140*n+36, 20, 20);
-        [selectA addTarget:self action:@selector(makeAns:) forControlEvents:UIControlEventTouchUpInside];
-        [selectA setImage:[UIImage imageNamed:@"btn_radio_off.png"] forState:UIControlStateNormal];
-        selectA.tag=110+n*10+1;
-       // NSLog(@"%d",selectA.tag);
-        [scrollView addSubview:selectA];
-        UIButton *selectB=[UIButton buttonWithType:UIButtonTypeCustom];
-        selectB.frame=CGRectMake(20, 140*n+62, 20, 20);
-        [selectB addTarget:self action:@selector(makeAns:) forControlEvents:UIControlEventTouchUpInside];
-        [selectB setImage:[UIImage imageNamed:@"btn_radio_off.png"] forState:UIControlStateNormal];
-        selectB.tag=110+n*10+2;
-        //NSLog(@"%d",selectB.tag);
-        [scrollView addSubview:selectB];
-        UIButton *selectC=[UIButton buttonWithType:UIButtonTypeCustom];
-        selectC.frame=CGRectMake(20, 140*n+88, 20, 20);
-        [selectC addTarget:self action:@selector(makeAns:) forControlEvents:UIControlEventTouchUpInside];
-        [selectC setImage:[UIImage imageNamed:@"btn_radio_off.png"] forState:UIControlStateNormal];
-        selectC.tag=110+n*10+3;
-       // NSLog(@"%d",selectC.tag);
-        [scrollView addSubview:selectC];
-        UIButton *selectD=[UIButton buttonWithType:UIButtonTypeCustom];
-        selectD.frame=CGRectMake(20, 140*n+114, 20, 20);
-        [selectD addTarget:self action:@selector(makeAns:) forControlEvents:UIControlEventTouchUpInside];
-        [selectD setImage:[UIImage imageNamed:@"btn_radio_off.png"] forState:UIControlStateNormal];
-        selectD.tag=110+n*10+4;
-       // NSLog(@"%d",selectD.tag);
-        [scrollView addSubview:selectD];
-        
-        WanXing *wan=[self.array objectAtIndex:n];
-        UILabel *la=[[UILabel alloc]initWithFrame:CGRectMake(50, 140*n+36, 260, 20)];
-        [la setBackgroundColor:[UIColor clearColor]];
-        la.text=[NSString stringWithFormat:@"A.  %@",wan.select1];
-        [scrollView addSubview:la];
-        [la release];
-        UILabel *lb=[[UILabel alloc]initWithFrame:CGRectMake(50, 140*n+62, 260, 20)];
-        [lb setBackgroundColor:[UIColor clearColor]];
-        lb.text=[NSString stringWithFormat:@"B.  %@",wan.select2];
-        [scrollView addSubview:lb];
-        [lb release];
-        UILabel *lc=[[UILabel alloc]initWithFrame:CGRectMake(50, 140*n+88, 260, 20)];
-        [lc setBackgroundColor:[UIColor clearColor]];
-        lc.text=[NSString stringWithFormat:@"C.  %@",wan.select3];
-        [scrollView addSubview:lc];
-        [lc release];
-        UILabel *ld=[[UILabel alloc]initWithFrame:CGRectMake(50, 140*n+114, 260, 20)];
-        [ld setBackgroundColor:[UIColor clearColor]];
-        ld.text=[NSString stringWithFormat:@"D.  %@",wan.select4];
-        [scrollView addSubview:ld];
-        [ld release];
+        if (n<[self.array count]-1)
+        {
+            UILabel *num=[[UILabel alloc]initWithFrame:CGRectMake(5, 140*n+5, 25, 25)];
+            num.text=[NSString stringWithFormat:@"%d.",n+1];
+            [num setBackgroundColor:[UIColor clearColor]];
+            [scrollView addSubview:num];
+            [num release];
+            UILabel *ans=[[UILabel alloc]initWithFrame:CGRectMake(30, 140*n+5, 220, 25)];
+            ans.text=@"请选择：";
+            ans.tag=1+n;
+            [ans setBackgroundColor:[UIColor clearColor]];
+            [scrollView addSubview:ans];
+            [ans release];
+            UIButton *tishi=[UIButton buttonWithType:UIButtonTypeCustom];
+            tishi.frame=CGRectMake(250, 140*n+5, 60, 25);
+            [tishi addTarget:self action:@selector(showTishi:) forControlEvents:UIControlEventTouchUpInside];
+            [tishi setImage:[UIImage imageNamed:@"btn_prompt_pressed.png"] forState:UIControlStateNormal];
+            tishi.tag=21+n;
+            [scrollView addSubview:tishi];
+            UIButton *selectA=[UIButton buttonWithType:UIButtonTypeCustom];
+            selectA.frame=CGRectMake(20, 140*n+36, 20, 20);
+            [selectA addTarget:self action:@selector(makeAns:) forControlEvents:UIControlEventTouchUpInside];
+            [selectA setImage:[UIImage imageNamed:@"btn_radio_off.png"] forState:UIControlStateNormal];
+            selectA.tag=110+n*10+1;
+            // NSLog(@"%d",selectA.tag);
+            [scrollView addSubview:selectA];
+            UIButton *selectB=[UIButton buttonWithType:UIButtonTypeCustom];
+            selectB.frame=CGRectMake(20, 140*n+62, 20, 20);
+            [selectB addTarget:self action:@selector(makeAns:) forControlEvents:UIControlEventTouchUpInside];
+            [selectB setImage:[UIImage imageNamed:@"btn_radio_off.png"] forState:UIControlStateNormal];
+            selectB.tag=110+n*10+2;
+            //NSLog(@"%d",selectB.tag);
+            [scrollView addSubview:selectB];
+            UIButton *selectC=[UIButton buttonWithType:UIButtonTypeCustom];
+            selectC.frame=CGRectMake(20, 140*n+88, 20, 20);
+            [selectC addTarget:self action:@selector(makeAns:) forControlEvents:UIControlEventTouchUpInside];
+            [selectC setImage:[UIImage imageNamed:@"btn_radio_off.png"] forState:UIControlStateNormal];
+            selectC.tag=110+n*10+3;
+            // NSLog(@"%d",selectC.tag);
+            [scrollView addSubview:selectC];
+            UIButton *selectD=[UIButton buttonWithType:UIButtonTypeCustom];
+            selectD.frame=CGRectMake(20, 140*n+114, 20, 20);
+            [selectD addTarget:self action:@selector(makeAns:) forControlEvents:UIControlEventTouchUpInside];
+            [selectD setImage:[UIImage imageNamed:@"btn_radio_off.png"] forState:UIControlStateNormal];
+            selectD.tag=110+n*10+4;
+            // NSLog(@"%d",selectD.tag);
+            [scrollView addSubview:selectD];
+            
+            //WanXing *wan=[self.array objectAtIndex:n];
+            UILabel *la=[[UILabel alloc]initWithFrame:CGRectMake(50, 140*n+36, 260, 20)];
+            [la setBackgroundColor:[UIColor clearColor]];
+            la.text=[NSString stringWithFormat:@"A.  %@",wan.select1];
+            [scrollView addSubview:la];
+            [la release];
+            UILabel *lb=[[UILabel alloc]initWithFrame:CGRectMake(50, 140*n+62, 260, 20)];
+            [lb setBackgroundColor:[UIColor clearColor]];
+            lb.text=[NSString stringWithFormat:@"B.  %@",wan.select2];
+            [scrollView addSubview:lb];
+            [lb release];
+            UILabel *lc=[[UILabel alloc]initWithFrame:CGRectMake(50, 140*n+88, 260, 20)];
+            [lc setBackgroundColor:[UIColor clearColor]];
+            lc.text=[NSString stringWithFormat:@"C.  %@",wan.select3];
+            [scrollView addSubview:lc];
+            [lc release];
+            UILabel *ld=[[UILabel alloc]initWithFrame:CGRectMake(50, 140*n+114, 260, 20)];
+            [ld setBackgroundColor:[UIColor clearColor]];
+            ld.text=[NSString stringWithFormat:@"D.  %@",wan.select4];
+            [scrollView addSubview:ld];
+            [ld release];
+        }
+        n++;
     }
+    
     UIButton *submitAn=[UIButton buttonWithType:UIButtonTypeCustom];
     submitAn.frame=CGRectMake(105, 2810, 110, 42);
     [submitAn setImage:[UIImage imageNamed:@"btn_submit_pressed.png"] forState:UIControlStateNormal];
@@ -238,11 +246,11 @@
     [resultLabel release];
 }
 -(void)submitAns
-{
+{//提交答案
     //NSLog(@"您选了%s",answer);
     int num=0;
     NSString *result=@"您还有";
-    for (int n=0; n<20; n++)
+    for (int n=0; n<[self.array count]-1; n++)
     {
         if (answer[n]=='0')
         {
@@ -254,7 +262,7 @@
     if (num==0)
     {
         int rightNum=0;
-        for (int m=0; m<20; m++)
+        for (int m=0; m<[self.array count]-1; m++)
         {
             WanXing *wan=[self.array objectAtIndex:m];
             UILabel *label=(UILabel *)[scrollView viewWithTag:1+m];
@@ -266,7 +274,7 @@
             else
                 label.text=[NSString stringWithFormat:@" × 您选了%c，正确答案是%@。",answer[m],wan.result];
         }
-        resultLabel.text=[NSString stringWithFormat:@"您答对了%d题，共20题。",rightNum];
+        resultLabel.text=[NSString stringWithFormat:@"您答对了%d题，共%d题。",rightNum,[self.array count]-1];
     }
      else
      {
@@ -285,7 +293,7 @@
     }
 }
 -(void)showTishi:(UIButton *)sender
-{
+{//显示提示
     int num=sender.tag-21;
     WanXing *wan=[self.array objectAtIndex:num];
     NSString *showString=[NSString stringWithFormat:@"%@\n%@\n%@",wan.hint1,wan.hint2,wan.hint3];
@@ -296,7 +304,7 @@
     [alert release];
 }
 -(void)makeAns:(UIButton *)sender
-{
+{//做题后 得到所选的选项
     int x=((sender.tag-100)/10)-1;
     int y=sender.tag%10;
     UIButton *b1=(UIButton *)[scrollView viewWithTag:sender.tag/10*10+1];
@@ -495,7 +503,7 @@
 #pragma mark -
 #pragma mark UIAlertViewDelegate Methods
 -(void)willPresentAlertView:(UIAlertView *)alertView
-{
+{//重写了alert
     alertView.frame=CGRectMake(10, 150, 300, 180);
     for (UIView *view in  alertView.subviews)
     {
@@ -530,14 +538,14 @@
     [alertView addSubview:message];
 }
 -(void)closeAlert:(UIButton *)sender
-{
+{//关闭alert
     UIAlertView *sup=(UIAlertView *)[sender superview];
     [sup dismissWithClickedButtonIndex:0 animated:YES];
 }
 
 #pragma mark - 按钮
 - (IBAction)downBut:(UIButton *)sender
-{
+{//显示 隐藏做题的界面
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration:1.0f];
     if (isDown)
@@ -564,7 +572,7 @@
 }
 
 - (IBAction)nextButton:(UIButton *)sender
-{
+{//下一题
     if (!isWrong)
     {
         if (i<[self.arr count]-1)
@@ -582,6 +590,7 @@
     }
     [self setContain];
 }
+#pragma mark - 隐藏tabbar
 - (void)viewWillAppear: (BOOL)animated
 {
     [self hideTabBar:YES];

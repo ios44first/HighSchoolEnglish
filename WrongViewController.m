@@ -30,7 +30,7 @@
     [super viewDidLoad];
     
     //self.navigationItem.rightBarButtonItem=self.editButtonItem;
-
+//导航返回按钮
     UIImage* image= [UIImage imageNamed:@"return_pressed.png"];
     CGRect frame_1= CGRectMake(0, 0, image.size.width, image.size.height);
     UIButton* backButton= [[UIButton alloc] initWithFrame:frame_1];
@@ -41,6 +41,7 @@
     [self.navigationItem setLeftBarButtonItem:back];
     [back release];
     [backButton release];
+//导航编辑按钮    
     UIImage* image1= [UIImage imageNamed:@"delete_pressed.png"];
     CGRect frame_2= CGRectMake(0, 0, image1.size.width, image1.size.height);
     UIButton* backButton1= [[UIButton alloc] initWithFrame:frame_2];
@@ -53,7 +54,7 @@
     [self.navigationItem setRightBarButtonItem:back1];
     [back1 release];
     [backButton1 release];
-    
+//通过访问数据库的单例，来获得数据
     self.array=[NSMutableArray array];
     factory=[DataFactory instance];
     id delegate=[[UIApplication sharedApplication]delegate];
@@ -80,11 +81,11 @@
     num=[[NSMutableArray alloc]initWithObjects:@"1",@"1",@"1", nil];
 }
 -(void)goBack
-{
+{//fan hui
     [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)changeImg:(UIButton *)sender
-{
+{//通过isEditing的值来改变按钮的图片
     if (isEditing)
     {
         isEditing=NO;
@@ -103,7 +104,7 @@
     // Dispose of any resources that can be recreated.
 }
 -(void)tapHeader:(UIButton *)sender
-{
+{//改变每组的cell个数
     if ([[num objectAtIndex:sender.tag - 100]intValue]==1)
         [num replaceObjectAtIndex:sender.tag - 100 withObject:@"0"];
     else
@@ -116,7 +117,7 @@
     return 30;
 }
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
+{//设置每组header的视图样式内容
     NSString *ti=@"";
     switch (section)
     {
@@ -145,7 +146,7 @@
     return mySectionView;
 }
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
+{//设置每组的标题
     switch (section)
     {
         case 0:
@@ -166,7 +167,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+{//返回每组的cell的个数
     if ([[num objectAtIndex:section]intValue]==1)
     {
         return [[self.array objectAtIndex:section]count];
@@ -175,7 +176,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+{//初始化cell
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
@@ -187,10 +188,10 @@
     return cell;
 }
 -(void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
-{
+{//初始化cell的函数
     NSDateFormatter *format=[[NSDateFormatter alloc]init];
     [format setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
-    if (indexPath.section==1)
+    if (indexPath.section==1)  //第二组
     {
         ReadArtical *read=[[self.array objectAtIndex:indexPath.section]objectAtIndex:indexPath.row];
         cell.textLabel.text=read.contain;
@@ -209,13 +210,13 @@
         }
         cell.detailTextLabel.text=[NSString stringWithFormat:@"%@           %@",temp,[format stringFromDate:read.createDate]];
     }
-    else if (indexPath.section==2)
+    else if (indexPath.section==2)  //第三组
     {
         DuoXuan *duo=[[self.array objectAtIndex:indexPath.section]objectAtIndex:indexPath.row];
         cell.textLabel.text=duo.title;
         cell.detailTextLabel.text=[NSString stringWithFormat:@"完形填空           %@",[format stringFromDate:duo.createDate]];
     }
-    else if (indexPath.section==0)
+    else if (indexPath.section==0)   //第一组
     {
         DanXuan *dan=[[self.array objectAtIndex:indexPath.section]objectAtIndex:indexPath.row];
         cell.textLabel.text=dan.title;

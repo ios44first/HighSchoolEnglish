@@ -29,7 +29,7 @@
 {
     [super viewDidLoad];
     if (_refreshHeaderView == nil) {
-        
+// 初始化下拉刷新的视图
         EGORefreshTableHeaderView *view = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];
         view.delegate = self;
         [self.tableView addSubview:view];
@@ -40,13 +40,13 @@
     [_refreshHeaderView refreshLastUpdatedDate];
     
     //NSLog(@"%d,%d,%d",year,grade,titleType);
-    
+//初始化解析用到的属性
     self.array=[NSMutableArray array];
     self.arrayData=[NSMutableArray array];
     self.str=[NSMutableString string];
     self.dictionary=[NSMutableDictionary dictionary];
     currentpagenum=0;
-
+//存放区域ID的字典
     self.areaDic=[NSDictionary dictionaryWithObjectsAndKeys:@"天津",@"120000",@"河北",@"130000",@"山西",@"140000",@"内蒙",@"150000",@"辽宁",@"210000",@"吉林",@"220000",@"黑龙江",@"230000",@"上海",@"310000",@"江苏",@"320000",@"浙江",@"330000",@"安徽",@"340000",@"福建",@"350000",@"江西",@"360000",@"山东",@"370000",@"河南",@"410000",@"湖北",@"420000",@"湖南",@"430000",@"广东",@"440000",@"广西",@"450000",@"海南",@"460000",@"重庆",@"500000",@"四川",@"510000",@"贵州",@"520000",@"云南",@"530000",@"西藏",@"540000",@"陕西",@"610000",@"甘肃",@"620000",@"青海",@"630000",@"宁夏",@"640000",@"新疆",@"650000",@"北京",@"110000", nil];
     [self getData];
     
@@ -64,14 +64,14 @@
     //[self.tableView setSeparatorColor:[UIColor grayColor]];
 }
 - (void)viewWillAppear: (BOOL)animated
-{
+{//显示本书图前调用的方法
     NSString *path=[[NSBundle mainBundle] pathForResource:@"questionID" ofType:@"plist"];
     madeArray=[[NSMutableArray alloc]initWithContentsOfFile:path];
     //NSLog(@"%@",madeArray);
     [self.tableView reloadData];
 }
 -(void)getData
-{
+{//获得解析数据
     //NSLog(@"%d",currentpagenum);
     NSString *string=nil;
     if (TIKU)
@@ -279,7 +279,7 @@
     {
         cell=[[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
     }
-    if (indexPath.row<[self.arrayData count])
+    if (indexPath.row<[self.arrayData count]) //初始化cell内容
     {
         cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
         Questions *que=[self.arrayData objectAtIndex:indexPath.row];
@@ -303,7 +303,7 @@
         else
             cell.imageView.image=[UIImage imageNamed:@"bg_point_wei.png"];
     }
-    else
+    else    //初始化上拉加载的cell
     {
         if (self.tableView.contentSize.height<420)
         {
@@ -463,13 +463,13 @@
 }
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    if (self.tableView.contentOffset.y == (self.tableView.contentSize.height - self.tableView.frame.size.height) )
+    if (self.tableView.contentOffset.y == (self.tableView.contentSize.height - self.tableView.frame.size.height))//上拉加载更多
     {
        [self.array removeAllObjects];
        [self getData];
        [self.tableView reloadData];
     }
-    else if(self.tableView.contentOffset.y < -20)
+    else if(self.tableView.contentOffset.y < -20)//下拉刷新
     {
         [self.array removeAllObjects];
         [self.arrayData removeAllObjects];

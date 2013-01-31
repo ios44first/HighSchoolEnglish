@@ -76,7 +76,7 @@
      [imgV removeFromSuperview];
 }
 - (void)drawRect
-{
+{   //截图
     UIGraphicsBeginImageContext(CGSizeMake(320, 330));
     [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
     UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();
@@ -85,14 +85,14 @@
     imgV=[[UIImageView alloc]initWithImage:viewImage];
     imgV.frame=CGRectMake(0, 0, 320, 330);
     [self.view addSubview:imgV];
-    
+//逐渐缩小的动画效果
     CABasicAnimation *animation=[CABasicAnimation animationWithKeyPath:@"transform.scale"];//制定操作的属性名
     animation.timingFunction=[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
     animation.toValue=[NSNumber numberWithFloat:0.0f];
     [animation setDuration:1.0f];
     [animation setDelegate:self];
     [imgV.layer addAnimation:animation forKey:@"animation"];
-    
+//逐渐右移的动画效果
     CAKeyframeAnimation *animationPosition=[CAKeyframeAnimation animationWithKeyPath:@"position"];//制定操作的属性名
     NSArray *values=[NSArray arrayWithObjects:[NSValue valueWithCGPoint:CGPointMake(160, 155)],[NSValue valueWithCGPoint:CGPointMake(300, -20)], nil];
     [animationPosition setValues:values];
@@ -140,10 +140,12 @@
     {
         urlStr=[[NSString stringWithFormat:@"http://api.liqwei.com/translate/?language=zh-CN|en&content=%@",input]stringByAddingPercentEscapesUsingEncoding:enCode];
     }*/
+//由接口得到URL
     NSString *urlStr=[[NSString stringWithFormat:@"http://dict.qq.com/dict?q=%@",input]stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSURL *url=[NSURL URLWithString:urlStr];
     NSError *error=nil;
     NSString *resutStr=[NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&error];
+//返回的数据通过Json解析，返回一个字典
     NSDictionary *dic=[resutStr JSONValue];
     NSArray *array=nil;
     if ([[dic allKeys] containsObject:@"local"])
@@ -153,13 +155,13 @@
     if (array!=nil)
     {
         NSDictionary *one=[array objectAtIndex:0];
-        if ([[one allKeys] containsObject:@"pho"])
+        if ([[one allKeys] containsObject:@"pho"])  //带有音标的
         {
             NSArray *yin=[one valueForKey:@"pho"];
             //NSDictionary *d=[arr objectAtIndex:0];
             NSArray *arr=[NSArray array];
             NSMutableString *result=[[NSMutableString alloc]init];
-            if ([[one allKeys] containsObject:@"des2"])
+            if ([[one allKeys] containsObject:@"des2"])  //描述，词语的解释
             {
                 arr=[one valueForKey:@"des2"];
             }
@@ -212,7 +214,7 @@
             self.translationView.text=[NSString Unicode10:result];
             [result release];
         }
-        else
+        else   //没有音标的
         {
             NSArray *des2=[one valueForKey:@"des2"];
             //NSLog(@"%@",des2);
@@ -247,7 +249,7 @@
         }
     }
     else if([[dic allKeys] containsObject:@"netdes"])
-    {
+    { //既没有音标有没有描述的（句子，短语）
         NSArray *one=[dic valueForKey:@"netdes"];
         NSDictionary *word=[one objectAtIndex:0];
         NSArray *shortArray=[word valueForKey:@"des"];

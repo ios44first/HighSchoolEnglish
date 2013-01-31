@@ -41,7 +41,7 @@
     [self.navigationItem setLeftBarButtonItem:back];
     [back release];
     [backButton release];
-    
+//如果是普通状态（非查看错题的状态），导航显示收藏按钮
     if (!isWrong)
     {
         UIImage* image1= [UIImage imageNamed:@"btn_favorite_normal.png"];
@@ -59,7 +59,7 @@
     [self setContain];
 }
 -(void)addQuestion
-{
+{//收藏错题
     id delegate=[[UIApplication sharedApplication]delegate];
     NSManagedObjectContext *managedObjectContext=[delegate managedObjectContext];
     DanXuan *dan=[NSEntityDescription insertNewObjectForEntityForName:@"DanXuan" inManagedObjectContext:managedObjectContext];
@@ -118,7 +118,7 @@
    [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)setContain
-{
+{//获得数据，如果是正常状态，则进行数据解析
     if (!isWrong)
     {
         NSString *string=[NSString stringWithFormat:@"http://api.winclass.net/serviceaction.do?method=gettheme&subjectid=3&id=%d",self.question.questionsId];
@@ -131,7 +131,7 @@
         [xmlData release];
         [parserTool release];
     }
-    
+//根据解析后的数据或错题本传过来的数据初始化题干内容
     self.questionContain.text=[NSString filterString:self.danxuanti.tiTitle];
     self.chooseA.text=[NSString stringWithFormat:@"A.  %@",[NSString filterString:self.danxuanti.select1]];
     self.chooseB.text=[NSString stringWithFormat:@"B.  %@",[NSString filterString:self.danxuanti.select2]];
@@ -282,17 +282,18 @@
 #pragma mark -
 #pragma mark UIAlertViewDelegate Methods
 -(void)willPresentAlertView:(UIAlertView *)alertView
-{
+{//重写了alert
     alertView.frame=CGRectMake(10, 150, 300, 180);
     for (UIView *view in  alertView.subviews)
-    {
+    {//移除原有的视图
         [view removeFromSuperview];
     }
+//设置背景
     UIImageView *iv=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 300, 180)];
     iv.image=[UIImage imageNamed:@"bg_reviewwords.png"];
     [alertView addSubview:iv];
     [iv release];
-    
+ //标题
     UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(45, 0, 210, 36)];
     label.text=title;
     label.backgroundColor=[UIColor clearColor];
@@ -300,13 +301,13 @@
     label.textColor=[UIColor colorWithRed:0.22 green:0.66 blue:1 alpha:1.0];
     [alertView addSubview:label];
     [label release];
-    
+ //关闭
     UIButton *close=[UIButton buttonWithType:UIButtonTypeCustom];
     [close setImage:[UIImage imageNamed:@"btn_closereview_pressed.png"] forState:UIControlStateNormal];
     [close addTarget:self action:@selector(closeAlert:) forControlEvents:UIControlEventTouchUpInside];
     close.frame=CGRectMake(255, 0, 45, 36);
     [alertView addSubview:close];
-    
+ //显示的信息
     message = [[UITextView alloc] initWithFrame:CGRectMake(10, 40, 280, 120)];
     message.editable=NO;
     message.textColor=[UIColor colorWithRed:0.22 green:0.66 blue:1 alpha:1.0];
@@ -317,7 +318,7 @@
     [alertView addSubview:message];
 }
 -(void)closeAlert:(UIButton *)sender
-{
+{//关闭alert
     UIAlertView *sup=(UIAlertView *)[sender superview];
     [sup dismissWithClickedButtonIndex:0 animated:YES];
 }
@@ -386,14 +387,14 @@
     [super dealloc];
 }
 - (IBAction)nextQuestion:(UIButton *)sender
-{
-    if (!isWrong)
+{//下一个题
+    if (!isWrong)//如果不是错题 直接从数组中取
     {
         if (i<[self.arr count]-1)
         {
             self.question=[self.arr objectAtIndex:++i];
         }
-    }else
+    }else//如果是错题，从数组中取出数据，初始化对象
     {
         if (i<[self.arr count]-1)
         {
@@ -418,7 +419,7 @@
 }
 
 - (IBAction)tiShi:(UIButton *)sender
-{
+{//显示提示
     UIAlertView *alert;
     NSString *an=[NSString stringWithFormat:@"%@\n%@\n%@",self.danxuanti.hint1,self.danxuanti.hint2,self.danxuanti.hint3];
      msg=[NSString filterString:an];
@@ -430,7 +431,7 @@
 }
 
 - (IBAction)submitAnswer:(UIButton *)sender
-{   
+{//提交答案
     UIAlertView *alert;
     title=@"答题结果";
     if ([answer isEqualToString:self.danxuanti.result])
@@ -457,7 +458,7 @@
 }
 
 - (IBAction)chooseAnswer:(UIButton *)sender
-{
+{//选择选项
     switch (sender.tag)
     {
         case 11:
